@@ -3,24 +3,41 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
+/**
+ * @author Timo
+ * Gem class
+ */
 public class Gem {
 
-	int dimension = 40;
+	int dimension = 40; //the dimension (width and height) of the gems on the board
 	int row;
 	int col;
-	int type; //which of the 6 gems
-	Image image;
+	int type; //which type of six gems
+	Image image; //The image of the gem
+	Image overlay; //The overlay image
+	boolean selected = false;
 	
+	/**
+	 * @param row
+	 * @param col
+	 * @param type
+	 * Constructor
+	 */
 	public Gem(int row, int col, int type){
 		this.row = row;
 		this.col = col;
 		this.type = type;
 		loadImage();
+		ImageIcon overlayicon = new ImageIcon("overlay.png");
+		overlay = overlayicon.getImage();
 	}
 	
+	/**
+	 * Loads the correct image according to the type of the gem
+	 * Should be called when type changes
+	 * Type 0 will return a null image, creating an empty cell
+	 */
 	private void loadImage() {
-		//depending on the type, a different image should be loaded
-		//might wanna handle type 0 as well
         ImageIcon ii = null;
 
 		switch (type) {
@@ -48,26 +65,60 @@ public class Gem {
 		if(ii==null)
 			this.image = null; //creates an empty cell
 		else
-			this.image = ii.getImage();        
+			this.image = ii.getImage();
     }	
 
+	/**
+	 * @param type
+	 */
 	void setType(int type){
 		this.type = type;
 		loadImage();
 	}
 	
-	//this method draws a gem, should be called from the paintcomponent
+	/**
+	 * @param g
+	 * 	this method draws a gem, should be called from the paintcomponent
+	 */
 	void draw(Graphics g){
-		g.drawImage(image, 235 + col*dimension, 115 + row*dimension, dimension, dimension, null);	
+		g.drawImage(image, 235 + col*dimension, 115 + row*dimension, dimension, dimension, null);
+		if (selected)
+			g.drawImage(overlay, 235 + col*dimension, 115 + row*dimension, dimension, dimension, null);
 	}
 
+	/**
+	 * Deletes a gem by changing the type to 0
+	 */
 	public void delete() {
 		setType(0);
 	}
 
+	/**
+	 * @param row
+	 * @param col
+	 * Sets the gem to a new position
+	 * 
+	 */
 	public void setPosition(int row, int col) {
 		// TODO Auto-generated method stub
 		this.row = row;
 		this.col = col;
 	}
+
+	/**
+	 * @return true if the gem is currently selected
+	 */
+	public boolean isSelected() {
+		return selected;
+	}
+
+	/**
+	 * @param selected
+	 * Set the selected variable
+	 */
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+	
+	
 }

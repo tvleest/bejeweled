@@ -1,6 +1,10 @@
 import java.awt.Graphics;
 import java.util.Random;
 
+/**
+ * @author Timo
+ * Holds the double dimension array with gems and the board methods
+ */
 public class Board {
 	Gem[][] gems;
 	int dimension;
@@ -13,6 +17,9 @@ public class Board {
 		fillBoard();
 	}
 	
+	/**
+	 * Fills the board with random gems
+	 */
 	public void fillBoard(){
 		/*
 		int[] types = new int[7];
@@ -31,6 +38,12 @@ public class Board {
         }
 	}
 	
+	/**
+	 * @param col
+	 * @param row
+	 * @param types
+	 * Backtrack method
+	 */
 	public void fillBoard(int col, int row, int[] types){
 		//shuffle array
 		
@@ -48,6 +61,12 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
 	public boolean rowCheck(int row, int col, int type){
 		if(col<=1){
 			return true;
@@ -58,6 +77,12 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
 	public boolean colCheck(int row, int col, int type){
 		if(row<=1){
 			return true;
@@ -68,17 +93,25 @@ public class Board {
 		}
 	}
 
+	/**
+	 * @param g
+	 * draws the board
+	 */
 	public void draw(Graphics g) {
 		for (Gem[] gemss : gems)
     		for(Gem gem : gemss)
     				gem.draw(g);
 	}
 
+	/**
+	 * @param row
+	 * @param col
+	 * Deletes a gem based on column and row, moves all the gems above this gem a place down
+	 */
 	public void delete(int row, int col) {
 		gems[row][col].delete();
 		
-		//this should probably get its own method
-        //move all blocks above the deleted block down
+		//move all blocks above the deleted block down
         for(int r=row; r>=0; r--){
         	if(r>=1){
 		        gems[r-1][col].setPosition(r, col);
@@ -92,6 +125,13 @@ public class Board {
         }
 	}
 	
+	/**
+	 * @param row1
+	 * @param col1
+	 * @param row2
+	 * @param col2
+	 * swaps two gems
+	 */
 	public void swap(int row1, int col1, int row2, int col2){
 		Gem tempgem = gems[row1][col1];
 		gems[row2][col2].setPosition(row1, col1);
@@ -100,6 +140,10 @@ public class Board {
 		gems[row2][col2] = tempgem;
 	}
 	
+	/**
+	 * @param g
+	 * @return
+	 */
 	public Gem getUpper(Gem g) {
 		if(g.row > 0) {
 			return(gems[g.row - 1][g.col]);
@@ -107,6 +151,10 @@ public class Board {
 		return null;
 	}
 	
+	/**
+	 * @param g
+	 * @return
+	 */
 	public Gem getRight(Gem g) {
 		if(g.col < 7) {
 			return(gems[g.row][g.col + 1]);
@@ -114,6 +162,10 @@ public class Board {
 		return null;
 	}
 	
+	/**
+	 * @param g
+	 * @return
+	 */
 	public Gem getBelow(Gem g) {
 		if(g.row < 7) {
 			return(gems[g.row + 1][g.col]);
@@ -121,6 +173,10 @@ public class Board {
 		return null;
 	}
 	
+	/**
+	 * @param g
+	 * @return
+	 */
 	public Gem getLeft(Gem g) {
 		if(g.col > 0) {
 			return(gems[g.row][g.col-1]);
@@ -128,6 +184,11 @@ public class Board {
 		return null;
 	}
 	
+	/**
+	 * @param gem1
+	 * @param gem2
+	 * @return true if two gems are neighbours
+	 */
 	public boolean areNeighbours(Gem gem1, Gem gem2) {
 		return(getUpper(gem1)==gem2 || getBelow(gem1)==gem2 || getLeft(gem1)==gem2 || getRight(gem1)==gem2);
 	}

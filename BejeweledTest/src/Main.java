@@ -1,18 +1,24 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+/**
+ * @author Timo
+ *
+ */
 public class Main extends JFrame {
 	JLabel highscores;
 	
+	/**
+	 * Constructor
+	 */
 	public Main(){
-		
 		initializeGame();	
-		
 	}
 	
-	private void initializeGame() {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * Set up the game
+	 */
+	private void initializeGame() {		
 		highscores = new JLabel("Highscores");
 		add(new Game());
 		setSize(800,600);
@@ -20,9 +26,11 @@ public class Main extends JFrame {
 		setLocationRelativeTo(null);
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * @param args
+	 * Main method
+	 */
+	public static void main(String[] args) {		
 				Main m = new Main();
 				m.setVisible(true);
 	}
