@@ -40,7 +40,13 @@ public class Game extends JPanel implements MouseListener{
         int col = xvar/40;
         int row = yvar/40;
         if (col < 8 && row < 8) {
-        	board.delete(row, col);
+        	if(board.selectedgem==null)
+        		board.selectedgem=board.gems[row][col];
+        	else
+        	{
+        		board.swap(board.selectedgem.row, board.selectedgem.col, row, col);
+        		board.selectedgem=null;
+        	}
             repaint();
         }
     }
