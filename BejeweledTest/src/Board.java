@@ -108,21 +108,21 @@ public class Board {
 	}
 	
 	public Gem getRight(Gem g) {
-		if(g.row > 0) {
+		if(g.col < 7) {
 			return(gems[g.row][g.col + 1]);
 		}
 		return null;
 	}
 	
 	public Gem getBelow(Gem g) {
-		if(g.row > 0) {
+		if(g.row < 7) {
 			return(gems[g.row + 1][g.col]);
 		}
 		return null;
 	}
 	
 	public Gem getLeft(Gem g) {
-		if(g.row > 0) {
+		if(g.col > 0) {
 			return(gems[g.row][g.col-1]);
 		}
 		return null;
