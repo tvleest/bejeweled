@@ -23,6 +23,26 @@ public class Board {
             }
         }
 	}
+	
+	public boolean rowCheck(int row, int col, int type){
+		if(col<=1){
+			return true;
+		} else if(gems[row][col-1].type==type && gems[row][col-2].type==type){
+			return false;
+		} else{
+			return true;
+		}
+	}
+	
+	public boolean colCheck(int row, int col, int type){
+		if(row<=1){
+			return true;
+		} else if(gems[row-1][col].type==type && gems[row-2][col].type==type){
+			return false;
+		} else{
+			return true;
+		}
+	}
 
 	public void draw(Graphics g) {
 		for (Gem[] gemss : gems)
