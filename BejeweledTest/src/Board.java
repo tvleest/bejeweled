@@ -5,6 +5,7 @@ public class Board {
 	Gem[][] gems;
 	int dimension;
 	Random random = new Random();
+	Gem selectedgem = null;
 	
 	public Board(int dimension){
 		this.dimension = dimension;
