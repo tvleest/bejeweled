@@ -10,6 +10,10 @@ public class Gem {
 	int col;
 	int type; //which of the 6 gems
 	Image image;
+	private Gem up;
+	private Gem right;
+	private Gem down;
+	private Gem left;
 	
 	public Gem(int row, int col, int type){
 		this.row = row;
@@ -71,4 +75,35 @@ public class Gem {
 		this.col = col;
 	}
 	
+	public void setUp(Gem g) {
+		up = g;
+	}
+	
+	public void setRight(Gem g) {
+		right = g;
+	}
+	
+	public void setDown(Gem g) {
+		down = g;
+	}
+	
+	public void setLeft(Gem g) {
+		left = g;
+	}
+	
+	public Gem getUp() {
+		return up;
+	}
+	
+	public Gem getRight() {
+		return right;
+	}
+	
+	public Gem getDown() {
+		return down;
+	}
+	
+	public Gem getLeft() {
+		return left;
+	}
 }
