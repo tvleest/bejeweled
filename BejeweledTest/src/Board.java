@@ -24,6 +24,23 @@ public class Board {
         }
 	}
 	
+	public void fillBoard(int col, int row, int[] types){
+		//shuffle array
+		
+		for(int i =0; i<6; i++){
+			if(rowCheck(row,col,i) && colCheck(row,col,i)){
+				Gem gem = new Gem(row, col, i);
+				gems[row][col]=gem;
+				if(col<7){
+					fillBoard(col+1, row, types);
+				} else{
+					fillBoard(0,row+1, types); 
+				}
+			}
+			
+		}
+	}
+	
 	public boolean rowCheck(int row, int col, int type){
 		if(col<=1){
 			return true;
