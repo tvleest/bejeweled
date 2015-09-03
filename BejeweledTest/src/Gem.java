@@ -62,7 +62,7 @@ public class Gem {
 	
 	//this method draws a gem, should be called from the paintcomponent
 	void draw(Graphics g){
-		g.drawImage(image, col*40, row*40, dimension, dimension, null);	
+		g.drawImage(image, 235 + col*dimension, 115 + row*dimension, dimension, dimension, null);	
 	}
 
 	public void delete() {
