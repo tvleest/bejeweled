@@ -14,20 +14,21 @@ public class Board {
 	}
 	
 	public void fillBoard(){
+		/*
 		int[] types = new int[7];
 		for(int i=0; i<6; i++){
 			types[i]=i+1;
 		}
 		fillBoard(0,0,types);
-		
-		/*int row,col;
+		*/
+		int row,col;
         for (col=0;col<dimension;col++){
             for (row=0;row<8;row++){
             	int type = random.nextInt(6)+1; //take a random number out of 1,2,3,4,5,6
     			Gem gem = new Gem(row, col, type);
                 gems[row][col] = gem;
             }
-        }*/
+        }
 	}
 	
 	public void fillBoard(int col, int row, int[] types){
