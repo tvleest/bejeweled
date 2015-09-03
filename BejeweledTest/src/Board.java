@@ -76,4 +76,31 @@ public class Board {
 		gems[row2][col2] = tempgem;
 	}
 	
+	public Gem getUpper(Gem g) {
+		if(g.row > 0) {
+			return(gems[g.row - 1][g.col]);
+		}
+		return null;
+	}
+	
+	public Gem getRight(Gem g) {
+		if(g.row > 0) {
+			return(gems[g.row][g.col + 1]);
+		}
+		return null;
+	}
+	
+	public Gem getBelow(Gem g) {
+		if(g.row > 0) {
+			return(gems[g.row + 1][g.col]);
+		}
+		return null;
+	}
+	
+	public Gem getLeft(Gem g) {
+		if(g.row > 0) {
+			return(gems[g.row][g.col]);
+		}
+		return null;
+	}
 }

@@ -34,12 +34,12 @@ public class Game extends JPanel implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		int xvar = e.getX();
-        int yvar = e.getY();
+		int xvar = e.getX() - 235;
+        int yvar = e.getY() - 115;
         //calc which diamond is clicked
         int col = xvar/40;
         int row = yvar/40;
-        if (col < 8 && row < 8) {
+        if (col < 8 && row < 8 && col >= 0 && row >= 0) {
         	if(board.selectedgem==null)
         		board.selectedgem=board.gems[row][col];
         	else
