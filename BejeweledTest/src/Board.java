@@ -45,7 +45,14 @@ public class Board {
                 gems[0][col] = gem;
         	}
         }
-		
+	}
+	
+	public void swap(int row1, int col1, int row2, int col2){
+		Gem tempgem = gems[row1][col1];
+		gems[row2][col2].setPosition(row1, col1);
+		gems[row1][col1] = gems[row2][col2];
+		tempgem.setPosition(row2, col2);
+		gems[row2][col2] = tempgem;
 	}
 	
 }
