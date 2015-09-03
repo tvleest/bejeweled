@@ -19,14 +19,7 @@ public class Game extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int xvar = e.getX();
-        int yvar = e.getY();
-        //calc which diamond is clicked
-        int col = xvar/40;
-        int row = yvar/40;
-        board.delete(row, col);
-        
-        repaint();
+
 	}
 
 	@Override
@@ -41,8 +34,16 @@ public class Game extends JPanel implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-	}
+		int xvar = e.getX();
+        int yvar = e.getY();
+        //calc which diamond is clicked
+        int col = xvar/40;
+        int row = yvar/40;
+        if (col < 8 && row < 8) {
+        	board.delete(row, col);
+            repaint();
+        }
+    }
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
