@@ -126,4 +126,8 @@ public class Board {
 		}
 		return null;
 	}
+	
+	public boolean areNeighbours(Gem gem1, Gem gem2) {
+		return(getUpper(gem1)==gem2 || getBelow(gem1)==gem2 || getLeft(gem1)==gem2 || getRight(gem1)==gem2);
+	}
 }

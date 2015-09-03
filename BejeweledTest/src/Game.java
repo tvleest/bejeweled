@@ -43,9 +43,15 @@ public class Game extends JPanel implements MouseListener{
         	if(board.selectedgem==null)
         		board.selectedgem=board.gems[row][col];
         	else
-        	{
-        		board.swap(board.selectedgem.row, board.selectedgem.col, row, col);
-        		board.selectedgem=null;
+        	{	
+        		Gem clickedGem = board.gems[row][col];
+        		if (board.areNeighbours(board.selectedgem, clickedGem)){
+        			board.swap(board.selectedgem.row, board.selectedgem.col, row, col);
+        		}
+        		else{
+        			//error sound;
+        		}
+        		board.selectedgem=null; //deselect
         	}
             repaint();
         }
