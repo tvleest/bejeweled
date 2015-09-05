@@ -38,6 +38,13 @@ public class Board {
                 gems[row][col] = gem;
             }
         }
+        
+        for(int j = 0; j < 8; j++) {
+			for (int k = 0; k < 8; k++) {
+				Gem temp = gems[j][k];
+				deleteRows(temp);
+			}
+		}
 	}
 	
 	/**
@@ -236,6 +243,12 @@ public class Board {
 		}
 		for(int k = 0; k < array2.size(); k++) {
 			delete(array2.get(k).row, array2.get(k).col);
+		}
+		for(int j = 0; j < 8; j++) {
+			for (int k = 0; k < 8; k++) {
+				Gem temp = gems[j][k];
+				deleteRows(temp);
+			}
 		}
 	}
 	
