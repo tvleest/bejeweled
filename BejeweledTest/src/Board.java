@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -10,6 +11,7 @@ public class Board {
 	int dimension;
 	Random random = new Random();
 	Gem selectedgem = null;
+	Gem secondGem = null;
 	
 	public Board(int dimension){
 		this.dimension = dimension;
@@ -192,4 +194,125 @@ public class Board {
 	public boolean areNeighbours(Gem gem1, Gem gem2) {
 		return(getUpper(gem1)==gem2 || getBelow(gem1)==gem2 || getLeft(gem1)==gem2 || getRight(gem1)==gem2);
 	}
+	
+	/**
+	 * Will delete all combinations of Gems, by first finding them with
+	 * deleteHorizontal and deleteVertical and then deleting them with deleteAll.
+	 * @param g
+	 * @return true, iff there are rows to be deleted
+	 */
+	public boolean deleteRows(Gem g) {
+		ArrayList<Gem> array1 = deleteHorizontal(g);
+		ArrayList<Gem> array2 = deleteVertical(g);
+		if(!array1.isEmpty()) {
+			if(!array2.isEmpty()){
+				array1.addAll(array2);
+			}
+		}
+		else if(array2.isEmpty()){
+			return false;
+		}
+		else {
+			array1 = array2;
+		}
+		array1.add(g);
+		deleteAll(array1);
+		return true;
+	}
+	
+	/**
+	 * First sorts the arrayList array, then deletes all the Gems from the list
+	 * @param array
+	 */
+	public void deleteAll(ArrayList<Gem> array) {
+		ArrayList<Gem> array2 = new ArrayList<Gem>();
+		for(int i = 0; i < 8; i++) {
+			for(int j = 0; j < array.size(); j++) {
+				Gem temp = array.get(j);
+				if(temp.row == i) {
+					array2.add(array.get(j));
+				}
+			}
+		}
+		for(int k = 0; k < array2.size(); k++) {
+			delete(array2.get(k).row, array2.get(k).col);
+		}
+	}
+	
+	/**
+	 * Finds all horizontal combinations of Gems with Gem g, places the gems in 
+	 * these combinations in the ArrayList array
+	 * @param g
+	 * @return array
+	 */
+	public ArrayList<Gem> deleteHorizontal(Gem g) {
+		int type1 = g.type;
+		Gem leftgem = getLeft(g);
+		Gem rightgem = getRight(g);
+		ArrayList<Gem> array = new ArrayList<Gem>();
+		
+		if(leftgem != null && leftgem.type == type1){
+			if(getLeft(leftgem) != null && getLeft(leftgem).type == type1){
+				if(rightgem != null && rightgem.type == type1){
+					if(getRight(rightgem) != null && getRight(rightgem).type == type1){
+						array.add(getRight(rightgem));
+					}
+					array.add(rightgem);
+				}
+				array.add(getLeft(leftgem));
+				array.add(leftgem);
+			}
+			else if(rightgem != null && rightgem.type == type1){
+				if(getRight(rightgem) != null && getRight(rightgem).type == type1){
+					array.add(getRight(rightgem));
+				}
+				array.add(rightgem);
+				array.add(leftgem);
+			}
+		}
+		else if(rightgem != null && getRight(rightgem) != null && rightgem.type == type1 && getRight(rightgem).type == type1) {
+			array.add(getRight(rightgem));
+			array.add(rightgem);
+		}
+		return array;
+	}
+	
+	/**
+	 * Finds all vertical combinations of Gems with Gem g, places the gems in 
+	 * these combinations in the ArrayList array
+	 * @param g
+	 * @return array
+	 */
+	public ArrayList<Gem> deleteVertical(Gem g) {
+		int type1 = g.type;
+		Gem upgem = getUpper(g);
+		Gem downgem = getBelow(g);
+		ArrayList<Gem> array = new ArrayList<Gem>();
+		
+		if(upgem != null && upgem.type == type1){
+			if(getUpper(upgem) != null && getUpper(upgem).type == type1){
+				if(downgem != null && downgem.type == type1){
+					if(getBelow(downgem) != null && getBelow(downgem).type == type1){
+						array.add(getBelow(downgem));
+					}
+						array.add(downgem);
+				}
+				array.add(getUpper(upgem));
+				array.add(upgem);
+			}
+			else if(downgem != null && downgem.type == type1){
+				if(getBelow(downgem) != null && getBelow(downgem).type == type1){
+					array.add(getBelow(downgem));
+				}
+				array.add(downgem);
+				array.add(upgem);
+			}
+		}
+		else if(downgem != null && getBelow(downgem) != null && downgem.type == type1 && getBelow(downgem).type == type1) {
+			array.add(getBelow(downgem));
+			array.add(downgem);
+		}
+		return array;
+	}
+	
 }
