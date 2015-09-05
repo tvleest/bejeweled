@@ -57,10 +57,10 @@ public class Game extends JPanel implements MouseListener{
         		board.secondGem = board.gems[row][col];
         		if (board.areNeighbours(board.selectedgem, board.secondGem)){
         			board.swap(board.selectedgem.row, board.selectedgem.col, row, col);
-        			boolean first = board.deleteRows(board.selectedgem);
+        			boolean first = board.deleteRows(board.selectedgem); 
         			boolean second = board.deleteRows(board.secondGem);
         			if(first == false && second == false) { //if there are no combinations found after the move
-        				board.swap(board.secondGem.row, board.secondGem.col, row, col);
+        				board.swap(board.secondGem.row, board.secondGem.col, row, col); //switches the two switched gems back
         				//error sound
         			}
         		}

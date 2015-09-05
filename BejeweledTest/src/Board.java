@@ -39,7 +39,7 @@ public class Board {
             }
         }
         
-        for(int j = 0; j < 8; j++) {
+        for(int j = 0; j < 8; j++) { //this loop deletes all combinations that are already on the board
 			for (int k = 0; k < 8; k++) {
 				Gem temp = gems[j][k];
 				deleteRows(temp);
@@ -233,7 +233,7 @@ public class Board {
 	 */
 	public void deleteAll(ArrayList<Gem> array) {
 		ArrayList<Gem> array2 = new ArrayList<Gem>();
-		for(int i = 0; i < 8; i++) {
+		for(int i = 0; i < 8; i++) { //sorts the array on the row of the gem, up to down
 			for(int j = 0; j < array.size(); j++) {
 				Gem temp = array.get(j);
 				if(temp.row == i) {
@@ -242,9 +242,9 @@ public class Board {
 			}
 		}
 		for(int k = 0; k < array2.size(); k++) {
-			delete(array2.get(k).row, array2.get(k).col);
+			delete(array2.get(k).row, array2.get(k).col); //deletes all gems from the bord, from up to down
 		}
-		for(int j = 0; j < 8; j++) {
+		for(int j = 0; j < 8; j++) { //makes sure that no new combinations form on the board with new gems
 			for (int k = 0; k < 8; k++) {
 				Gem temp = gems[j][k];
 				deleteRows(temp);
@@ -264,10 +264,10 @@ public class Board {
 		Gem rightgem = getRight(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
 		
-		if(leftgem != null && leftgem.type == type1){
-			if(getLeft(leftgem) != null && getLeft(leftgem).type == type1){
-				if(rightgem != null && rightgem.type == type1){
-					if(getRight(rightgem) != null && getRight(rightgem).type == type1){
+		if(leftgem != null && leftgem.type == type1){ //2 on a row, left-gem
+			if(getLeft(leftgem) != null && getLeft(leftgem).type == type1){ //3 on a row, left-left-gem
+				if(rightgem != null && rightgem.type == type1){ //4 on a row, left-left-gem-right
+					if(getRight(rightgem) != null && getRight(rightgem).type == type1){ //5 on a row, left-left-gem-right-right
 						array.add(getRight(rightgem));
 					}
 					array.add(rightgem);
@@ -275,19 +275,19 @@ public class Board {
 				array.add(getLeft(leftgem));
 				array.add(leftgem);
 			}
-			else if(rightgem != null && rightgem.type == type1){
-				if(getRight(rightgem) != null && getRight(rightgem).type == type1){
+			else if(rightgem != null && rightgem.type == type1){ //3 on a row, left-gem-right
+				if(getRight(rightgem) != null && getRight(rightgem).type == type1){ //4 on a row, left-gem-right-right
 					array.add(getRight(rightgem));
 				}
 				array.add(rightgem);
 				array.add(leftgem);
 			}
 		}
-		else if(rightgem != null && getRight(rightgem) != null && rightgem.type == type1 && getRight(rightgem).type == type1) {
+		else if(rightgem != null && getRight(rightgem) != null && rightgem.type == type1 && getRight(rightgem).type == type1) { //3 on a row, gem-right-right
 			array.add(getRight(rightgem));
 			array.add(rightgem);
 		}
-		return array;
+		return array; //return an array with all the gems that were in a combination
 	}
 	
 	/**
@@ -302,10 +302,10 @@ public class Board {
 		Gem downgem = getBelow(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
 		
-		if(upgem != null && upgem.type == type1){
-			if(getUpper(upgem) != null && getUpper(upgem).type == type1){
-				if(downgem != null && downgem.type == type1){
-					if(getBelow(downgem) != null && getBelow(downgem).type == type1){
+		if(upgem != null && upgem.type == type1){ //2 in a row, up-gem
+			if(getUpper(upgem) != null && getUpper(upgem).type == type1){ //3 in a row, up-up-gem
+				if(downgem != null && downgem.type == type1){ //4 in a row, up-up-gem-down
+					if(getBelow(downgem) != null && getBelow(downgem).type == type1){ //5 in a row up-up-gem-down-down
 						array.add(getBelow(downgem));
 					}
 						array.add(downgem);
@@ -313,19 +313,19 @@ public class Board {
 				array.add(getUpper(upgem));
 				array.add(upgem);
 			}
-			else if(downgem != null && downgem.type == type1){
-				if(getBelow(downgem) != null && getBelow(downgem).type == type1){
+			else if(downgem != null && downgem.type == type1){ //3 on a row, up-gem-down
+				if(getBelow(downgem) != null && getBelow(downgem).type == type1){ //4 on a row, up-gem-down-down
 					array.add(getBelow(downgem));
 				}
 				array.add(downgem);
 				array.add(upgem);
 			}
 		}
-		else if(downgem != null && getBelow(downgem) != null && downgem.type == type1 && getBelow(downgem).type == type1) {
+		else if(downgem != null && getBelow(downgem) != null && downgem.type == type1 && getBelow(downgem).type == type1) { //3 on a row, gem-down-down
 			array.add(getBelow(downgem));
 			array.add(downgem);
 		}
-		return array;
+		return array; //return an array with all the gems that were in a combination
 	}
 	
 }
