@@ -1,21 +1,31 @@
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 
 /**
  * @author Timo
  * This class is our Panel, handling mouse events and drawing the game
  */
-public class Game extends JPanel implements MouseListener{
+public class Game extends JPanel implements MouseListener, ActionListener{
 	public static Sounds GameSounds = new Sounds(); // to use the sounds in this class
 	Board board = new Board(8);
 	private int score;
 	private int threeScore = 10;
 	private int fourScore = 15;
+	
+	private Timer timer;
+	private int time;
+	private final int THREETIME = 5;
+	private final int DELAY = 1000;
 	
 	/**
 	 * Constructor
@@ -23,6 +33,9 @@ public class Game extends JPanel implements MouseListener{
 	public Game(){
 		addMouseListener(this); //binds the mouse to the JPanel
 		score = 0;
+		time = 90;
+		timer = new Timer(DELAY, this);
+        timer.start();
 	}
 	
 	/* (non-Javadoc)
@@ -33,6 +46,7 @@ public class Game extends JPanel implements MouseListener{
         super.paintComponent(g);
         	board.draw(g);
         	drawScore(g);
+        	drawTime(g);
     }
 
 	@Override
@@ -68,6 +82,7 @@ public class Game extends JPanel implements MouseListener{
         			boolean second = board.deleteRows(board.secondGem);
             		if (first) {
             			updateScore();
+            			updateTime();
             		}
         			if(first == false && second == false) { //if there are no combinations found after the move
         				board.swap(board.secondGem.row, board.secondGem.col, row, col); //switches the two switched gems back
@@ -100,6 +115,42 @@ public class Game extends JPanel implements MouseListener{
 		String s = "Score: ";
 		s += score;
 		g.setFont(new Font("Cambria", Font.BOLD, 14));
+		g.drawString(s, 480, 460);
+	}
+	
+	public void updateTime() {
+		time += THREETIME;
+	}
+	
+	public int getTime() {
+		return time;
+	}
+	
+	public void drawTime(Graphics g) {
+		String s = "Time left: ";
+		int minutes = time / 60;
+		int seconds = time % 60;
+		if(seconds < 10) {
+			s += minutes + ":" + 0 + seconds;
+		} else {
+			s += minutes + ":" + seconds;
+		}
 		g.drawString(s, 245, 460);
+        Toolkit.getDefaultToolkit().sync();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		time -= 1;
+		if(time < 1) {
+			int reply = JOptionPane.showConfirmDialog(this, "Time's up!\n Would you like to start a new game?", "Game Over", JOptionPane.YES_NO_OPTION);
+			if(reply == JOptionPane.OK_OPTION) {
+				
+			}
+			if(reply == JOptionPane.NO_OPTION) {
+				
+			}
+		}
+		repaint();
 	}
 }
