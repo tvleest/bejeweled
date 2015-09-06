@@ -23,13 +23,8 @@ public class Board {
 	 * Fills the board with random gems
 	 */
 	public void fillBoard(){
+		fillBoard(0,0);
 		/*
-		int[] types = new int[7];
-		for(int i=0; i<6; i++){
-			types[i]=i+1;
-		}
-		fillBoard(0,0,types);
-		*/
 		int row,col;
         for (col=0;col<dimension;col++){
             for (row=0;row<8;row++){
@@ -44,7 +39,7 @@ public class Board {
 				Gem temp = gems[j][k];
 				deleteRows(temp);
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -53,21 +48,23 @@ public class Board {
 	 * @param types
 	 * Backtrack method
 	 */
-	public void fillBoard(int col, int row, int[] types){
-		//shuffle array
-		
-		for(int i =0; i<6; i++){
-			if(rowCheck(row,col,i) && colCheck(row,col,i)){
-				Gem gem = new Gem(row, col, i);
-				gems[row][col]=gem;
-				if(col<7){
-					fillBoard(col+1, row, types);
-				} else{
-					fillBoard(0,row+1, types); 
-				}
+
+	
+	public void fillBoard(int col, int row) throws RuntimeException{
+		int type = random.nextInt(6)+1;
+		if(rowCheck(row,col,type) && colCheck(row,col,type)){
+			Gem gem = new Gem(row, col, type);
+			gems[row][col]=gem;
+			if(col<7){
+				fillBoard(col+1, row);
+			} else if(row<7){
+				fillBoard(0,row+1); 
 			}
-			
 		}
+		else{
+			fillBoard(col, row);
+		}
+		
 	}
 	
 	/**
