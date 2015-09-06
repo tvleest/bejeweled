@@ -7,6 +7,7 @@ import javax.swing.JLabel;
  */
 public class Main extends JFrame {
 	JLabel highscores;
+	JLabel score;
 	
 	/**
 	 * Constructor

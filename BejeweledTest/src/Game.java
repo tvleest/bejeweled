@@ -1,6 +1,8 @@
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 import javax.swing.JPanel;
 
 
@@ -11,12 +13,16 @@ import javax.swing.JPanel;
 public class Game extends JPanel implements MouseListener{
 	public static Sounds GameSounds = new Sounds(); // to use the sounds in this class
 	Board board = new Board(8);
+	private int score;
+	private int threeScore = 10;
+	private int fourScore = 15;
 	
 	/**
 	 * Constructor
 	 */
 	public Game(){
 		addMouseListener(this); //binds the mouse to the JPanel
+		score = 0;
 	}
 	
 	/* (non-Javadoc)
@@ -26,6 +32,7 @@ public class Game extends JPanel implements MouseListener{
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         	board.draw(g);
+        	drawScore(g);
     }
 
 	@Override
@@ -59,6 +66,9 @@ public class Game extends JPanel implements MouseListener{
         			board.swap(board.selectedgem.row, board.selectedgem.col, row, col);
         			boolean first = board.deleteRows(board.selectedgem); 
         			boolean second = board.deleteRows(board.secondGem);
+            		if (first) {
+            			updateScore();
+            		}
         			if(first == false && second == false) { //if there are no combinations found after the move
         				board.swap(board.secondGem.row, board.secondGem.col, row, col); //switches the two switched gems back
         				//error sound
@@ -77,4 +87,19 @@ public class Game extends JPanel implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {}
+	
+	public void updateScore() {
+		score += threeScore;
+	}
+	
+	public int getScore() {
+		return score;
+	}
+	
+	public void drawScore(Graphics g) {
+		String s = "Score: ";
+		s += score;
+		g.setFont(new Font("Cambria", Font.BOLD, 14));
+		g.drawString(s, 245, 460);
+	}
 }

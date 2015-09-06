@@ -328,4 +328,6 @@ public class Board {
 		return array; //return an array with all the gems that were in a combination
 	}
 	
+
+	
 }
