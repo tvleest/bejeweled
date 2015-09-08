@@ -32,17 +32,7 @@ public class Gem {
 		overlay = overlayicon.getImage();
 	}
 	
-	public int getRow(){
-		return this.row;
-	}
 	
-	public int getCol(){
-		return this.col;
-	}
-	
-	public int getType(){
-		return this.type;
-	}
 	
 	/**
 	 * Loads the correct image according to the type of the gem
@@ -130,6 +120,28 @@ public class Gem {
 	 */
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	
+	/**
+	 * @return row of gem
+	 */
+	
+	public int getRow(){
+		return this.row;
+	}
+	
+	/**
+	 * @return colom of gem
+	 */
+	public int getCol(){
+		return this.col;
+	}
+	
+	/**
+	 * @return type of gem
+	 */
+	public int getType(){
+		return this.type;
 	}
 	
 	
