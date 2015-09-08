@@ -76,7 +76,7 @@ public class Board {
 	public boolean rowCheck(int row, int col, int type){
 		if(col<=1){
 			return true;
-		} else if(gems[row][col-1].type==type && gems[row][col-2].type==type){
+		} else if(gems[row][col-1].getType()==type && gems[row][col-2].getType()==type){
 			return false;
 		} else{
 			return true;
@@ -92,7 +92,7 @@ public class Board {
 	public boolean colCheck(int row, int col, int type){
 		if(row<=1){
 			return true;
-		} else if(gems[row-1][col].type==type && gems[row-2][col].type==type){
+		} else if(gems[row-1][col].getType()==type && gems[row-2][col].getType()==type){
 			return false;
 		} else{
 			return true;
@@ -151,8 +151,8 @@ public class Board {
 	 * @return
 	 */
 	public Gem getUpper(Gem g) {
-		if(g.row > 0) {
-			return(gems[g.row - 1][g.col]);
+		if(g.getRow() > 0) {
+			return(gems[g.getRow() - 1][g.getCol()]);
 		}
 		return null;
 	}
@@ -162,8 +162,8 @@ public class Board {
 	 * @return
 	 */
 	public Gem getRight(Gem g) {
-		if(g.col < 7) {
-			return(gems[g.row][g.col + 1]);
+		if(g.getCol() < 7) {
+			return(gems[g.getRow()][g.getCol() + 1]);
 		}
 		return null;
 	}
@@ -173,8 +173,8 @@ public class Board {
 	 * @return
 	 */
 	public Gem getBelow(Gem g) {
-		if(g.row < 7) {
-			return(gems[g.row + 1][g.col]);
+		if(g.getRow() < 7) {
+			return(gems[g.getRow() + 1][g.getCol()]);
 		}
 		return null;
 	}
@@ -184,8 +184,8 @@ public class Board {
 	 * @return
 	 */
 	public Gem getLeft(Gem g) {
-		if(g.col > 0) {
-			return(gems[g.row][g.col-1]);
+		if(g.getCol() > 0) {
+			return(gems[g.getRow()][g.getCol()-1]);
 		}
 		return null;
 	}
@@ -233,13 +233,13 @@ public class Board {
 		for(int i = 0; i < 8; i++) { //sorts the array on the row of the gem, up to down
 			for(int j = 0; j < array.size(); j++) {
 				Gem temp = array.get(j);
-				if(temp.row == i) {
+				if(temp.getRow() == i) {
 					array2.add(array.get(j));
 				}
 			}
 		}
 		for(int k = 0; k < array2.size(); k++) {
-			delete(array2.get(k).row, array2.get(k).col); //deletes all gems from the bord, from up to down
+			delete(array2.get(k).getRow(), array2.get(k).getCol()); //deletes all gems from the bord, from up to down
 		}
 		for(int j = 0; j < 8; j++) { //makes sure that no new combinations form on the board with new gems
 			for (int k = 0; k < 8; k++) {
@@ -256,17 +256,17 @@ public class Board {
 	 * @return array
 	 */
 	public ArrayList<Gem> deleteHorizontal(Gem g) {
-		int type = g.type;
+		int type = g.getType();
 		Gem leftgem = getLeft(g);
 		Gem rightgem = getRight(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
 		
-		while(leftgem != null && leftgem.type == type) {
+		while(leftgem != null && leftgem.getType() == type) {
 			array.add(leftgem);
 			leftgem = getLeft(leftgem);
 		}
 		
-		while(rightgem != null && rightgem.type == type) {
+		while(rightgem != null && rightgem.getType() == type) {
 			array.add(rightgem);
 			rightgem = getRight(rightgem);
 		}
@@ -286,17 +286,17 @@ public class Board {
 	 * @return array
 	 */
 	public ArrayList<Gem> deleteVertical(Gem g) {
-		int type = g.type;
+		int type = g.getType();
 		Gem upgem = getUpper(g);
 		Gem downgem = getBelow(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
 		
-		while(upgem != null && upgem.type == type) {
+		while(upgem != null && upgem.getType() == type) {
 			array.add(upgem);
 			upgem = getUpper(upgem);
 		}
 		
-		while(downgem != null && downgem.type == type) {
+		while(downgem != null && downgem.getType() == type) {
 			array.add(downgem);
 			downgem = getBelow(downgem);
 		}

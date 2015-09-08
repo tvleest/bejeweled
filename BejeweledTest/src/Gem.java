@@ -9,13 +9,13 @@ import javax.swing.ImageIcon;
  */
 public class Gem {
 
-	int dimension = 40; //the dimension (width and height) of the gems on the board
-	int row;
-	int col;
-	int type; //which type of six gems
-	Image image; //The image of the gem
-	Image overlay; //The overlay image
-	boolean selected = false;
+	private int dimension = 40; //the dimension (width and height) of the gems on the board
+	private int row;
+	private int col;
+	private int type; //which type of six gems
+	private Image image; //The image of the gem
+	private Image overlay; //The overlay image
+	private boolean selected = false;
 	
 	/**
 	 * @param row
@@ -30,6 +30,18 @@ public class Gem {
 		loadImage();
 		ImageIcon overlayicon = new ImageIcon("overlay.png");
 		overlay = overlayicon.getImage();
+	}
+	
+	public int getRow(){
+		return this.row;
+	}
+	
+	public int getCol(){
+		return this.col;
+	}
+	
+	public int getType(){
+		return this.type;
 	}
 	
 	/**
