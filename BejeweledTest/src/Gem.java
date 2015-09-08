@@ -30,7 +30,7 @@ public class Gem {
 		this.col = col;
 		this.type = type;
 		loadImage();
-		overlay = new Image("overlay.png");
+		overlay = new Image("Images/overlay.png");
 	}
 	
 	/**
@@ -41,22 +41,22 @@ public class Gem {
 	private void loadImage() {
 		switch (type) {
 		case 1:
-			image = new Image("blue.png");
+			image = new Image("Images/blue.png");
 			break;
 		case 2:
-			image = new Image("green.png");
+			image = new Image("Images/green.png");
 			break;
 		case 3:
-			image = new Image("orange.png");
+			image = new Image("Images/orange.png");
 			break;
 		case 4:
-			image = new Image("pink.png");
+			image = new Image("Images/pink.png");
 			break;
 		case 5:
-			image = new Image("red.png");
+			image = new Image("Images/red.png");
 			break;
 		case 6:
-			image = new Image("yellow.png");
+			image = new Image("Images/yellow.png");
 			break;
 		default:
 			image=null;
