@@ -16,31 +16,9 @@ public class Board {
 	public Board(int dimension){
 		this.dimension = dimension;
 		gems = new Gem[dimension][dimension];
-		fillBoard();
-	}
-	
-	/**
-	 * Fills the board with random gems
-	 */
-	public void fillBoard(){
 		fillBoard(0,0);
-		/*
-		int row,col;
-        for (col=0;col<dimension;col++){
-            for (row=0;row<8;row++){
-            	int type = random.nextInt(6)+1; //take a random number out of 1,2,3,4,5,6
-    			Gem gem = new Gem(row, col, type);
-                gems[row][col] = gem;
-            }
-        }
-        
-        for(int j = 0; j < 8; j++) { //this loop deletes all combinations that are already on the board
-			for (int k = 0; k < 8; k++) {
-				Gem temp = gems[j][k];
-				deleteRows(temp);
-			}
-		}*/
 	}
+
 	
 	/**
 	 * @param col
@@ -48,8 +26,6 @@ public class Board {
 	 * @param types
 	 * Backtrack method
 	 */
-
-	
 	public void fillBoard(int col, int row) throws RuntimeException{
 		int type = random.nextInt(6)+1;
 		if(rowCheck(row,col,type) && colCheck(row,col,type)){
@@ -65,6 +41,15 @@ public class Board {
 			fillBoard(col, row);
 		}
 		
+	}
+	
+	
+	/**
+	 * getGems method
+	 * @return Gem[][] gems
+	 */
+	public Gem[][] getGems() {
+		return gems;
 	}
 	
 	/**
