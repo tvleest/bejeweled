@@ -1,7 +1,9 @@
 import java.awt.Graphics;
-import java.awt.Image;
 
 import javax.swing.ImageIcon;
+
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 /**
  * @author Timo
@@ -28,11 +30,8 @@ public class Gem {
 		this.col = col;
 		this.type = type;
 		loadImage();
-		ImageIcon overlayicon = new ImageIcon("overlay.png");
-		overlay = overlayicon.getImage();
+		overlay = new Image("overlay.png");
 	}
-	
-	
 	
 	/**
 	 * Loads the correct image according to the type of the gem
@@ -40,35 +39,30 @@ public class Gem {
 	 * Type 0 will return a null image, creating an empty cell
 	 */
 	private void loadImage() {
-        ImageIcon ii = null;
-
 		switch (type) {
 		case 1:
-			ii = new ImageIcon("blue.png");
+			image = new Image("blue.png");
 			break;
 		case 2:
-			ii = new ImageIcon("green.png");
+			image = new Image("green.png");
 			break;
 		case 3:
-			ii = new ImageIcon("orange.png");
+			image = new Image("orange.png");
 			break;
 		case 4:
-			ii = new ImageIcon("pink.png");
+			image = new Image("pink.png");
 			break;
 		case 5:
-			ii = new ImageIcon("red.png");
+			image = new Image("red.png");
 			break;
 		case 6:
-			ii = new ImageIcon("yellow.png");
+			image = new Image("yellow.png");
 			break;
 		default:
+			image=null;
 			break;
 		}
-		if(ii==null)
-			this.image = null; //creates an empty cell
-		else
-			this.image = ii.getImage();
-    }	
+    }		
 
 	/**
 	 * @param type
@@ -82,10 +76,10 @@ public class Gem {
 	 * @param g
 	 * 	this method draws a gem, should be called from the paintcomponent
 	 */
-	void draw(Graphics g){
-		g.drawImage(image, 235 + col*dimension, 115 + row*dimension, dimension, dimension, null);
+	void draw(GraphicsContext gc){
+		gc.drawImage(image, 235 + col*dimension, 115 + row*dimension, dimension, dimension);
 		if (selected)
-			g.drawImage(overlay, 235 + col*dimension, 115 + row*dimension, dimension, dimension, null);
+			gc.drawImage(overlay, 235 + col*dimension, 115 + row*dimension, dimension, dimension);
 	}
 
 	/**

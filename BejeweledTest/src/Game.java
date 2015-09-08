@@ -1,27 +1,26 @@
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.Timer;
-
+import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 /**
  * @author Timo
  * This class is our Panel, handling mouse events and drawing the game
  */
-public class Game extends JPanel implements MouseListener, ActionListener{
-	public static Sounds GameSounds = new Sounds(); // to use the sounds in this class
+public class Game extends Scene{
+	//TODO: public static Sounds GameSounds = new Sounds(); // to use the sounds in this class
 	Board board = new Board(8);
-	private int score;
-	private int scorePerGem = 10;
+	GraphicsContext gc;
 	
-	private Timer timer;
+	private int score;
+	private int scorePerGem = 10; //TODO: implement score per gem
+	
 	private int time;
 	private final int TIMEPERGEM = 5;
 	private final int DELAY = 1000;
@@ -29,47 +28,39 @@ public class Game extends JPanel implements MouseListener, ActionListener{
 	/**
 	 * Constructor
 	 */
-	public Game(){
-		addMouseListener(this); //binds the mouse to the JPanel
+	public Game(Group root){
+		super(root);
+		Canvas canvas = new Canvas( 800, 600 );
+   		root.getChildren().add( canvas );
+   		gc = canvas.getGraphicsContext2D();
+   		this.setOnMousePressed(
+                new EventHandler<MouseEvent>()
+                {
+                    public void handle(MouseEvent e)
+                    {
+                    	//get the coordinates of the mouse pressed event
+                		int xvar = (int) (e.getX() - 235);
+                        int yvar = (int) (e.getY() - 115);
+                        //calculate which column and row are clicked, integers will be rounded down by default
+                        int col = xvar/40;
+                        int row = yvar/40;
+                        //check if the col and row are inside the board
+                        if (col < 8 && row < 8 && col >= 0 && row >= 0) {
+                        	handleMouseClicked(row, col);
+                        }
+                    }
+                });
+        draw();
+
 		score = 0;
 		time = 90;
-		timer = new Timer(DELAY, this);
-        timer.start();
 	}
 	
-	/* (non-Javadoc)
-	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
-	 */
-	@Override
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        	board.draw(g);
-        	drawScore(g);
-        	drawTime(g);
-    }
-
-	@Override
-	public void mouseClicked(MouseEvent e) {}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {}
-
-	@Override
-	public void mouseExited(MouseEvent e) {}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		//get the coordinates of the mouse pressed event
-		int xvar = e.getX() - 235;
-        int yvar = e.getY() - 115;
-        //calculate which column and row are clicked, integers will be rounded down by default
-        int col = xvar/40;
-        int row = yvar/40;
-        //check if the col and row are inside the board
-        if (col < 8 && row < 8 && col >= 0 && row >= 0) {
-        	handleMouseClicked(row, col);
-        }
-    }
+	public void draw() {
+			board.draw(gc);
+			drawScore();
+			drawTime();
+	    }
 
 	private void handleMouseClicked(int row, int col) {
 //		Game.GameSounds.playAudio("select");
@@ -99,12 +90,8 @@ public class Game extends JPanel implements MouseListener, ActionListener{
     		board.selectedgem=null; //deselect gem
     		board.secondGem=null; 
     	}
-        repaint(); //update the panel		
 	}
 
-	@Override
-	public void mouseReleased(MouseEvent e) {}
-	
 	public void updateScore() {
 		score += scorePerGem;
 	}
@@ -113,11 +100,10 @@ public class Game extends JPanel implements MouseListener, ActionListener{
 		return score;
 	}
 	
-	public void drawScore(Graphics g) {
+	public void drawScore() {
 		String s = "Score: ";
 		s += score;
-		g.setFont(new Font("Cambria", Font.BOLD, 14));
-		g.drawString(s, 480, 460);
+	    gc.fillText( s, 60, 80 );
 	}
 	
 	public void updateTime() {
@@ -128,7 +114,7 @@ public class Game extends JPanel implements MouseListener, ActionListener{
 		return time;
 	}
 	
-	public void drawTime(Graphics g) {
+	public void drawTime() {
 		String s = "Time left: ";
 		int minutes = time / 60;
 		int seconds = time % 60;
@@ -137,22 +123,6 @@ public class Game extends JPanel implements MouseListener, ActionListener{
 		} else {
 			s += minutes + ":" + seconds;
 		}
-		g.drawString(s, 245, 460);
-        Toolkit.getDefaultToolkit().sync();
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		time -= 1;
-		if(time < 1) {
-			int reply = JOptionPane.showConfirmDialog(this, "Time's up!\n Would you like to start a new game?", "Game Over", JOptionPane.YES_NO_OPTION);
-			if(reply == JOptionPane.OK_OPTION) {
-				
-			}
-			if(reply == JOptionPane.NO_OPTION) {
-				
-			}
-		}
-		repaint();
+		gc.fillText(s, 60, 60 );
 	}
 }

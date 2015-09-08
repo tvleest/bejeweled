@@ -2,6 +2,8 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  * @author Timo
  * Holds the double dimension array with gems and the board methods
@@ -18,7 +20,6 @@ public class Board {
 		gems = new Gem[dimension][dimension];
 		fillBoard(0,0);
 	}
-
 	
 	/**
 	 * @param col
@@ -39,9 +40,7 @@ public class Board {
 		else{
 			fillBoard(col, row);
 		}
-		
 	}
-	
 	
 	/**
 	 * getGems method
@@ -87,10 +86,10 @@ public class Board {
 	 * @param g
 	 * draws the board
 	 */
-	public void draw(Graphics g) {
+	public void draw(GraphicsContext gc) {
 		for (Gem[] gemss : gems)
     		for(Gem gem : gemss)
-    				gem.draw(g);
+    				gem.draw(gc);
 	}
 
 	/**
