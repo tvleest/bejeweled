@@ -1,7 +1,3 @@
-import java.awt.Graphics;
-
-import javax.swing.ImageIcon;
-
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
