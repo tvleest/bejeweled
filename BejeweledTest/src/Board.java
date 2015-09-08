@@ -23,10 +23,9 @@ public class Board {
 	/**
 	 * @param col
 	 * @param row
-	 * @param types
 	 * Backtrack method
 	 */
-	public void fillBoard(int col, int row) throws RuntimeException{
+	public void fillBoard(int col, int row){
 		int type = random.nextInt(6)+1;
 		if(rowCheck(row,col,type) && colCheck(row,col,type)){
 			Gem gem = new Gem(row, col, type);
@@ -56,7 +55,7 @@ public class Board {
 	 * @param row
 	 * @param col
 	 * @param type
-	 * @return
+	 * @return 
 	 */
 	public boolean rowCheck(int row, int col, int type){
 		if(col<=1){
