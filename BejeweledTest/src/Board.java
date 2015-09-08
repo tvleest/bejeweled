@@ -150,7 +150,7 @@ public class Board {
 	 * @return
 	 */
 	public Gem getRight(Gem g) {
-		if(g.getCol() < 7) {
+		if(g.getCol() < dimension - 1) {
 			return(gems[g.getRow()][g.getCol() + 1]);
 		}
 		return null;
@@ -161,7 +161,7 @@ public class Board {
 	 * @return
 	 */
 	public Gem getBelow(Gem g) {
-		if(g.getRow() < 7) {
+		if(g.getRow() < dimension - 1) {
 			return(gems[g.getRow() + 1][g.getCol()]);
 		}
 		return null;
@@ -218,7 +218,7 @@ public class Board {
 	 */
 	public void deleteAll(ArrayList<Gem> array) {
 		ArrayList<Gem> array2 = new ArrayList<Gem>();
-		for(int i = 0; i < 8; i++) { //sorts the array on the row of the gem, up to down
+		for(int i = 0; i < dimension; i++) { //sorts the array on the row of the gem, up to down
 			for(int j = 0; j < array.size(); j++) {
 				Gem temp = array.get(j);
 				if(temp.getRow() == i) {
@@ -229,8 +229,8 @@ public class Board {
 		for(int k = 0; k < array2.size(); k++) {
 			delete(array2.get(k).getRow(), array2.get(k).getCol()); //deletes all gems from the bord, from up to down
 		}
-		for(int j = 0; j < 8; j++) { //makes sure that no new combinations form on the board with new gems
-			for (int k = 0; k < 8; k++) {
+		for(int j = 0; j < dimension; j++) { //makes sure that no new combinations form on the board with new gems
+			for (int k = 0; k < dimension; k++) {
 				Gem temp = gems[j][k];
 				deleteRows(temp);
 			}
