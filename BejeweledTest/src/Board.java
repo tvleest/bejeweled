@@ -256,35 +256,27 @@ public class Board {
 	 * @return array
 	 */
 	public ArrayList<Gem> deleteHorizontal(Gem g) {
-		int type1 = g.type;
+		int type = g.type;
 		Gem leftgem = getLeft(g);
 		Gem rightgem = getRight(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
 		
-		if(leftgem != null && leftgem.type == type1){ //2 on a row, left-gem
-			if(getLeft(leftgem) != null && getLeft(leftgem).type == type1){ //3 on a row, left-left-gem
-				if(rightgem != null && rightgem.type == type1){ //4 on a row, left-left-gem-right
-					if(getRight(rightgem) != null && getRight(rightgem).type == type1){ //5 on a row, left-left-gem-right-right
-						array.add(getRight(rightgem));
-					}
-					array.add(rightgem);
-				}
-				array.add(getLeft(leftgem));
-				array.add(leftgem);
-			}
-			else if(rightgem != null && rightgem.type == type1){ //3 on a row, left-gem-right
-				if(getRight(rightgem) != null && getRight(rightgem).type == type1){ //4 on a row, left-gem-right-right
-					array.add(getRight(rightgem));
-				}
-				array.add(rightgem);
-				array.add(leftgem);
-			}
+		while(leftgem != null && leftgem.type == type) {
+			array.add(leftgem);
+			leftgem = getLeft(leftgem);
 		}
-		else if(rightgem != null && getRight(rightgem) != null && rightgem.type == type1 && getRight(rightgem).type == type1) { //3 on a row, gem-right-right
-			array.add(getRight(rightgem));
+		
+		while(rightgem != null && rightgem.type == type) {
 			array.add(rightgem);
+			rightgem = getRight(rightgem);
 		}
-		return array; //return an array with all the gems that were in a combination
+		
+		if(array.size() >= 2) {
+			return array;
+		}
+		else{
+			return new ArrayList<Gem>();
+		}
 	}
 	
 	/**
@@ -294,37 +286,27 @@ public class Board {
 	 * @return array
 	 */
 	public ArrayList<Gem> deleteVertical(Gem g) {
-		int type1 = g.type;
+		int type = g.type;
 		Gem upgem = getUpper(g);
 		Gem downgem = getBelow(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
 		
-		if(upgem != null && upgem.type == type1){ //2 in a row, up-gem
-			if(getUpper(upgem) != null && getUpper(upgem).type == type1){ //3 in a row, up-up-gem
-				if(downgem != null && downgem.type == type1){ //4 in a row, up-up-gem-down
-					if(getBelow(downgem) != null && getBelow(downgem).type == type1){ //5 in a row up-up-gem-down-down
-						array.add(getBelow(downgem));
-					}
-						array.add(downgem);
-				}
-				array.add(getUpper(upgem));
-				array.add(upgem);
-			}
-			else if(downgem != null && downgem.type == type1){ //3 on a row, up-gem-down
-				if(getBelow(downgem) != null && getBelow(downgem).type == type1){ //4 on a row, up-gem-down-down
-					array.add(getBelow(downgem));
-				}
-				array.add(downgem);
-				array.add(upgem);
-			}
+		while(upgem != null && upgem.type == type) {
+			array.add(upgem);
+			upgem = getUpper(upgem);
 		}
-		else if(downgem != null && getBelow(downgem) != null && downgem.type == type1 && getBelow(downgem).type == type1) { //3 on a row, gem-down-down
-			array.add(getBelow(downgem));
+		
+		while(downgem != null && downgem.type == type) {
 			array.add(downgem);
+			downgem = getBelow(downgem);
 		}
-		return array; //return an array with all the gems that were in a combination
+		
+		if(array.size() >= 2) {
+			return array;
+		}
+		else{
+			return new ArrayList<Gem>();
+		}
 	}
-	
-
 	
 }
