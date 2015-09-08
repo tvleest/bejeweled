@@ -122,12 +122,16 @@ public class Board {
 	 * @param col2
 	 * swaps two gems
 	 */
-	public void swap(int row1, int col1, int row2, int col2){
+	public boolean swap(int row1, int col1, int row2, int col2){
+		if(!areNeighbours(gems[row1][col1], gems[row2][col2])){
+			return false;
+		}
 		Gem tempgem = gems[row1][col1];
 		gems[row2][col2].setPosition(row1, col1);
 		gems[row1][col1] = gems[row2][col2];
 		tempgem.setPosition(row2, col2);
 		gems[row2][col2] = tempgem;
+		return true;
 	}
 	
 	/**
