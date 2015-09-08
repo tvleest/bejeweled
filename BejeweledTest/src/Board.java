@@ -31,9 +31,9 @@ public class Board {
 		if(rowCheck(row,col,type) && colCheck(row,col,type)){
 			Gem gem = new Gem(row, col, type);
 			gems[row][col]=gem;
-			if(col<7){
+			if(col<dimension-1){
 				fillBoard(col+1, row);
-			} else if(row<7){
+			} else if(row<dimension-1){
 				fillBoard(0,row+1); 
 			}
 		}
