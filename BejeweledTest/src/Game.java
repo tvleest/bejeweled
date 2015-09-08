@@ -9,7 +9,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-
 /**
  * @author Timo
  * This class is our Panel, handling mouse events and drawing the game
@@ -20,9 +19,8 @@ public class Game extends Scene{
 	GraphicsContext gc;
 	
 	private int score;
-	private int scorePerGem = 10;
+	private int scorePerGem = 10; //TODO: implement score per gem
 	
-	//private Timer timer;
 	private int time;
 	private final int TIMEPERGEM = 5;
 	private final int DELAY = 1000;
@@ -52,13 +50,10 @@ public class Game extends Scene{
                         }
                     }
                 });
-		
         draw();
 
 		score = 0;
 		time = 90;
-//		timer = new Timer(DELAY, this);
-//        timer.start();
 	}
 	
 	public void draw() {

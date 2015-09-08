@@ -24,9 +24,8 @@ public class Main extends Application {
 		primaryStage.setTitle("Bejeweled group 30");
 	    Group root = new Group();
 	    Game scene = new Game(root);
-	    primaryStage.setScene( scene );
+	    primaryStage.setScene(scene);
 	    
-	    final long startNanoTime = System.nanoTime();
 	    new AnimationTimer()
 	    {
 	        public void handle(long currentNanoTime)

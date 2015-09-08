@@ -20,7 +20,6 @@ public class Board {
 		gems = new Gem[dimension][dimension];
 		fillBoard(0,0);
 	}
-
 	
 	/**
 	 * @param col
@@ -41,9 +40,7 @@ public class Board {
 		else{
 			fillBoard(col, row);
 		}
-		
 	}
-	
 	
 	/**
 	 * getGems method

@@ -33,8 +33,6 @@ public class Gem {
 		overlay = new Image("overlay.png");
 	}
 	
-	
-	
 	/**
 	 * Loads the correct image according to the type of the gem
 	 * Should be called when type changes
