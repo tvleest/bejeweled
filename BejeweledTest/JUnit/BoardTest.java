@@ -1,10 +1,10 @@
 import static org.junit.Assert.*;
-import java.util.ArrayList;
-
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import javafx.application.Application;
+/**
+ * @author Timo
+ *
+ */
 public class BoardTest {
 
 	//just to see how Travis CI works

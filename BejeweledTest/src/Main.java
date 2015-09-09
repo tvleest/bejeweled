@@ -8,7 +8,7 @@ import javafx.stage.Stage;
  *
  */
 public class Main extends Application {
-	Game game;
+	GameScene game;
 
 	/**
 	 * @param args
@@ -22,7 +22,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("Bejeweled group 30");
 	    Group root = new Group();
-	    Game scene = new Game(root);
+	    GameScene scene = new GameScene(root);
 	    primaryStage.setScene(scene);
 	    
 	    new AnimationTimer()

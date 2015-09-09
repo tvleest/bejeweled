@@ -4,124 +4,134 @@ import java.util.Random;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- * @author Timo
+ * @author Timo 
  * Holds the double dimension array with gems and the board methods
  */
 public class Board {
-	Gem[][] gems;
-	int dimension;
-	Random random = new Random();
-	Gem selectedgem = null;
-	Gem secondGem = null;
-	
-	public Board(int dimension){
+	private Gem[][] gems;
+	private int dimension;
+	private Random random = new Random();
+	private Gem selectedgem = null;
+	private Gem secondGem = null;
+	private int offsetx;
+	private int offsety;
+
+	/**
+	 * @param dimension
+	 * @param offsetx
+	 * @param offsety
+	 */
+	public Board(int dimension, int offsetx, int offsety) {
 		this.dimension = dimension;
+		this.offsetx = offsetx;
+		this.offsety = offsety;
 		gems = new Gem[dimension][dimension];
-		fillBoard(0,0);
+		fillBoard(0, 0);
 	}
-	
+
 	/**
 	 * @param col
 	 * @param row
-	 * Backtrack method
+	 *            Backtrack method
 	 */
-	public void fillBoard(int col, int row){
-		int type = random.nextInt(6)+1;
-		if(rowCheck(row,col,type) && colCheck(row,col,type)){
-			Gem gem = new Gem(row, col, type);
-			gems[row][col]=gem;
-			if(col<dimension-1){
-				fillBoard(col+1, row);
-			} else if(row<dimension-1){
-				fillBoard(0,row+1); 
+	public void fillBoard(int col, int row) {
+		int type = random.nextInt(6) + 1;
+		if (rowCheck(row, col, type) && colCheck(row, col, type)) {
+			Gem gem = new Gem(row, col, offsetx, offsety, type);
+			gems[row][col] = gem;
+			if (col < dimension - 1) {
+				fillBoard(col + 1, row);
+			} else if (row < dimension - 1) {
+				fillBoard(0, row + 1);
 			}
-		}
-		else{
+		} else {
 			fillBoard(col, row);
 		}
 	}
-	
+
 	/**
 	 * getGems method
+	 * 
 	 * @return Gem[][] gems
 	 */
 	public Gem[][] getGems() {
 		return gems;
 	}
-	
-	/**
-	 * @param row
-	 * @param col
-	 * @param type
-	 * @return 
-	 */
-	public boolean rowCheck(int row, int col, int type){
-		if(col<=1){
-			return true;
-		} else if(gems[row][col-1].getType()==type && gems[row][col-2].getType()==type){
-			return false;
-		} else{
-			return true;
-		}
-	}
-	
+
 	/**
 	 * @param row
 	 * @param col
 	 * @param type
 	 * @return
 	 */
-	public boolean colCheck(int row, int col, int type){
-		if(row<=1){
+	public boolean rowCheck(int row, int col, int type) {
+		if (col <= 1) {
 			return true;
-		} else if(gems[row-1][col].getType()==type && gems[row-2][col].getType()==type){
+		} else if (gems[row][col - 1].getType() == type && gems[row][col - 2].getType() == type) {
 			return false;
-		} else{
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
+	public boolean colCheck(int row, int col, int type) {
+		if (row <= 1) {
+			return true;
+		} else if (gems[row - 1][col].getType() == type && gems[row - 2][col].getType() == type) {
+			return false;
+		} else {
 			return true;
 		}
 	}
 
 	/**
 	 * @param g
-	 * draws the board
+	 *            draws the board
 	 */
 	public void draw(GraphicsContext gc) {
 		for (Gem[] gemss : gems)
-    		for(Gem gem : gemss)
-    				gem.draw(gc);
+			for (Gem gem : gemss)
+				gem.draw(gc);
 	}
 
 	/**
 	 * @param row
 	 * @param col
-	 * Deletes a gem based on column and row, moves all the gems above this gem a place down
+	 *            Deletes a gem based on column and row, moves all the gems
+	 *            above this gem a place down
 	 */
 	public void delete(int row, int col) {
 		gems[row][col].delete();
-		
-		//move all blocks above the deleted block down
-        for(int r=row; r>=0; r--){
-        	if(r>=1){
-		        gems[r-1][col].setPosition(r, col);
-		        gems[r][col]= gems[r-1][col];
-        	}
-        	else{
-        		int type = random.nextInt(6)+1; //take a random number out of 1,2,3,4,5,6
-    			Gem gem = new Gem(0, col, type);
-                gems[0][col] = gem;
-        	}
-        }
+
+		// move all blocks above the deleted block down
+		for (int r = row; r >= 0; r--) {
+			if (r >= 1) {
+				gems[r - 1][col].setPosition(r, col);
+				gems[r][col] = gems[r - 1][col];
+			} else {
+				int type = random.nextInt(6) + 1; // take a random number out of
+													// 1,2,3,4,5,6
+				Gem gem = new Gem(0, col, offsetx, offsety, type);
+				gems[0][col] = gem;
+			}
+		}
 	}
-	
+
 	/**
 	 * @param row1
 	 * @param col1
 	 * @param row2
 	 * @param col2
-	 * swaps two gems
+	 *            swaps two gems
 	 */
-	public boolean swap(int row1, int col1, int row2, int col2){
-		if(!areNeighbours(gems[row1][col1], gems[row2][col2])){
+	public boolean swap(int row1, int col1, int row2, int col2) {
+		if (!areNeighbours(gems[row1][col1], gems[row2][col2])) {
 			return false;
 		}
 		Gem tempgem = gems[row1][col1];
@@ -131,113 +141,123 @@ public class Board {
 		gems[row2][col2] = tempgem;
 		return true;
 	}
-	
+
 	/**
 	 * @param g
 	 * @return
 	 */
 	public Gem getUpper(Gem g) {
-		if(g.getRow() > 0) {
-			return(gems[g.getRow() - 1][g.getCol()]);
+		if (g.getRow() > 0) {
+			return (gems[g.getRow() - 1][g.getCol()]);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @param g
 	 * @return
 	 */
 	public Gem getRight(Gem g) {
-		if(g.getCol() < dimension - 1) {
-			return(gems[g.getRow()][g.getCol() + 1]);
+		if (g.getCol() < dimension - 1) {
+			return (gems[g.getRow()][g.getCol() + 1]);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @param g
 	 * @return
 	 */
 	public Gem getBelow(Gem g) {
-		if(g.getRow() < dimension - 1) {
-			return(gems[g.getRow() + 1][g.getCol()]);
+		if (g.getRow() < dimension - 1) {
+			return (gems[g.getRow() + 1][g.getCol()]);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @param g
 	 * @return
 	 */
 	public Gem getLeft(Gem g) {
-		if(g.getCol() > 0) {
-			return(gems[g.getRow()][g.getCol()-1]);
+		if (g.getCol() > 0) {
+			return (gems[g.getRow()][g.getCol() - 1]);
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @param gem1
 	 * @param gem2
 	 * @return true if two gems are neighbours
 	 */
 	public boolean areNeighbours(Gem gem1, Gem gem2) {
-		return(getUpper(gem1)==gem2 || getBelow(gem1)==gem2 || getLeft(gem1)==gem2 || getRight(gem1)==gem2);
+		return (getUpper(gem1) == gem2 || getBelow(gem1) == gem2 || getLeft(gem1) == gem2 || getRight(gem1) == gem2);
 	}
-	
+
 	/**
 	 * Will delete all combinations of Gems, by first finding them with
-	 * deleteHorizontal and deleteVertical and then deleting them with deleteAll.
+	 * deleteHorizontal and deleteVertical and then deleting them with
+	 * deleteAll.
+	 * 
 	 * @param g
 	 * @return true, iff there are rows to be deleted
 	 */
 	public boolean deleteRows(Gem g) {
 		ArrayList<Gem> array1 = deleteHorizontal(g);
 		ArrayList<Gem> array2 = deleteVertical(g);
-		if(!array1.isEmpty()) {
-			if(!array2.isEmpty()){
+		if (!array1.isEmpty()) {
+			if (!array2.isEmpty()) {
 				array1.addAll(array2);
 			}
-		}
-		else if(array2.isEmpty()){
+		} else if (array2.isEmpty()) {
 			return false;
-		}
-		else {
+		} else {
 			array1 = array2;
 		}
 		array1.add(g);
 		deleteAll(array1);
 		return true;
 	}
-	
+
 	/**
 	 * First sorts the arrayList array, then deletes all the Gems from the list
+	 * 
 	 * @param array
 	 */
 	public void deleteAll(ArrayList<Gem> array) {
 		ArrayList<Gem> array2 = new ArrayList<Gem>();
-		for(int i = 0; i < dimension; i++) { //sorts the array on the row of the gem, up to down
-			for(int j = 0; j < array.size(); j++) {
+		for (int i = 0; i < dimension; i++) { // sorts the array on the row of
+												// the gem, up to down
+			for (int j = 0; j < array.size(); j++) {
 				Gem temp = array.get(j);
-				if(temp.getRow() == i) {
+				if (temp.getRow() == i) {
 					array2.add(array.get(j));
 				}
 			}
 		}
-		for(int k = 0; k < array2.size(); k++) {
-			delete(array2.get(k).getRow(), array2.get(k).getCol()); //deletes all gems from the bord, from up to down
+		for (int k = 0; k < array2.size(); k++) {
+			delete(array2.get(k).getRow(), array2.get(k).getCol()); // deletes
+																	// all gems
+																	// from the
+																	// bord,
+																	// from up
+																	// to down
 		}
-		for(int j = 0; j < dimension; j++) { //makes sure that no new combinations form on the board with new gems
+		for (int j = 0; j < dimension; j++) { // makes sure that no new
+												// combinations form on the
+												// board with new gems
 			for (int k = 0; k < dimension; k++) {
 				Gem temp = gems[j][k];
 				deleteRows(temp);
 			}
 		}
 	}
-	
+
 	/**
-	 * Finds all horizontal combinations of Gems with Gem g, places the gems in 
+	 * Finds all horizontal combinations of Gems with Gem g, places the gems in
 	 * these combinations in the ArrayList array
+	 * 
 	 * @param g
 	 * @return array
 	 */
@@ -246,28 +266,28 @@ public class Board {
 		Gem leftgem = getLeft(g);
 		Gem rightgem = getRight(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
-		
-		while(leftgem != null && leftgem.getType() == type) {
+
+		while (leftgem != null && leftgem.getType() == type) {
 			array.add(leftgem);
 			leftgem = getLeft(leftgem);
 		}
-		
-		while(rightgem != null && rightgem.getType() == type) {
+
+		while (rightgem != null && rightgem.getType() == type) {
 			array.add(rightgem);
 			rightgem = getRight(rightgem);
 		}
-		
-		if(array.size() >= 2) {
+
+		if (array.size() >= 2) {
 			return array;
-		}
-		else{
+		} else {
 			return new ArrayList<Gem>();
 		}
 	}
-	
+
 	/**
-	 * Finds all vertical combinations of Gems with Gem g, places the gems in 
+	 * Finds all vertical combinations of Gems with Gem g, places the gems in
 	 * these combinations in the ArrayList array
+	 * 
 	 * @param g
 	 * @return array
 	 */
@@ -276,23 +296,44 @@ public class Board {
 		Gem upgem = getUpper(g);
 		Gem downgem = getBelow(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
-		
-		while(upgem != null && upgem.getType() == type) {
+
+		while (upgem != null && upgem.getType() == type) {
 			array.add(upgem);
 			upgem = getUpper(upgem);
 		}
-		
-		while(downgem != null && downgem.getType() == type) {
+
+		while (downgem != null && downgem.getType() == type) {
 			array.add(downgem);
 			downgem = getBelow(downgem);
 		}
-		
-		if(array.size() >= 2) {
+
+		if (array.size() >= 2) {
 			return array;
-		}
-		else{
+		} else {
 			return new ArrayList<Gem>();
 		}
 	}
+
+	public Gem getSelectedgem() {
+		return selectedgem;
+	}
+
+	public void setSelectedgem(Gem selectedgem) {
+		this.selectedgem = selectedgem;
+	}
+
+	public Gem getSecondGem() {
+		return secondGem;
+	}
+
+	public void setSecondGem(Gem secondGem) {
+		this.secondGem = secondGem;
+	}
+
+	public void setGems(Gem[][] gems) {
+		this.gems = gems;
+	}
 	
+	
+
 }
