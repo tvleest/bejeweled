@@ -10,8 +10,8 @@ import javafx.scene.input.MouseEvent;
  * This class is our Panel, handling mouse events and drawing the game
  */
 public class GameScene extends Scene{
-	//TODO: public static Sounds GameSounds = new Sounds(); // to use the sounds in this class
-	
+//TODO: public static Sounds GameSounds = new Sounds();
+//to use the sounds in this class
 	GraphicsContext gc;
 	private GameLogic gamelogic;
 	public final int OFFSETX = 235;
