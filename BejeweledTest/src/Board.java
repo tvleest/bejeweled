@@ -13,9 +13,13 @@ public class Board {
 	Random random = new Random();
 	Gem selectedgem = null;
 	Gem secondGem = null;
+	private int offsetx;
+	private int offsety;
 	
-	public Board(int dimension){
+	public Board(int dimension, int offsetx, int offsety){
 		this.dimension = dimension;
+		this.offsetx = offsetx;
+		this.offsety = offsety;
 		gems = new Gem[dimension][dimension];
 		fillBoard(0,0);
 	}
@@ -28,7 +32,7 @@ public class Board {
 	public void fillBoard(int col, int row){
 		int type = random.nextInt(6)+1;
 		if(rowCheck(row,col,type) && colCheck(row,col,type)){
-			Gem gem = new Gem(row, col, type);
+			Gem gem = new Gem(row, col, offsetx, offsety, type);
 			gems[row][col]=gem;
 			if(col<dimension-1){
 				fillBoard(col+1, row);
@@ -107,7 +111,7 @@ public class Board {
         	}
         	else{
         		int type = random.nextInt(6)+1; //take a random number out of 1,2,3,4,5,6
-    			Gem gem = new Gem(0, col, type);
+    			Gem gem = new Gem(0, col, offsetx, offsety, type);
                 gems[0][col] = gem;
         	}
         }

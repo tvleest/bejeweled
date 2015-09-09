@@ -14,6 +14,8 @@ public class Gem {
 	private Image image; //The image of the gem
 	private Image overlay; //The overlay image
 	private boolean selected = false;
+	private int offsetx;
+	private int offsety;
 	
 	/**
 	 * @param row
@@ -21,9 +23,11 @@ public class Gem {
 	 * @param type
 	 * Constructor
 	 */
-	public Gem(int row, int col, int type){
+	public Gem(int row, int col, int offsetx, int offsety, int type){
 		this.row = row;
 		this.col = col;
+		this.offsetx = offsetx;
+		this.offsety = offsety;
 		this.type = type;
 		loadImage();
 		overlay = new Image("Images/overlay.png");
@@ -73,9 +77,9 @@ public class Gem {
 	 * 	this method draws a gem, should be called from the paintcomponent
 	 */
 	void draw(GraphicsContext gc){
-		gc.drawImage(image, 235 + col*dimension, 115 + row*dimension, dimension, dimension);
+		gc.drawImage(image, offsetx + col*dimension, offsety + row*dimension, dimension, dimension);
 		if (selected)
-			gc.drawImage(overlay, 235 + col*dimension, 115 + row*dimension, dimension, dimension);
+			gc.drawImage(overlay, offsetx + col*dimension, offsety + row*dimension, dimension, dimension);
 	}
 
 	/**
