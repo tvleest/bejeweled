@@ -1,21 +1,27 @@
+
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -27,6 +33,7 @@ public class Main extends Application {
 	GameScene scene;
 	Stage stage;
 	Timeline timeline;
+	Group root;
 
 	/**
 	 * @param args
@@ -55,7 +62,7 @@ public class Main extends Application {
 	 * Switch the current screen to the main menu.
 	 */
 	public void switchMenu() {
-		Group root = new Group();
+		root = new Group();
 		Font font = Font.font(72);
 		
 		// load background
@@ -83,9 +90,18 @@ public class Main extends Application {
 		
 		Button exitButton = new Button("EXIT");
 		exitButton.setFont(font);
-//		exitButton.setOnAction(); //exit the menu
+		exitButton.setLayoutX(290);
+		exitButton.setLayoutY(430);
+		exitButton.setBackground(buttonBack);
+		exitButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				Platform.exit();
+			}
+		});
 		
-		root.getChildren().addAll(imgView, startGameButton);
+		root.getChildren().addAll(imgView, startGameButton, exitButton);
 		if(stage.getScene() == null) {
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
@@ -99,7 +115,7 @@ public class Main extends Application {
 	 */
 	public void switchGame() {
 		timeline.playFromStart();
-		Group root = new Group();
+		root = new Group();
 	    Image background = new Image("Images/Background.png");
 		ImageView imgView = new ImageView(background);
 		imgView.setFitHeight(600);
@@ -117,5 +133,41 @@ public class Main extends Application {
 		    }.start();
 	    stage.setScene(scene);
 	    
+	}
+	
+	public void gameOver() {
+		Popup popup = new Popup();
+		popup.centerOnScreen();
+		TextField result = new TextField();
+		popup.setWidth(200);
+		popup.setHeight(500);
+		Rectangle rect = new Rectangle(500, 300, Color.GOLD);
+		rect.setArcHeight(30);
+		rect.setArcWidth(30);
+		Text text = new Text("GAME OVER!");
+		Text name = new Text("Enter your name: ");
+		text.setLayoutX(200);
+		text.setLayoutY(30);
+		name.setLayoutX(30);
+		name.setLayoutY(150);
+		result.setLayoutX(160);
+		result.setLayoutY(130);
+		text.setFill(Color.BLACK);
+		Button confirm = new Button("Continue");
+		confirm.setLayoutX(205);
+		confirm.setLayoutY(255);
+		popup.getContent().addAll(rect, text, confirm, name, result);
+		popup.show(stage);
+		root.setDisable(true);
+		
+		confirm.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent e) {
+				popup.hide();
+				switchMenu();
+			}
+		});
+		
 	}
 }
