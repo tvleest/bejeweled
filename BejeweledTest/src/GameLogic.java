@@ -59,8 +59,8 @@ public final class GameLogic {
 	 * @param col the col.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
-		Media m = new Media(new File("C:/Users/Jorien/Documents/GitHub/bejeweled/BejeweledTest/src/Sounds/select.mp3").toURI().toString());
-		new MediaPlayer(m).setAutoPlay(true);
+		Media select = new Media(new File("C:/Users/Jorien/Documents/GitHub/bejeweled/BejeweledTest/src/Sounds/select.mp3").toURI().toString());
+		new MediaPlayer(select).setAutoPlay(true);
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);

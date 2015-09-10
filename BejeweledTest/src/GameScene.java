@@ -5,12 +5,19 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.io.File;
+
 /**
  * @author Timo
  * This class is our Panel, handling mouse events and drawing the game
  */
 public class GameScene extends Scene{
 //TODO: public static Sounds GameSounds = new Sounds();
+
+	
 //to use the sounds in this class
 	GraphicsContext gc;
 	private GameLogic gamelogic;
@@ -26,6 +33,8 @@ public class GameScene extends Scene{
    		root.getChildren().add( canvas );
    		gc = canvas.getGraphicsContext2D();
    		gamelogic = new GameLogic(OFFSETX, OFFSETY);
+   		//Media achtergrondmuziek = new Media(new File("C:/Users/Jorien/Documents/GitHub/bejeweled/BejeweledTest/src/Sounds/bejeweled.mp3").toURI().toString());
+   		//new MediaPlayer(achtergrondmuziek).setAutoPlay(true);
    		
    		//this will handle mouseclicks
    		this.setOnMousePressed(
