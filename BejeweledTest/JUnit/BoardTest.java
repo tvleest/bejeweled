@@ -178,10 +178,10 @@ public class BoardTest {
 		gems[0][0].setType(1);
 		gems[0][1].setType(1);
 		gems[0][2].setType(1);
-		assertTrue(board.deleteRows(gems[0][0]));
+		assertTrue(board.deleteRows(gems[0][0]) > 0);
 		gems[0][1].setType(2);
 		gems[1][0].setType(2);
-		assertFalse(board.deleteRows(gems[0][0]));
+		assertTrue(board.deleteRows(gems[0][0]) == 0);
 	}
 
 	/**
@@ -332,6 +332,18 @@ public class BoardTest {
 		Gem[][] testgems = new Gem[2][2];
 		board.setGems(testgems);
 		assertArrayEquals(testgems, board.getGems());
+	}
+	
+	/**
+	 * Tests the equals method by comparing 2 equals board and the different boards.
+	 */
+	@Test
+	public void testEquals() {
+		board = new Board(2,0,0,false);
+		Board board2 = new Board(2,0,0,false);
+		Board board3 = new Board(3,1,2,false);
+		assertEquals(board, board2);
+		assertFalse(board.equals(board3));
 	}
 }
 
