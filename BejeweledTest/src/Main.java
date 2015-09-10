@@ -5,11 +5,16 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -62,6 +67,12 @@ public class Main extends Application {
 		// make two buttons for the menu
 		Button startGameButton = new Button("START GAME");
 		startGameButton.setFont(font);
+		startGameButton.setLayoutX(150);
+		startGameButton.setLayoutY(270);
+		CornerRadii r = new CornerRadii(10);
+		Insets insets = new Insets(10);
+		Background buttonBack = new Background(new BackgroundFill(Color.GOLD, r, insets));
+		startGameButton.setBackground(buttonBack);
 		startGameButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
