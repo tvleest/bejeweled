@@ -16,6 +16,7 @@ public class Gem {
 	private boolean selected = false;
 	private int offsetx;
 	private int offsety;
+	private boolean loadImage;
 	
 	/**
 	 * @param row
@@ -23,14 +24,17 @@ public class Gem {
 	 * @param type
 	 * Constructor
 	 */
-	public Gem(int row, int col, int offsetx, int offsety, int type){
+	public Gem(int row, int col, int offsetx, int offsety, int type, boolean loadImages){
 		this.row = row;
 		this.col = col;
 		this.offsetx = offsetx;
 		this.offsety = offsety;
 		this.type = type;
-		loadImage();
-		overlay = new Image("Images/overlay.png");
+		this.loadImage = loadImages;
+		if(loadImages){
+			loadImage();
+			overlay = new Image("Images/overlay.png");
+		}
 	}
 	
 	/**
@@ -69,7 +73,9 @@ public class Gem {
 	 */
 	void setType(int type){
 		this.type = type;
-		loadImage();
+		if(loadImage){
+			loadImage();
+		}
 	}
 	
 	/**

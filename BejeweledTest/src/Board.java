@@ -15,16 +15,18 @@ public class Board {
 	private Gem secondGem = null;
 	private int offsetx;
 	private int offsety;
+	private boolean loadImages;
 
 	/**
 	 * @param dimension
 	 * @param offsetx
 	 * @param offsety
 	 */
-	public Board(int dimension, int offsetx, int offsety) {
+	public Board(int dimension, int offsetx, int offsety, boolean loadImages) {
 		this.dimension = dimension;
 		this.offsetx = offsetx;
 		this.offsety = offsety;
+		this.loadImages = loadImages;
 		gems = new Gem[dimension][dimension];
 		fillBoard(0, 0);
 	}
@@ -37,7 +39,7 @@ public class Board {
 	public void fillBoard(int col, int row) {
 		int type = random.nextInt(6) + 1;
 		if (rowCheck(row, col, type) && colCheck(row, col, type)) {
-			Gem gem = new Gem(row, col, offsetx, offsety, type);
+			Gem gem = new Gem(row, col, offsetx, offsety, type, loadImages);
 			gems[row][col] = gem;
 			if (col < dimension - 1) {
 				fillBoard(col + 1, row);
@@ -117,7 +119,7 @@ public class Board {
 			} else {
 				int type = random.nextInt(6) + 1; // take a random number out of
 													// 1,2,3,4,5,6
-				Gem gem = new Gem(0, col, offsetx, offsety, type);
+				Gem gem = new Gem(0, col, offsetx, offsety, type, loadImages);
 				gems[0][col] = gem;
 			}
 		}

@@ -35,7 +35,7 @@ public final class GameLogic {
 	public GameLogic(final int offsetx, final int offsety) {
 		score = 0;
 		time = 90;
-		board = new Board(8, offsetx, offsety);
+		board = new Board(8, offsetx, offsety, true);
 	}
 
 	/**
