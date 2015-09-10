@@ -3,6 +3,12 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.GraphicsContext;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import java.io.File;
+
+
 /**
  * @author Timo
  *
@@ -53,7 +59,8 @@ public final class GameLogic {
 	 * @param col the col.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
-		// TODO:Game.GameSounds.playAudio("select");
+		Media m = new Media(new File("C:/Users/Jorien/Documents/GitHub/bejeweled/BejeweledTest/src/Sounds/select.mp3").toURI().toString());
+		new MediaPlayer(m).setAutoPlay(true);
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);
