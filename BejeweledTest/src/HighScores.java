@@ -37,7 +37,7 @@ public class HighScores {
 	 * @return
 	 * @throws IOException
 	 */
-	public static ArrayList<Integer> readScoreFile() throws IOException{
+	public ArrayList<Integer> readScoreFile() throws IOException{
 	    ArrayList<Integer> allScores = new ArrayList<Integer>();
 	    // read the file
 	    BufferedReader readfile = new BufferedReader(new FileReader(filename));
@@ -82,6 +82,12 @@ public class HighScores {
 	public ArrayList<Integer> getAllScores() {
 		return allScores;
 	}
+
+	public void setAllScores(ArrayList<Integer> allScores) {
+		this.allScores = allScores;
+	}
+	
+	
 }
 		
 	
