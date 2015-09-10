@@ -16,6 +16,8 @@ public class Board {
 	private int offsetx;
 	private int offsety;
 	private boolean loadImages;
+	private int score;
+	private final int scorePerGem = 10;
 
 	/**
 	 * @param dimension
@@ -23,6 +25,7 @@ public class Board {
 	 * @param offsety
 	 */
 	public Board(int dimension, int offsetx, int offsety, boolean loadImages) {
+		score = 0;
 		this.dimension = dimension;
 		this.offsetx = offsetx;
 		this.offsety = offsety;
@@ -238,6 +241,7 @@ public class Board {
 				}
 			}
 		}
+		updateScore(array2.size());
 		for (int k = 0; k < array2.size(); k++) {
 			delete(array2.get(k).getRow(), array2.get(k).getCol()); // deletes
 																	// all gems
@@ -315,6 +319,14 @@ public class Board {
 			return new ArrayList<Gem>();
 		}
 	}
+	
+	/**
+	 * @param amountOfGems
+	 * Updates score based on an amount of gems
+	 */
+	public void updateScore(int amountOfGems){
+		score += scorePerGem*amountOfGems;
+	}
 
 	public Gem getSelectedgem() {
 		return selectedgem;
@@ -335,6 +347,15 @@ public class Board {
 	public void setGems(Gem[][] gems) {
 		this.gems = gems;
 	}
+
+	/**
+	 * @return the current score
+	 */
+	public int getScore() {
+		return score;
+	}
+	
+	
 	
 	
 
