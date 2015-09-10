@@ -1,31 +1,30 @@
-import java.applet.*;
-import java.util.HashMap;
-import java.net.*;
+import java.awt.Toolkit;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
+import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
-/**
- * @author Hugo
- * @version 1.1
- * @This class makes it possible to play sound files during Bejeweled
- */
 
-public class Sounds {
-	HashMap<String,AudioClip> GameSounds;
+public class Sounds{
 	
-	// method to locate the sounds
-	public Sounds() {
-		AudioClip select = null;
-		// more sounds to come and insert here
-		try {
-			select = Applet.newAudioClip(new URL("file:select.wav"));
-		} catch (Exception error) {System.out.println(error.getMessage());}
-		GameSounds = new HashMap(1); //HashMap(n) n = number of sounds
-		GameSounds.put("select", select);
+		private MediaPlayer player;
+    
+	
+		public Sounds(){
+			Media Sounds = new Media("Sounds/select.mp3");
+			player = new MediaPlayer(Sounds);
 		}
 	
-	// 	method to play the sounds
-    public void playAudio(String name){
-        AudioClip sound = GameSounds.get(name);
-        sound.play();
-	}
+		public void PlaySounds(){
+			player.play();
+		}
 	
+    
 }
+
