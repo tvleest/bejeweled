@@ -37,12 +37,7 @@ public final class GameLogic {
 	 */
 	public GameLogic(final int offsetx, final int offsety, Main m, boolean loadImages) {
 		time = 90;
-		if(loadImages) {
-			board = new Board(8, offsetx, offsety, true);
-		}
-		else {
-			board = new Board(8, offsetx, offsety, false);
-		}
+		board = new Board(8, offsetx, offsety, loadImages);
 		main = m;
 	}
 
@@ -67,8 +62,8 @@ public final class GameLogic {
 	 * @param col the col.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
-		//Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
-		//new MediaPlayer(m).setAutoPlay(true);
+		Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
+		new MediaPlayer(m).setAutoPlay(true);
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);
