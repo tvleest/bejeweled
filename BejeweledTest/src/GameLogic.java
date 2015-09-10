@@ -2,9 +2,10 @@ import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.GraphicsContext;
-
+import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Popup;
 
 import java.io.File;
 
@@ -35,9 +36,11 @@ public final class GameLogic {
 	 * @param offsetx the offset on the x-axis
 	 * @param offsety the offset on the y-axis
 	 */
+
 	public GameLogic(final int offsetx, final int offsety, Main m, boolean loadImages) {
 		time = 90;
 		board = new Board(8, offsetx, offsety, loadImages);
+
 		main = m;
 	}
 
@@ -140,7 +143,7 @@ public final class GameLogic {
 		gc.fillText(s, 60, 60);
 		
 		if(time < 1){
-			main.switchMenu();
+			main.gameOver();
 			time = 90;
 		}
 	}
