@@ -1,3 +1,6 @@
+import javafx.animation.Timeline;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -96,6 +99,10 @@ public final class GameLogic {
 	public void updateTime() {
 		time += timePerGem;
 	}
+	
+	public void decrementTime() {
+		time--;
+	}
 
 	/**
 	 * @return the current time
@@ -109,6 +116,7 @@ public final class GameLogic {
 	 *            GraphicsContext to draw to Draws the time to the scene
 	 */
 	public void drawTime(final GraphicsContext gc) {
+        
 		String s = "Time left: ";
 		int minutes = time / 60;
 		int seconds = time % 60;
