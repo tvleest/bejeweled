@@ -35,9 +35,14 @@ public final class GameLogic {
 	 * @param offsetx the offset on the x-axis
 	 * @param offsety the offset on the y-axis
 	 */
-	public GameLogic(final int offsetx, final int offsety, Main m) {
+	public GameLogic(final int offsetx, final int offsety, Main m, boolean loadImages) {
 		time = 90;
-		board = new Board(8, offsetx, offsety, true);
+		if(loadImages) {
+			board = new Board(8, offsetx, offsety, true);
+		}
+		else {
+			board = new Board(8, offsetx, offsety, false);
+		}
 		main = m;
 	}
 
@@ -62,8 +67,8 @@ public final class GameLogic {
 	 * @param col the col.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
-		Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
-		new MediaPlayer(m).setAutoPlay(true);
+		//Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
+		//new MediaPlayer(m).setAutoPlay(true);
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);
@@ -72,13 +77,15 @@ public final class GameLogic {
 			int firstgemrow = board.getSelectedgem().getRow();
 			int firstgemcol = board.getSelectedgem().getCol();
 			if (board.swap(firstgemrow, firstgemcol, row, col)) {
-				boolean first = board.deleteRows(board.getSelectedgem());
-				boolean second = board.deleteRows(board.getSecondGem());
-				if (first) {
-					updateTime();
+				int first = board.deleteRows(board.getSelectedgem());
+				int second = board.deleteRows(board.getSecondGem());
+				if (first + second > 0) {
+					for(int i = 0; i < first+second; i++){
+						updateTime();
+					}
 				}
 				// if there are no combinations found after the move
-				if (first == false && second == false) {
+				else {
 					// switches the two switched gems back
 
 					board.swap(firstgemrow, firstgemcol, row, col);

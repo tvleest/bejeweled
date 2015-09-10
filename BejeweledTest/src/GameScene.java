@@ -25,7 +25,7 @@ public class GameScene extends Scene{
 		Canvas canvas = new Canvas(800, 600);
    		root.getChildren().add( canvas );
    		gc = canvas.getGraphicsContext2D();
-   		gamelogic = new GameLogic(OFFSETX, OFFSETY, main);
+   		gamelogic = new GameLogic(OFFSETX, OFFSETY, main, true);
    		
    		//this will handle mouseclicks
    		this.setOnMousePressed(
