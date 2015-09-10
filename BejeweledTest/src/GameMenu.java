@@ -11,15 +11,8 @@ import javafx.scene.text.Font;
 
 
 public class GameMenu extends Main {
-
-	@Override
-    public void initSettings(GameSettings settings) {
-		settings.setWidth(800);
-		settings.setHeight(600);
-	}
 	
-	@Override
-	protected void initMainMenu (Pane mainMenuRoot) {
+	protected void start (Pane mainMenuRoot) {
 		
 		Font font = Font.font(72);
 		
@@ -32,11 +25,11 @@ public class GameMenu extends Main {
 		// make two buttons for the menu
 		Button startGameButton = new Button("START GAME");
 		startGameButton.setFont(font);
-		startGameButton.setOnAction(event --> startGame); //start the game
+		startGameButton.setOnAction(Main.start()); //start the game
 		
 		Button exitButton = new Button("EXIT");
 		exitButton.setFont(font);
-		exitButton.setOnAction(event --> System.exit(0)); //exit the menu
+		exitButton.setOnAction(); //exit the menu
 
     
 }

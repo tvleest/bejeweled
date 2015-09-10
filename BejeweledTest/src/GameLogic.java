@@ -26,16 +26,19 @@ public final class GameLogic {
 	 * 
 	 */
 	private final int timePerGem = 5;
+	
+	Main main;
 
 
 	/**
 	 * @param offsetx the offset on the x-axis
 	 * @param offsety the offset on the y-axis
 	 */
-	public GameLogic(final int offsetx, final int offsety) {
+	public GameLogic(final int offsetx, final int offsety, Main m) {
 		score = 0;
-		time = 90;
+		time = 5;
 		board = new Board(8, offsetx, offsety);
+		main = m;
 	}
 
 	/**
@@ -120,6 +123,10 @@ public final class GameLogic {
 	public void updateTime() {
 		time += timePerGem;
 	}
+	
+	public void decrementTime() {
+		time--;
+	}
 
 	/**
 	 * @return the current time
@@ -142,5 +149,10 @@ public final class GameLogic {
 			s += minutes + ":" + seconds;
 		}
 		gc.fillText(s, 60, 60);
+		
+		if(time < 1){
+			main.switchMenu();
+			time = 90;
+		}
 	}
 }
