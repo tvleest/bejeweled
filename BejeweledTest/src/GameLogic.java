@@ -13,14 +13,6 @@ public final class GameLogic {
 	/**
 	 * 
 	 */
-	private int score;
-	/**
-	 * 
-	 */
-	private int scorePerGem = 10; // TODO: implement score per gem
-	/**
-	 * 
-	 */
 	private int time;
 	/**
 	 * 
@@ -33,7 +25,6 @@ public final class GameLogic {
 	 * @param offsety the offset on the y-axis
 	 */
 	public GameLogic(final int offsetx, final int offsety) {
-		score = 0;
 		time = 90;
 		board = new Board(8, offsetx, offsety);
 	}
@@ -71,7 +62,6 @@ public final class GameLogic {
 				boolean first = board.deleteRows(board.getSelectedgem());
 				boolean second = board.deleteRows(board.getSecondGem());
 				if (first) {
-					updateScore();
 					updateTime();
 				}
 				// if there are no combinations found after the move
@@ -91,26 +81,12 @@ public final class GameLogic {
 	}
 
 	/**
-	 * This method will update the score.
-	 */
-	public void updateScore() {
-		score += scorePerGem;
-	}
-
-	/**
-	 * @return the score
-	 */
-	public int getScore() {
-		return score;
-	}
-
-	/**
 	 * @param gc
 	 *            GraphicsContext to draw to
 	 */
 	public void drawScore(final GraphicsContext gc) {
 		String s = "Score: ";
-		s += score;
+		s += board.getScore();
 		gc.fillText(s, 60, 80);
 	}
 
