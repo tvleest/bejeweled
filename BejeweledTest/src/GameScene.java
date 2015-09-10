@@ -49,6 +49,10 @@ public class GameScene extends Scene{
 	}
 	
 	public void draw() {
-			gamelogic.draw(gc);
-	    }
+		gamelogic.draw(gc);
+	}
+	
+	public void decrementTime() {
+		gamelogic.decrementTime();
+	}
 }

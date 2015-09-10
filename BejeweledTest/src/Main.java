@@ -1,9 +1,13 @@
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * @author Timo
@@ -31,7 +35,15 @@ public class Main extends Application {
 		imgView.setFitWidth(800);
 		root.getChildren().add(imgView);
 	   
+		
 		GameScene scene = new GameScene(root);
+		
+		Timeline timeline = new Timeline(new KeyFrame(
+		        Duration.millis(1000),
+		        ae -> scene.decrementTime()));
+		timeline.setCycleCount(Animation.INDEFINITE);
+		timeline.play();
+		
 	    primaryStage.setScene(scene);
 	    
 	    
