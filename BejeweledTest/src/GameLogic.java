@@ -2,6 +2,15 @@ import javafx.animation.Timeline;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.TextField;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.Popup;
+
+import java.io.File;
+import java.io.IOException;
+
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -27,15 +36,20 @@ public final class GameLogic {
 	 * 
 	 */
 	private final int timePerGem = 5;
+	
+	Main main;
 
 
 	/**
 	 * @param offsetx the offset on the x-axis
 	 * @param offsety the offset on the y-axis
 	 */
-	public GameLogic(final int offsetx, final int offsety) {
+
+	public GameLogic(final int offsetx, final int offsety, Main m, boolean loadImages) {
 		time = 90;
-		board = new Board(8, offsetx, offsety, true);
+		board = new Board(8, offsetx, offsety, loadImages);
+
+		main = m;
 	}
 
 	/**
@@ -59,8 +73,14 @@ public final class GameLogic {
 	 * @param col the col.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
-		Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
-		new MediaPlayer(m).setAutoPlay(true);
+		try{
+			Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
+			new MediaPlayer(m).setAutoPlay(true);
+		}
+		catch (Exception e) {
+		    System.err.println("Caught Exception: " + e.getMessage() +"\n Are you running a test?");
+		}
+		
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);
@@ -69,13 +89,15 @@ public final class GameLogic {
 			int firstgemrow = board.getSelectedgem().getRow();
 			int firstgemcol = board.getSelectedgem().getCol();
 			if (board.swap(firstgemrow, firstgemcol, row, col)) {
-				boolean first = board.deleteRows(board.getSelectedgem());
-				boolean second = board.deleteRows(board.getSecondGem());
-				if (first) {
-					updateTime();
+				int first = board.deleteRows(board.getSelectedgem());
+				int second = board.deleteRows(board.getSecondGem());
+				if (first + second > 0) {
+					for(int i = 0; i < first+second; i++){
+						updateTime();
+					}
 				}
 				// if there are no combinations found after the move
-				if (first == false && second == false) {
+				else {
 					// switches the two switched gems back
 
 					board.swap(firstgemrow, firstgemcol, row, col);
@@ -133,5 +155,10 @@ public final class GameLogic {
 			s += minutes + ":" + seconds;
 		}
 		gc.fillText(s, 60, 60);
+		
+		if(time < 1){
+			main.gameOver();
+			time = 90;
+		}
 	}
 }

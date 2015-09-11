@@ -208,7 +208,7 @@ public class Board {
 	 * @param g
 	 * @return true, iff there are rows to be deleted
 	 */
-	public boolean deleteRows(Gem g) {
+	public int deleteRows(Gem g) {
 		ArrayList<Gem> array1 = deleteHorizontal(g);
 		ArrayList<Gem> array2 = deleteVertical(g);
 		if (!array1.isEmpty()) {
@@ -216,13 +216,13 @@ public class Board {
 				array1.addAll(array2);
 			}
 		} else if (array2.isEmpty()) {
-			return false;
+			return 0;
 		} else {
 			array1 = array2;
 		}
 		array1.add(g);
 		deleteAll(array1);
-		return true;
+		return array1.size();
 	}
 
 	/**
@@ -355,7 +355,21 @@ public class Board {
 		return score;
 	}
 	
-	
+	/**
+	 * Returns true iff Object other is equal to this.
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if(other instanceof Board) {
+			Board that = (Board) other;
+			if(this.dimension == that.dimension &&
+					this.offsetx == that.offsetx &&
+					this.offsety == that.offsety) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
 

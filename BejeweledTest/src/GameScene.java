@@ -20,12 +20,12 @@ public class GameScene extends Scene{
 	/**
 	 * Constructor
 	 */
-	public GameScene(Group root){
+	public GameScene(Group root, Main main){
 		super(root);
 		Canvas canvas = new Canvas(800, 600);
    		root.getChildren().add( canvas );
    		gc = canvas.getGraphicsContext2D();
-   		gamelogic = new GameLogic(OFFSETX, OFFSETY);
+   		gamelogic = new GameLogic(OFFSETX, OFFSETY, main, true);
    		
    		//this will handle mouseclicks
    		this.setOnMousePressed(
@@ -49,8 +49,8 @@ public class GameScene extends Scene{
 	}
 	
 	public void draw() {
-		gamelogic.draw(gc);
-	}
+			gamelogic.draw(gc);
+	    }
 	
 	public void decrementTime() {
 		gamelogic.decrementTime();
