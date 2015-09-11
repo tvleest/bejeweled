@@ -140,25 +140,22 @@ public class Main extends Application {
 	public void gameOver(HighScores highscores, int score) {
 		Popup popup = new Popup();
 		popup.centerOnScreen();
-		TextField result = new TextField();
 		popup.setWidth(200);
 		popup.setHeight(500);
 		Rectangle rect = new Rectangle(500, 300, Color.GOLD);
 		rect.setArcHeight(30);
 		rect.setArcWidth(30);
 		Text text = new Text("GAME OVER!");
-		Text name = new Text("Enter your name: ");
+		Text name = new Text("You've score " + score + " points!");
 		text.setLayoutX(200);
 		text.setLayoutY(30);
 		name.setLayoutX(30);
 		name.setLayoutY(150);
-		result.setLayoutX(160);
-		result.setLayoutY(130);
 		text.setFill(Color.BLACK);
 		Button confirm = new Button("Continue");
 		confirm.setLayoutX(205);
 		confirm.setLayoutY(255);
-		popup.getContent().addAll(rect, text, confirm, name, result);
+		popup.getContent().addAll(rect, text, confirm, name);
 		popup.show(stage);
 		root.setDisable(true);
 		
