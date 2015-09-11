@@ -4,10 +4,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.TextField;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Popup;
 
 import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -65,8 +67,14 @@ public final class GameLogic {
 	 * @param col the col.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
-		Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
-		new MediaPlayer(m).setAutoPlay(true);
+		try{
+			Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
+			new MediaPlayer(m).setAutoPlay(true);
+		}
+		catch (Exception e) {
+		    System.err.println("Caught Exception: " + e.getMessage() +"\n Are you running a test?");
+		}
+		
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);
