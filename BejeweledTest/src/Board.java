@@ -55,7 +55,7 @@ public class Board {
 	}
 
 	/**
-	 * getGems method
+	 * getGems method.
 	 * 
 	 * @return Gem[][] gems
 	 */
@@ -102,9 +102,11 @@ public class Board {
 	 * 			  draws the board
 	 */
 	public void draw(GraphicsContext gc) {
-		for (Gem[] gemss : gems)
-			for (Gem gem : gemss)
+		for (Gem[] gemss : gems) {
+			for (Gem gem : gemss) {
 				gem.draw(gc);
+			}
+		}
 	}
 
 	/**
@@ -328,8 +330,8 @@ public class Board {
 	 * @param amountOfGems - number of gems deleted due to a formed combination.
 	 * Updates score based on an amount of gems
 	 */
-	public void updateScore(int amountOfGems){
-		score += scorePerGem*amountOfGems;
+	public void updateScore(int amountOfGems) {
+		score += scorePerGem * amountOfGems;
 	}
 	
 	/**

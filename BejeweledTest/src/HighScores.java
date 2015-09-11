@@ -16,7 +16,7 @@ import java.util.Collections;
 public class HighScores {
 	
 	/**
-	 * Define the highscore file
+	 * Define the highscore file.
 	 */
 	private static String filename = "highscores.txt";
 	
@@ -44,7 +44,7 @@ public class HighScores {
 		allScores.add(score);
 		Collections.sort(allScores);
 		Collections.reverse(allScores);
-		while (allScores.size()>10) {
+		while (allScores.size() > 10) {
 			allScores.remove(10);
 		}
 	}
@@ -75,9 +75,9 @@ public class HighScores {
 	public void writeScoreFile() throws IOException {
 		// try to write it to highscore.txt and close when done
 		try {
-			FileWriter out= new FileWriter(filename);
-			for(int score : allScores) {
-				out.write(score+"\n");
+			FileWriter out = new FileWriter(filename);
+			for (int score : allScores) {
+				out.write(score + "\n");
 			}
 			out.close();
 		}

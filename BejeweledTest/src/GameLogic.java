@@ -69,12 +69,12 @@ public final class GameLogic {
 	 * @param col - the col index.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
-		try{
+		try {
 			Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
 			new MediaPlayer(m).setAutoPlay(true);
 		}
 		catch (Exception e) {
-		    System.err.println("Caught Exception: " + e.getMessage() +"\n Are you running a test?");
+		    System.err.println("Caught Exception: " + e.getMessage() + "\n Are you running a test?");
 		}
 		
 		if (board.getSelectedgem() == null) {
@@ -88,7 +88,7 @@ public final class GameLogic {
 				int first = board.deleteRows(board.getSelectedgem());
 				int second = board.deleteRows(board.getSecondGem());
 				if (first + second > 0) {
-					for (int i = 0; i < first+second; i++) {
+					for (int i = 0; i < first + second; i++) {
 						updateTime();
 					}
 				} else {			// if there are no combinations found after the move
@@ -97,7 +97,7 @@ public final class GameLogic {
 					board.swap(firstgemrow, firstgemcol, row, col);
 					// TODO: error sound
 				}
-			}// else {
+			} // else {
 				// TODO: error sound;
 			//}
 			board.getSelectedgem().setSelected(false);
@@ -154,7 +154,7 @@ public final class GameLogic {
 		}
 		gc.fillText(s, 240, 480);
 		
-		if(time < 1) {
+		if (time < 1) {
 			main.gameOver(highscores, board.getScore());
 			time = 90;
 		}
@@ -166,8 +166,9 @@ public final class GameLogic {
 	 */
 	public void drawHighscores(final GraphicsContext gc) {
 		String hs = "Highscores:\n";
-		for (int score : highscores.getAllScores())
+		for (int score : highscores.getAllScores()) {
 			hs += score + "\n";
+		}
 		gc.fillText(hs, 100, 200);
 	}
 }

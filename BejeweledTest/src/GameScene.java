@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
  * @author Timo
  * This class is our Panel, handling mouse events and drawing the game
  */
-public class GameScene extends Scene{
+public class GameScene extends Scene {
 //TODO: public static Sounds GameSounds = new Sounds();
 //to use the sounds in this class
 	GraphicsContext gc;
@@ -32,14 +32,13 @@ public class GameScene extends Scene{
    		this.setOnMousePressed(
                 new EventHandler<MouseEvent>()
                 {
-                    public void handle(MouseEvent e)
-                    {
+                    public void handle(MouseEvent e) {
                     	//get the coordinates of the mouse pressed event
                 		int xvar = (int) (e.getX() - OFFSETX);
                         int yvar = (int) (e.getY() - OFFSETY);
                         //calculate which column and row are clicked
-                        int col = xvar/40;
-                        int row = yvar/40;
+                        int col = xvar / 40;
+                        int row = yvar / 40;
                         //check if the col and row are inside the board
                         if (col < 8 && row < 8 && col >= 0 && row >= 0) {
                         	gamelogic.handleMouseClicked(row, col);

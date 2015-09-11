@@ -24,7 +24,7 @@ public class Gem {
 	 * @param type - Type of the gem.
 	 * Constructor
 	 */
-	public Gem(int row, int col, int offsetx, int offsety, int type, boolean loadImages){
+	public Gem(int row, int col, int offsetx, int offsety, int type, boolean loadImages) {
 		this.row = row;
 		this.col = col;
 		this.offsetx = offsetx;
@@ -83,9 +83,9 @@ public class Gem {
 	 * 	this method draws a gem, should be called from the paintcomponent
 	 */
 	void draw(GraphicsContext gc) {
-		gc.drawImage(image, offsetx + col*dimension, offsety + row*dimension, dimension, dimension);
+		gc.drawImage(image, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		if (selected) {
-			gc.drawImage(overlay, offsetx + col*dimension, offsety + row*dimension, dimension, dimension);
+			gc.drawImage(overlay, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		}
 	}
 
