@@ -1,4 +1,6 @@
 
+import java.io.IOException;
+
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -135,7 +137,7 @@ public class Main extends Application {
 	    
 	}
 	
-	public void gameOver() {
+	public void gameOver(HighScores highscores, int score) {
 		Popup popup = new Popup();
 		popup.centerOnScreen();
 		TextField result = new TextField();
@@ -164,6 +166,13 @@ public class Main extends Application {
 			
 			@Override
 			public void handle(ActionEvent e) {
+				highscores.addHighScore(score);
+				try {
+					highscores.writeScoreFile();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				popup.hide();
 				switchMenu();
 			}
