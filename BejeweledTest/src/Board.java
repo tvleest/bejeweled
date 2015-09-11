@@ -16,7 +16,7 @@ public class Board {
 	private int offsetx;
 	private int offsety;
 	private boolean loadImages;
-	private int score;
+	private static int score;
 	private final int scorePerGem = 10;
 
 	/**
@@ -351,7 +351,7 @@ public class Board {
 	/**
 	 * @return the current score
 	 */
-	public int getScore() {
+	public static int getScore() {
 		return score;
 	}
 	
