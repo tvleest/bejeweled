@@ -24,7 +24,7 @@ public class Sounds {
 		/**
 		 * Plays the sound effect.
 		 */
-		public void playSounds() {
+		public final void playSounds() {
 			player.play();
 		}
 	

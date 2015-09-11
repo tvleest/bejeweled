@@ -40,7 +40,7 @@ public class HighScores {
 	 * Add highscores from file to array allScores.
 	 * @param score - score to add to the highscores list.
 	 */
-	public void addHighScore(int score) {
+	public final void addHighScore(int score) {
 		allScores.add(score);
 		Collections.sort(allScores);
 		Collections.reverse(allScores);
@@ -54,7 +54,7 @@ public class HighScores {
 	 * @throws IOException
 	 */
 	// read high score file and catch exceptions
-	public ArrayList<Integer> readScoreFile() throws IOException {
+	public final ArrayList<Integer> readScoreFile() throws IOException {
 	    ArrayList<Integer> allScores = new ArrayList<Integer>();
 	    // read the file
 	    BufferedReader readfile = new BufferedReader(new FileReader(filename));
@@ -72,7 +72,7 @@ public class HighScores {
 	 * Write scores to the highscore file.
 	 * @throws IOException when file cannot be written
 	 */
-	public void writeScoreFile() throws IOException {
+	public final void writeScoreFile() throws IOException {
 		// try to write it to highscore.txt and close when done
 		try {
 			FileWriter out = new FileWriter(filename);
@@ -91,7 +91,7 @@ public class HighScores {
 	 * @param file - String of the filename.
 	 * Overwrite file name so we can write to a testfile
 	 */
-	public void setFilename(String file) {
+	public final void setFilename(String file) {
 		this.filename = file;
 	}
 
@@ -99,7 +99,7 @@ public class HighScores {
 	/**
 	 * @return - Arraylist of the highscores.
 	 */
-	public ArrayList<Integer> getAllScores() {
+	public final ArrayList<Integer> getAllScores() {
 		return allScores;
 	}
 	
@@ -107,7 +107,7 @@ public class HighScores {
 	 * Set ArrayList of highscores.
 	 * @param allScores - ArrayList of highscores to set allscore to.
 	 */
-	public void setAllScores(ArrayList<Integer> allScores) {
+	public final void setAllScores(ArrayList<Integer> allScores) {
 		this.allScores = allScores;
 	}
 	

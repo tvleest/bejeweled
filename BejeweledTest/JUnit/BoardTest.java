@@ -18,12 +18,12 @@ public class BoardTest {
 	 * there is a Gem with a type from 1 to 6.
 	 */
 	@Test
-	public void testFillBoardIntInt() {
-		board = new Board(3,0,0,false);
-		board.fillBoard(0,0);
+	public final void testFillBoardIntInt() {
+		board = new Board(3, 0, 0, false);
+		board.fillBoard(0, 0);
 		gems = board.getGems();
-		for(int row = 0; row < 3; row++) {
-			for(int col = 0; col < 3; col++) {
+		for (int row = 0; row < 3; row++) {
+			for (int col = 0; col < 3; col++) {
 				assertTrue(1 <= gems[row][col].getType());
 				assertTrue(gems[row][col].getType() <= 6);
 			}
@@ -35,8 +35,8 @@ public class BoardTest {
 	 * and checking if the returned boolean is right.
 	 */
 	@Test
-	public void testRowCheck() {
-		board = new Board(3,0,0,false);
+	public final void testRowCheck() {
+		board = new Board(3, 0, 0, false);
 		gems = board.getGems();
 		gems[0][0].setType(1);
 		gems[0][1].setType(1);
@@ -50,8 +50,8 @@ public class BoardTest {
 	 * and checking if the returned boolean is right.
 	 */
 	@Test
-	public void testColCheck() {
-		board = new Board(3,0,0,false);
+	public final void testColCheck() {
+		board = new Board(3, 0, 0, false);
 		gems = board.getGems();
 		gems[0][0].setType(1);
 		gems[1][0].setType(1);
@@ -61,12 +61,13 @@ public class BoardTest {
 	}
 
 	/**
-	 * Tests the delete method, by deleting a gem and checking if it has disappeared
-	 * and if the other gems are on the right place.
+	 * Tests the delete method, by deleting a gem and 
+	 * checking if it has disappeared and if the other 
+	 * gems are on the right place.
 	 */
 	@Test
-	public void testDelete() {
-		board = new Board(3,0,0,false);
+	public final void testDelete() {
+		board = new Board(3, 0, 0, false);
 		gems = board.getGems();
 		gems[0][0].setType(1);
 		gems[1][0].setType(1);
@@ -78,12 +79,14 @@ public class BoardTest {
 	}
 
 	/**
-	 * Tests the swap method by swapping two gems and checking if their position has changed.
-	 * Also, it checks whether the gems are not changed if they are not next to each other.
+	 * Tests the swap method by swapping two gems and 
+	 * checking if their position has changed.
+	 * Also, it checks whether the gems are not changed 
+	 * if they are not next to each other.
 	 */
 	@Test
-	public void testSwap() {
-		board = new Board(2,0,0,false);
+	public final void testSwap() {
+		board = new Board(2, 0, 0, false);
 		assertFalse(board.swap(0, 1, 1, 0));
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
@@ -95,11 +98,12 @@ public class BoardTest {
 	}
 
 	/**
-	 * Tests the getUpper method by checking if the getUpper method returns the right Gem.
+	 * Tests the getUpper method by checking if 
+	 * the getUpper method returns the right Gem.
 	 */
 	@Test
-	public void testGetUpper() {
-		board = new Board(2,0,0,false);
+	public final void testGetUpper() {
+		board = new Board(2, 0, 0, false);
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -109,11 +113,12 @@ public class BoardTest {
 	}
 
 	/**
-	 * Tests the getRight method by checking if the getRight method returns the right Gem.
+	 * Tests the getRight method by checking if 
+	 * the getRight method returns the right Gem.
 	 */
 	@Test
-	public void testGetRight() {
-		board = new Board(2,0,0,false);
+	public final void testGetRight() {
+		board = new Board(2, 0, 0, false);
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -123,11 +128,12 @@ public class BoardTest {
 	}
 
 	/**
-	 * Tests the getBelow method by checking if the getBelow method returns the right Gem.
+	 * Tests the getBelow method by checking if 
+	 * the getBelow method returns the right Gem.
 	 */
 	@Test
-	public void testGetBelow() {
-		board = new Board(2,0,0,false);
+	public final void testGetBelow() {
+		board = new Board(2, 0, 0, false);
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -137,11 +143,12 @@ public class BoardTest {
 	}
 
 	/**
-	 * Tests the getLeft method by checking if the getLeft method returns the right Gem.
+	 * Tests the getLeft method by checking 
+	 * if the getLeft method returns the right Gem.
 	 */
 	@Test
-	public void testGetLeft() {
-		board = new Board(2,0,0,false);
+	public final void testGetLeft() {
+		board = new Board(2, 0, 0, false);
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -151,12 +158,12 @@ public class BoardTest {
 	}
 
 	/**
-	 * Tests the areNeighbours method, by testing neighbors and also testing Gems
-	 * that aren't neighbors.
+	 * Tests the areNeighbours method, by testing 
+	 * neighbours and also testing Gems that aren't neighbours.
 	 */
 	@Test
-	public void testAreNeighbours() {
-		board = new Board(2,0,0,false);
+	public final void testAreNeighbours() {
+		board = new Board(2, 0, 0, false);
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -172,8 +179,8 @@ public class BoardTest {
 	 * whether the method finds them.
 	 */
 	@Test
-	public void testDeleteRows() {
-		board = new Board(3,0,0,false);
+	public final void testDeleteRows() {
+		board = new Board(3, 0, 0, false);
 		gems = board.getGems();
 		gems[0][0].setType(1);
 		gems[0][1].setType(1);
@@ -189,8 +196,8 @@ public class BoardTest {
 	 * checking if those gems have been deleted.
 	 */
 	@Test
-	public void testDeleteAll() {
-		board = new Board(3,0,0,false);
+	public final void testDeleteAll() {
+		board = new Board(3, 0, 0, false);
 		gems = board.getGems();
 		ArrayList<Gem> array = new ArrayList<Gem>();
 		Gem gem1 = gems[0][0];
@@ -207,15 +214,16 @@ public class BoardTest {
 	}
 
 	/**
-	 * Tests the deleteHorizontal method, by making a nice board with horizontal combinations of
-	 * 5,4 and 3 Gems and checking if the method finds those combinations.
+	 * Tests the deleteHorizontal method, by making a nice board 
+	 * with horizontal combinations of 5,4 and 3 Gems and checking if 
+	 * the method finds those combinations.
 	 */
 	@Test
-	public void testDeleteHorizontal() {
-		board = new Board(5,0,0,false);
+	public final void testDeleteHorizontal() {
+		board = new Board(5, 0, 0, false);
 		gems = board.getGems();
-		for(int row = 0; row < 5; row++) {
-			for(int col = 0; col < 5 - row; col++) {
+		for (int row = 0; row < 5; row++) {
+			for (int col = 0; col < 5 - row; col++) {
 				gems[row][col].setType(1);
 			}
 		}
@@ -245,15 +253,16 @@ public class BoardTest {
 	}
 
 	/**
-	 * Tests the deleteVertical method, by making a nice board with vertical combinations of
-	 * 5,4 and 3 Gems and checking if the method finds those combinations.
+	 * Tests the deleteVertical method, by making a nice board with 
+	 * vertical combinations of 5,4 and 3 Gems and checking if 
+	 * the method finds those combinations.
 	 */
 	@Test
-	public void testDeleteVertical() {
-		board = new Board(5,0,0,false);
+	public final void testDeleteVertical() {
+		board = new Board(5, 0, 0, false);
 		gems = board.getGems();
-		for(int col = 0; col < 5; col++) {
-			for(int row = 0; row < 5 - col; row++) {
+		for (int col = 0; col < 5; col++) {
+			for (int row = 0; row < 5 - col; row++) {
 				gems[row][col].setType(1);
 			}
 		}
@@ -283,12 +292,13 @@ public class BoardTest {
 	}
 
 	/**
-	 * Tests the setSelectedgem and getSelectedgem methods, by first setting a Gem
-	 * on selected and then checking with getSelectedgem if it was selected.
+	 * Tests the setSelectedgem and getSelectedgem methods, by first 
+	 * setting a Gem on selected and then checking with getSelectedgem
+	 * if it was selected.
 	 */
 	@Test
-	public void selectedGemTest() {
-		board = new Board(2,0,0,false);
+	public final void selectedGemTest() {
+		board = new Board(2, 0, 0, false);
 		gems = board.getGems();
 		Gem gem = gems[0][0];
 		assertNull(board.getSelectedgem());
@@ -297,12 +307,12 @@ public class BoardTest {
 	}
 	
 	/**
-	 * Tests the updateScore and getScore methods. First, the score should be 0. Then the score
-	 * is updated with 20 (2 Gems) and then the score should be 20.
+	 * Tests updateScore and getScore methods. First, the score should be 0. 
+	 * Then the score is updated with 20 (2 Gems). Then the score should be 20.
 	 */
 	@Test
-	public void scoreTest() {
-		board = new Board(2,0,0,false);
+	public final void scoreTest() {
+		board = new Board(2, 0, 0, false);
 		assertEquals(board.getScore(), 0);
 		board.updateScore(2);
 		assertEquals(board.getScore(), 20);
@@ -313,8 +323,8 @@ public class BoardTest {
 	 * on second and then checking with getSecondGem if it was second.
 	 */
 	@Test
-	public void secondGemTest() {
-		board = new Board(2,0,0,false);
+	public final void secondGemTest() {
+		board = new Board(2, 0, 0, false);
 		gems = board.getGems();
 		Gem gem = gems[0][0];
 		assertNull(board.getSecondGem());
@@ -323,25 +333,27 @@ public class BoardTest {
 	}
 	
 	/**
-	 * Tests the setGems and getGems methods, by first setting Gems[][] testgems,
-	 * and then checking whether it was set with the getGems method.
+	 * Tests the setGems and getGems methods, by first 
+	 * setting Gems[][] testgems, and then checking whether it was 
+	 * set with the getGems method.
 	 */
 	@Test
-	public void setGemTest() {
-		board = new Board(2,0,0,false);
+	public final void setGemTest() {
+		board = new Board(2, 0, 0, false);
 		Gem[][] testgems = new Gem[2][2];
 		board.setGems(testgems);
 		assertArrayEquals(testgems, board.getGems());
 	}
 	
 	/**
-	 * Tests the equals method by comparing 2 equals board and the different boards.
+	 * Tests the equals method by comparing 2 equals 
+	 * board and the different boards.
 	 */
 	@Test
-	public void testEquals() {
-		board = new Board(2,0,0,false);
-		Board board2 = new Board(2,0,0,false);
-		Board board3 = new Board(3,1,2,false);
+	public final void testEquals() {
+		board = new Board(2, 0, 0, false);
+		Board board2 = new Board(2, 0, 0, false);
+		Board board3 = new Board(3, 1, 2, false);
 		assertEquals(board, board2);
 		assertFalse(board.equals(board3));
 	}

@@ -1,9 +1,8 @@
 
 import javafx.scene.canvas.GraphicsContext;
-
 import javafx.scene.media.Media;
-
 import javafx.scene.media.MediaPlayer;
+
 import java.io.File;
 
 
@@ -41,7 +40,7 @@ public final class GameLogic {
 	 * @param offsety the offset on the y-axis
 	 */
 	public GameLogic(final int offsetx, final int offsety, Main m, boolean i) {
-		time = 90;
+		time = 30;
 		board = new Board(8, offsetx, offsety, i);
 		highscores = new HighScores();
 		main = m;
@@ -152,11 +151,15 @@ public final class GameLogic {
 		} else {
 			s += minutes + ":" + seconds;
 		}
-		gc.fillText(s, 240, 480);
+		if (time < 5000) {
+			gc.fillText(s, 240, 480);
+		} else {
+			gc.fillText("Time left: 0", 240, 480);
+		}
 		
 		if (time < 1) {
 			main.gameOver(highscores, board.getScore());
-			time = 90;
+			time = Integer.MAX_VALUE;
 		}
 	}
 	

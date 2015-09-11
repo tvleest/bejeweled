@@ -71,7 +71,7 @@ public class Gem {
 	/**
 	 * @param type - Type to change the gem to.
 	 */
-	void setType(int type) {
+	final void setType(int type) {
 		this.type = type;
 		if (loadImage) {
 			loadImage();
@@ -82,7 +82,7 @@ public class Gem {
 	 * @param gc - The graphicscontext.
 	 * 	this method draws a gem, should be called from the paintcomponent
 	 */
-	void draw(GraphicsContext gc) {
+	final void draw(final GraphicsContext gc) {
 		gc.drawImage(image, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		if (selected) {
 			gc.drawImage(overlay, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
@@ -92,7 +92,7 @@ public class Gem {
 	/**
 	 * Deletes a gem by changing the type to 0.
 	 */
-	public void delete() {
+	public final void delete() {
 		setType(0);
 	}
 
@@ -102,7 +102,7 @@ public class Gem {
 	 * Sets the gem to a new position
 	 * 
 	 */
-	public void setPosition(int row, int col) {
+	public final void setPosition(int row, int col) {
 		this.row = row;
 		this.col = col;
 	}
@@ -110,7 +110,7 @@ public class Gem {
 	/**
 	 * @return - true if the gem is currently selected
 	 */
-	public boolean isSelected() {
+	public final boolean isSelected() {
 		return selected;
 	}
 
@@ -118,7 +118,7 @@ public class Gem {
 	 * @param selected - boolean to select or deselect the gem.
 	 * Set the selected variable
 	 */
-	public void setSelected(boolean selected) {
+	public final void setSelected(boolean selected) {
 		this.selected = selected;
 	}
 	
@@ -126,21 +126,21 @@ public class Gem {
 	 * @return - Row of gem
 	 */
 	
-	public int getRow() {
+	public final int getRow() {
 		return this.row;
 	}
 	
 	/**
 	 * @return - Column of gem
 	 */
-	public int getCol() {
+	public final int getCol() {
 		return this.col;
 	}
 	
 	/**
 	 * @return - Type of gem.
 	 */
-	public int getType() {
+	public final int getType() {
 		return this.type;
 	}
 	

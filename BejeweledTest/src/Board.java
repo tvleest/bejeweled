@@ -4,8 +4,8 @@ import java.util.Random;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
- * @author Timo 
- * Holds the double dimension array with gems and the board methods
+ * @author Group 30
+ * Holds the double dimension array with gems and the board methods.
  */
 public class Board {
 	private Gem[][] gems;
@@ -20,9 +20,9 @@ public class Board {
 	private final int scorePerGem = 10;
 
 	/**
-	 * @param dimension
-	 * @param offsetx
-	 * @param offsety
+	 * @param dimension - The dimensions of the board.
+	 * @param offsetx - standard offset in x, used for drawing and clicking. 
+	 * @param offsety - standard offset in y, used for drawing and clicking. 
 	 */
 	public Board(int dimension, int offsetx, int offsety, boolean loadImages) {
 		score = 0;
@@ -35,11 +35,11 @@ public class Board {
 	}
 
 	/**
-	 * @param col
-	 * @param row
+	 * @param col - column index
+	 * @param row - row index
 	 *            Backtrack method
 	 */
-	public void fillBoard(int col, int row) {
+	public final void fillBoard(int col, int row) {
 		int type = random.nextInt(6) + 1;
 		if (rowCheck(row, col, type) && colCheck(row, col, type)) {
 			Gem gem = new Gem(row, col, offsetx, offsety, type, loadImages);
@@ -59,7 +59,7 @@ public class Board {
 	 * 
 	 * @return Gem[][] gems
 	 */
-	public Gem[][] getGems() {
+	public final Gem[][] getGems() {
 		return gems;
 	}
 
@@ -70,7 +70,7 @@ public class Board {
 	 * @param type - type of the gem
 	 * @return - boolean based on the gem forming a combination or not.
 	 */
-	public boolean rowCheck(int row, int col, int type) {
+	public final boolean rowCheck(int row, int col, int type) {
 		if (col <= 1) {
 			return true;
 		} else if (gems[row][col - 1].getType() == type && gems[row][col - 2].getType() == type) {
@@ -87,7 +87,7 @@ public class Board {
 	 * @param type - type of the gem
 	 * @return - boolean based on the gem forming a combination or not.
 	 */
-	public boolean colCheck(int row, int col, int type) {
+	public final boolean colCheck(int row, int col, int type) {
 		if (row <= 1) {
 			return true;
 		} else if (gems[row - 1][col].getType() == type && gems[row - 2][col].getType() == type) {
@@ -101,7 +101,7 @@ public class Board {
 	 * @param gc
 	 * 			  draws the board
 	 */
-	public void draw(GraphicsContext gc) {
+	public final void draw(GraphicsContext gc) {
 		for (Gem[] gemss : gems) {
 			for (Gem gem : gemss) {
 				gem.draw(gc);
@@ -115,7 +115,7 @@ public class Board {
 	 *            Deletes a gem based on column and row, moves all the gems
 	 *            above this gem a place down
 	 */
-	public void delete(int row, int col) {
+	public final void delete(int row, int col) {
 		gems[row][col].delete();
 
 		// move all blocks above the deleted block down
@@ -141,7 +141,7 @@ public class Board {
 	 *            Swaps two gems and returns a boolean whether
 	 *            the swap is possible or not.
 	 */
-	public boolean swap(int row1, int col1, int row2, int col2) {
+	public final boolean swap(int row1, int col1, int row2, int col2) {
 		if (!areNeighbours(gems[row1][col1], gems[row2][col2])) {
 			return false;
 		}
@@ -157,7 +157,7 @@ public class Board {
 	 * @param g - The gem of which the upper neighbour is gotten.
 	 * @return - The upper neighbour of the gem.
 	 */
-	public Gem getUpper(Gem g) {
+	public final Gem getUpper(Gem g) {
 		if (g.getRow() > 0) {
 			return (gems[g.getRow() - 1][g.getCol()]);
 		}
@@ -168,7 +168,7 @@ public class Board {
 	 * @param g - The gem of which the right hand neighbour is gotten.
 	 * @return - The right hand neighbour of the gem.
 	 */
-	public Gem getRight(Gem g) {
+	public final Gem getRight(Gem g) {
 		if (g.getCol() < dimension - 1) {
 			return (gems[g.getRow()][g.getCol() + 1]);
 		}
@@ -179,7 +179,7 @@ public class Board {
 	 * @param g - The gem of which the neighbour below it is gotten.
 	 * @return - The gem below the gem passed in.
 	 */
-	public Gem getBelow(Gem g) {
+	public final Gem getBelow(Gem g) {
 		if (g.getRow() < dimension - 1) {
 			return (gems[g.getRow() + 1][g.getCol()]);
 		}
@@ -190,7 +190,7 @@ public class Board {
 	 * @param g - The gem of which the left hand neighbour is gotten.
 	 * @return - The left hand neighbour of the gem.
 	 */
-	public Gem getLeft(Gem g) {
+	public final Gem getLeft(Gem g) {
 		if (g.getCol() > 0) {
 			return (gems[g.getRow()][g.getCol() - 1]);
 		}
@@ -202,7 +202,7 @@ public class Board {
 	 * @param gem2 - The second of the gems involved in the check
 	 * @return - true if two gems are neighbours
 	 */
-	public boolean areNeighbours(Gem gem1, Gem gem2) {
+	public final boolean areNeighbours(Gem gem1, Gem gem2) {
 		return (getUpper(gem1) == gem2 || getBelow(gem1) == gem2 || getLeft(gem1) == gem2 || getRight(gem1) == gem2);
 	}
 
@@ -214,7 +214,7 @@ public class Board {
 	 * @param g - Gem as starting point
 	 * @return true, iff there are rows to be deleted
 	 */
-	public int deleteRows(Gem g) {
+	public final int deleteRows(Gem g) {
 		ArrayList<Gem> array1 = deleteHorizontal(g);
 		ArrayList<Gem> array2 = deleteVertical(g);
 		if (!array1.isEmpty()) {
@@ -236,7 +236,7 @@ public class Board {
 	 * 
 	 * @param array - Array of gems involved in the deletion.
 	 */
-	public void deleteAll(ArrayList<Gem> array) {
+	public final void deleteAll(ArrayList<Gem> array) {
 		ArrayList<Gem> array2 = new ArrayList<Gem>();
 		for (int i = 0; i < dimension; i++) { // sorts the array on the row of
 												// the gem, up to down
@@ -273,7 +273,7 @@ public class Board {
 	 * @param g - Gem to be checked for a combination.
 	 * @return array - array of a combination. Empty if there is none.
 	 */
-	public ArrayList<Gem> deleteHorizontal(Gem g) {
+	public final ArrayList<Gem> deleteHorizontal(Gem g) {
 		int type = g.getType();
 		Gem leftgem = getLeft(g);
 		Gem rightgem = getRight(g);
@@ -303,7 +303,7 @@ public class Board {
 	 * @param g - Gem to be checked for a combination.
 	 * @return array - array of a combination. Empty if there is none.
 	 */
-	public ArrayList<Gem> deleteVertical(Gem g) {
+	public final ArrayList<Gem> deleteVertical(Gem g) {
 		int type = g.getType();
 		Gem upgem = getUpper(g);
 		Gem downgem = getBelow(g);
@@ -330,7 +330,7 @@ public class Board {
 	 * @param amountOfGems - number of gems deleted due to a formed combination.
 	 * Updates score based on an amount of gems
 	 */
-	public void updateScore(int amountOfGems) {
+	public final void updateScore(int amountOfGems) {
 		score += scorePerGem * amountOfGems;
 	}
 	
@@ -338,14 +338,14 @@ public class Board {
 	 * Gives back the gem currently selected by the player.
 	 * @return - The selected gem.
 	 */
-	public Gem getSelectedgem() {
+	public final Gem getSelectedgem() {
 		return selectedgem;
 	}
 	
 	/**
 	 * Set the currently selected gem by the player.
 	 */
-	public void setSelectedgem(Gem selectedgem) {
+	public final void setSelectedgem(Gem selectedgem) {
 		this.selectedgem = selectedgem;
 	}
 	
@@ -353,14 +353,14 @@ public class Board {
 	 * Gives back the gem currently selected by the player.
 	 * @return - The second gem selected.
 	 */
-	public Gem getSecondGem() {
+	public final Gem getSecondGem() {
 		return secondGem;
 	}
 	
 	/**
 	 * Set the second currently selected gem by the player.
 	 */
-	public void setSecondGem(Gem secondGem) {
+	public final void setSecondGem(Gem secondGem) {
 		this.secondGem = secondGem;
 	}
 	
@@ -368,7 +368,7 @@ public class Board {
 	 * Set the two-dimensional gem array.
 	 * @param gems - Two-dimensional array of gems to set the old one as.
 	 */
-	public void setGems(Gem[][] gems) {
+	public final void setGems(Gem[][] gems) {
 		this.gems = gems;
 	}
 
@@ -383,7 +383,7 @@ public class Board {
 	 * @return - true iff Object other is equal to this.
 	 */
 	@Override
-	public boolean equals(Object other) {
+	public final boolean equals(Object other) {
 		if (other instanceof Board) {
 			Board that = (Board) other;
 			if (this.dimension == that.dimension

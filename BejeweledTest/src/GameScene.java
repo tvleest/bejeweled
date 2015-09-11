@@ -51,14 +51,14 @@ public class GameScene extends Scene {
 	/**
 	 * requests the gamelogic to draw the UI.
 	 */
-	public void draw() {
+	public final void draw() {
 			gamelogic.draw(gc);
 	    }
 	
 	/**
 	 * requests the gamelogic to decrement the timer (each second).
 	 */
-	public void decrementTime() {
+	public final void decrementTime() {
 		gamelogic.decrementTime();
 	}
 }

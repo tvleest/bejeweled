@@ -27,14 +27,15 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * @author Timo
+ * Main of our Bejeweled game.
+ * @author Group 30
  *
  */
 public class Main extends Application {
-	GameScene scene;
-	Stage stage;
-	Timeline timeline;
-	Group root;
+	private GameScene scene;
+	private Stage stage;
+	private Timeline timeline;
+	private Group root;
 
 	/**
 	 * @param args
@@ -45,7 +46,7 @@ public class Main extends Application {
 	}
 
 	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public final void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		scene = new GameScene(new Group(), this);
 		primaryStage.setTitle("Bejeweled group 30");
@@ -62,7 +63,7 @@ public class Main extends Application {
 	/**
 	 * Switch the current screen to the main menu.
 	 */
-	public void switchMenu() {
+	public final void switchMenu() {
 		root = new Group();
 		Font font = Font.font(72);
 		
@@ -114,7 +115,7 @@ public class Main extends Application {
 	/**
 	 * Switch the current screen to the Bejeweled screen.
 	 */
-	public void switchGame() {
+	public final void switchGame() {
 		timeline.playFromStart();
 		root = new Group();
 	    Image background = new Image("Images/Background.png");
@@ -141,7 +142,7 @@ public class Main extends Application {
 	 * @param highscores - highscores.
 	 * @param score - Achieved score.
 	 */
-	public void gameOver(HighScores highscores, int score) {
+	public final void gameOver(HighScores highscores, int score) {
 		Popup popup = new Popup();
 		popup.centerOnScreen();
 		popup.setWidth(200);
