@@ -12,10 +12,13 @@ import java.util.Scanner;
 
 public class HighScores {
 	
+	// define the highscore file
 	private static String filename = "highscores.txt";
 	
+	// define the array for the highscores 
 	private ArrayList<Integer> allScores;
 	
+	// read high score file and catch exceptions
 	public HighScores(){
 		try {
 			allScores = readScoreFile();
@@ -24,6 +27,7 @@ public class HighScores {
 		}
 	 }
 	
+	// add highscores from file to array allScores
 	public void addHighScore(int score){
 		allScores.add(score);
 		Collections.sort(allScores);
@@ -37,14 +41,17 @@ public class HighScores {
 	 * @return
 	 * @throws IOException
 	 */
+	// read high score file and catch exceptions
 	public ArrayList<Integer> readScoreFile() throws IOException{
 	    ArrayList<Integer> allScores = new ArrayList<Integer>();
 	    // read the file
 	    BufferedReader readfile = new BufferedReader(new FileReader(filename));
 	    String line = null;
+	    // read line per line and add to allScores array
 		while ((line = readfile.readLine()) != null) {
 			allScores.add(Integer.parseInt(line));
 		}
+		// close the file when done
 		readfile.close();
 	    return allScores;
 	}
