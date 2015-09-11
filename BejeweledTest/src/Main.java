@@ -150,7 +150,7 @@ public class Main extends Application {
 		rect.setArcHeight(30);
 		rect.setArcWidth(30);
 		Text text = new Text("GAME OVER!");
-		Text name = new Text("You've score " + score + " points!");
+		Text name = new Text("You've scored " + score + " points!");
 		text.setLayoutX(200);
 		text.setLayoutY(30);
 		name.setLayoutX(30);

@@ -4,8 +4,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.Media;
 
 import javafx.scene.media.MediaPlayer;
-
-
 import java.io.File;
 
 
@@ -27,7 +25,7 @@ public final class GameLogic {
 	/**
 	 * 
 	 */
-	private final int timePerGem = 5;
+	private final int timePerGem = 1;
 	/**
 	 * 
 	 */
@@ -43,7 +41,7 @@ public final class GameLogic {
 	 * @param offsety the offset on the y-axis
 	 */
 	public GameLogic(final int offsetx, final int offsety, Main m, boolean i) {
-		time = 3;
+		time = 90;
 		board = new Board(8, offsetx, offsety, i);
 		highscores = new HighScores();
 		main = m;
