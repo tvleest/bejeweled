@@ -1,21 +1,13 @@
-import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.TextField;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaException;
-import javafx.scene.media.MediaPlayer;
-import javafx.stage.Popup;
-
-import java.io.File;
-import java.io.IOException;
-
 
 import javafx.scene.media.Media;
+
 import javafx.scene.media.MediaPlayer;
 
+
 import java.io.File;
+
 
 
 /**
@@ -25,7 +17,7 @@ import java.io.File;
 public final class GameLogic {
 
 	/**
-	 * 
+	 * board attribute.
 	 */
 	private Board board;
 	/**
@@ -36,37 +28,38 @@ public final class GameLogic {
 	 * 
 	 */
 	private final int timePerGem = 5;
-	/*
+	/**
 	 * 
 	 */
 	private HighScores highscores;
-	
-	Main main;
+	/**
+	 * 
+	 */
+	private Main main;
 
 
 	/**
 	 * @param offsetx the offset on the x-axis
 	 * @param offsety the offset on the y-axis
 	 */
-
-	public GameLogic(final int offsetx, final int offsety, Main m, boolean loadImages) {
-		time = 90;
-		board = new Board(8, offsetx, offsety, loadImages);
+	public GameLogic(final int offsetx, final int offsety, Main m, boolean i) {
+		time = 3;
+		board = new Board(8, offsetx, offsety, i);
 		highscores = new HighScores();
 		main = m;
 	}
 
 	/**
-	 * @return the board.
+	 * @return - The board.
 	 */
 	public Board getBoard() {
 		return board;
 	}
 
 	/**
-	 * @param gc the graphicscontext.
+	 * @param gc - the graphicscontext.
 	 */
-	public void draw(final GraphicsContext gc){
+	public void draw(final GraphicsContext gc) {
 		board.draw(gc);
 		drawScore(gc);
 		drawTime(gc);
@@ -74,8 +67,8 @@ public final class GameLogic {
 	}
 
 	/**
-	 * @param row the row.
-	 * @param col the col.
+	 * @param row - the row index.
+	 * @param col - the col index.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
 		try{
@@ -97,20 +90,18 @@ public final class GameLogic {
 				int first = board.deleteRows(board.getSelectedgem());
 				int second = board.deleteRows(board.getSecondGem());
 				if (first + second > 0) {
-					for(int i = 0; i < first+second; i++){
+					for (int i = 0; i < first+second; i++) {
 						updateTime();
 					}
-				}
-				// if there are no combinations found after the move
-				else {
-					// switches the two switched gems back
+				} else {			// if there are no combinations found after the move
 
+					// switches the two switched gems back
 					board.swap(firstgemrow, firstgemcol, row, col);
 					// TODO: error sound
 				}
-			} else {
+			}// else {
 				// TODO: error sound;
-			}
+			//}
 			board.getSelectedgem().setSelected(false);
 			board.setSelectedgem(null);
 			board.setSecondGem(null);
@@ -134,12 +125,16 @@ public final class GameLogic {
 		time += timePerGem;
 	}
 	
+	/**
+	 * Decreases the timer by 1.
+	 * This is  called every second.
+	 */
 	public void decrementTime() {
 		time--;
 	}
 
 	/**
-	 * @return the current time
+	 * @return - the current time left
 	 */
 	public int getTime() {
 		return time;
@@ -161,7 +156,7 @@ public final class GameLogic {
 		}
 		gc.fillText(s, 240, 480);
 		
-		if(time < 1){
+		if(time < 1) {
 			main.gameOver(highscores, board.getScore());
 			time = 90;
 		}
@@ -171,10 +166,10 @@ public final class GameLogic {
 	 * @param gc GraphicsContext
 	 * Draws the highscore next to the board
 	 */
-	public void drawHighscores(final GraphicsContext gc){
+	public void drawHighscores(final GraphicsContext gc) {
 		String hs = "Highscores:\n";
-		for(int score : highscores.getAllScores())
-			hs += score+"\n";
+		for (int score : highscores.getAllScores())
+			hs += score + "\n";
 		gc.fillText(hs, 100, 200);
 	}
 }

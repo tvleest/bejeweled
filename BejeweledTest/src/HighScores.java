@@ -1,25 +1,34 @@
 import java.io.BufferedReader;
-import java.io.File;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
 
 
+/**
+ * Class that deals with the highscores of our game.
+ * @author - Group 30.
+ *
+ */
 public class HighScores {
 	
-	// define the highscore file
+	/**
+	 * Define the highscore file
+	 */
 	private static String filename = "highscores.txt";
 	
-	// define the array for the highscores 
+	/**
+	 *  Define the array for the highscores.
+	 */
 	private ArrayList<Integer> allScores;
 	
-	// read high score file and catch exceptions
-	public HighScores(){
+	/**
+	 *  Read high score file and catch exceptions.
+	 */
+	public HighScores() {
 		try {
 			allScores = readScoreFile();
 		} catch (IOException e) {
@@ -27,22 +36,25 @@ public class HighScores {
 		}
 	 }
 	
-	// add highscores from file to array allScores
-	public void addHighScore(int score){
+	/**
+	 * Add highscores from file to array allScores.
+	 * @param score - score to add to the highscores list.
+	 */
+	public void addHighScore(int score) {
 		allScores.add(score);
 		Collections.sort(allScores);
 		Collections.reverse(allScores);
-		while(allScores.size()>10){
+		while (allScores.size()>10) {
 			allScores.remove(10);
 		}
 	}
 	
 	/**
-	 * @return
+	 * @return - An arraylist of highscores.
 	 * @throws IOException
 	 */
 	// read high score file and catch exceptions
-	public ArrayList<Integer> readScoreFile() throws IOException{
+	public ArrayList<Integer> readScoreFile() throws IOException {
 	    ArrayList<Integer> allScores = new ArrayList<Integer>();
 	    // read the file
 	    BufferedReader readfile = new BufferedReader(new FileReader(filename));
@@ -57,39 +69,44 @@ public class HighScores {
 	}
 		    
 	/**
+	 * Write scores to the highscore file.
 	 * @throws IOException when file cannot be written
 	 */
-	public void writeScoreFile() throws IOException{
+	public void writeScoreFile() throws IOException {
 		// try to write it to highscore.txt and close when done
 		try {
 			FileWriter out= new FileWriter(filename);
-			for(int score : allScores){
+			for(int score : allScores) {
 				out.write(score+"\n");
 			}
 			out.close();
 		}
 		// catch errors
-		catch(IOException e) {
-	        System.out.println("The application wasn't able to write the scores to "+filename);
+		catch (IOException e) {
+	        System.out.println("The application wasn't able to write the scores to " + filename);
 	   }
 	}
 
 	/**
-	 * @param filename
+	 * @param file - String of the filename.
 	 * Overwrite file name so we can write to a testfile
 	 */
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public void setFilename(String file) {
+		this.filename = file;
 	}
 
 	
 	/**
-	 * @return the highscores
+	 * @return - Arraylist of the highscores.
 	 */
 	public ArrayList<Integer> getAllScores() {
 		return allScores;
 	}
-
+	
+	/**
+	 * Set ArrayList of highscores.
+	 * @param allScores - ArrayList of highscores to set allscore to.
+	 */
 	public void setAllScores(ArrayList<Integer> allScores) {
 		this.allScores = allScores;
 	}

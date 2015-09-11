@@ -13,7 +13,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -104,9 +103,9 @@ public class Main extends Application {
 		});
 		
 		root.getChildren().addAll(imgView, startGameButton, exitButton);
-		if(stage.getScene() == null) {
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
+		if (stage.getScene() == null) {
+			Scene sc = new Scene(root);
+			stage.setScene(sc);
 		} else {
 			stage.getScene().setRoot(root);
 		}
@@ -127,16 +126,21 @@ public class Main extends Application {
 		
 		  new AnimationTimer()
 		    {
-		        public void handle(long currentNanoTime)
-		        {
+		        public void handle(long currentNanoTime) {
 		        	scene.gc.clearRect(0, 0, 800, 600);
 		            scene.draw();
 		        }
 		    }.start();
+		    
 	    stage.setScene(scene);
 	    
 	}
 	
+	/**
+	 * Show a GameOver popup.
+	 * @param highscores - highscores.
+	 * @param score - Achieved score.
+	 */
 	public void gameOver(HighScores highscores, int score) {
 		Popup popup = new Popup();
 		popup.centerOnScreen();

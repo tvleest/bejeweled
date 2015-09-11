@@ -18,12 +18,13 @@ public class GameScene extends Scene{
 	public final int OFFSETY = 115;
 	
 	/**
-	 * Constructor
+	 * GameScene Constructor.
+	 * Prepares the UI of the root and mouseclick handlers.
 	 */
-	public GameScene(Group root, Main main){
+	public GameScene(Group root, Main main) {
 		super(root);
 		Canvas canvas = new Canvas(800, 600);
-   		root.getChildren().add( canvas );
+   		root.getChildren().add(canvas);
    		gc = canvas.getGraphicsContext2D();
    		gamelogic = new GameLogic(OFFSETX, OFFSETY, main, true);
    		
@@ -36,7 +37,7 @@ public class GameScene extends Scene{
                     	//get the coordinates of the mouse pressed event
                 		int xvar = (int) (e.getX() - OFFSETX);
                         int yvar = (int) (e.getY() - OFFSETY);
-                        //calculate which column and row are clicked, integers will be rounded down by default
+                        //calculate which column and row are clicked
                         int col = xvar/40;
                         int row = yvar/40;
                         //check if the col and row are inside the board
@@ -48,10 +49,16 @@ public class GameScene extends Scene{
         draw();
 	}
 	
+	/**
+	 * requests the gamelogic to draw the UI.
+	 */
 	public void draw() {
 			gamelogic.draw(gc);
 	    }
 	
+	/**
+	 * requests the gamelogic to decrement the timer (each second).
+	 */
 	public void decrementTime() {
 		gamelogic.decrementTime();
 	}

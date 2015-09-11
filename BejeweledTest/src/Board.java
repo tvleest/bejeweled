@@ -64,10 +64,11 @@ public class Board {
 	}
 
 	/**
-	 * @param row
-	 * @param col
-	 * @param type
-	 * @return
+	 * Checks whether the gem would form a combination in its row.
+	 * @param row - row of the gem
+	 * @param col - column of the gem
+	 * @param type - type of the gem
+	 * @return - boolean based on the gem forming a combination or not.
 	 */
 	public boolean rowCheck(int row, int col, int type) {
 		if (col <= 1) {
@@ -80,10 +81,11 @@ public class Board {
 	}
 
 	/**
-	 * @param row
-	 * @param col
-	 * @param type
-	 * @return
+	 * Checks whether the gem would form a combination in its column.
+	 * @param row - row of the gem
+	 * @param col - column of the gem
+	 * @param type - type of the gem
+	 * @return - boolean based on the gem forming a combination or not.
 	 */
 	public boolean colCheck(int row, int col, int type) {
 		if (row <= 1) {
@@ -96,8 +98,8 @@ public class Board {
 	}
 
 	/**
-	 * @param g
-	 *            draws the board
+	 * @param gc
+	 * 			  draws the board
 	 */
 	public void draw(GraphicsContext gc) {
 		for (Gem[] gemss : gems)
@@ -106,8 +108,8 @@ public class Board {
 	}
 
 	/**
-	 * @param row
-	 * @param col
+	 * @param row - row number integer
+	 * @param col - column number integer
 	 *            Deletes a gem based on column and row, moves all the gems
 	 *            above this gem a place down
 	 */
@@ -129,11 +131,13 @@ public class Board {
 	}
 
 	/**
-	 * @param row1
-	 * @param col1
-	 * @param row2
-	 * @param col2
-	 *            swaps two gems
+	 * @param row1 - row number of the first gem to be swapped.
+	 * @param col1 - column number of the first gem to be swapped.
+	 * @param row2 - row number of the second gem to be swapped.
+	 * @param col2 - column number of the second gem to be swapped.
+	 * @return - boolean based on the possibility of the swap.
+	 *            Swaps two gems and returns a boolean whether
+	 *            the swap is possible or not.
 	 */
 	public boolean swap(int row1, int col1, int row2, int col2) {
 		if (!areNeighbours(gems[row1][col1], gems[row2][col2])) {
@@ -148,8 +152,8 @@ public class Board {
 	}
 
 	/**
-	 * @param g
-	 * @return
+	 * @param g - The gem of which the upper neighbour is gotten.
+	 * @return - The upper neighbour of the gem.
 	 */
 	public Gem getUpper(Gem g) {
 		if (g.getRow() > 0) {
@@ -159,8 +163,8 @@ public class Board {
 	}
 
 	/**
-	 * @param g
-	 * @return
+	 * @param g - The gem of which the right hand neighbour is gotten.
+	 * @return - The right hand neighbour of the gem.
 	 */
 	public Gem getRight(Gem g) {
 		if (g.getCol() < dimension - 1) {
@@ -170,8 +174,8 @@ public class Board {
 	}
 
 	/**
-	 * @param g
-	 * @return
+	 * @param g - The gem of which the neighbour below it is gotten.
+	 * @return - The gem below the gem passed in.
 	 */
 	public Gem getBelow(Gem g) {
 		if (g.getRow() < dimension - 1) {
@@ -181,8 +185,8 @@ public class Board {
 	}
 
 	/**
-	 * @param g
-	 * @return
+	 * @param g - The gem of which the left hand neighbour is gotten.
+	 * @return - The left hand neighbour of the gem.
 	 */
 	public Gem getLeft(Gem g) {
 		if (g.getCol() > 0) {
@@ -192,9 +196,9 @@ public class Board {
 	}
 
 	/**
-	 * @param gem1
-	 * @param gem2
-	 * @return true if two gems are neighbours
+	 * @param gem1 - One of the gems involved in the check
+	 * @param gem2 - The second of the gems involved in the check
+	 * @return - true if two gems are neighbours
 	 */
 	public boolean areNeighbours(Gem gem1, Gem gem2) {
 		return (getUpper(gem1) == gem2 || getBelow(gem1) == gem2 || getLeft(gem1) == gem2 || getRight(gem1) == gem2);
@@ -205,7 +209,7 @@ public class Board {
 	 * deleteHorizontal and deleteVertical and then deleting them with
 	 * deleteAll.
 	 * 
-	 * @param g
+	 * @param g - Gem as starting point
 	 * @return true, iff there are rows to be deleted
 	 */
 	public int deleteRows(Gem g) {
@@ -226,9 +230,9 @@ public class Board {
 	}
 
 	/**
-	 * First sorts the arrayList array, then deletes all the Gems from the list
+	 * First sorts the arrayList array, then deletes all the Gems from the list.
 	 * 
-	 * @param array
+	 * @param array - Array of gems involved in the deletion.
 	 */
 	public void deleteAll(ArrayList<Gem> array) {
 		ArrayList<Gem> array2 = new ArrayList<Gem>();
@@ -246,7 +250,7 @@ public class Board {
 			delete(array2.get(k).getRow(), array2.get(k).getCol()); // deletes
 																	// all gems
 																	// from the
-																	// bord,
+																	// board,
 																	// from up
 																	// to down
 		}
@@ -262,10 +266,10 @@ public class Board {
 
 	/**
 	 * Finds all horizontal combinations of Gems with Gem g, places the gems in
-	 * these combinations in the ArrayList array
+	 * these combinations in the ArrayList array.
 	 * 
-	 * @param g
-	 * @return array
+	 * @param g - Gem to be checked for a combination.
+	 * @return array - array of a combination. Empty if there is none.
 	 */
 	public ArrayList<Gem> deleteHorizontal(Gem g) {
 		int type = g.getType();
@@ -292,10 +296,10 @@ public class Board {
 
 	/**
 	 * Finds all vertical combinations of Gems with Gem g, places the gems in
-	 * these combinations in the ArrayList array
+	 * these combinations in the ArrayList array.
 	 * 
-	 * @param g
-	 * @return array
+	 * @param g - Gem to be checked for a combination.
+	 * @return array - array of a combination. Empty if there is none.
 	 */
 	public ArrayList<Gem> deleteVertical(Gem g) {
 		int type = g.getType();
@@ -321,50 +325,68 @@ public class Board {
 	}
 	
 	/**
-	 * @param amountOfGems
+	 * @param amountOfGems - number of gems deleted due to a formed combination.
 	 * Updates score based on an amount of gems
 	 */
 	public void updateScore(int amountOfGems){
 		score += scorePerGem*amountOfGems;
 	}
-
+	
+	/**
+	 * Gives back the gem currently selected by the player.
+	 * @return - The selected gem.
+	 */
 	public Gem getSelectedgem() {
 		return selectedgem;
 	}
-
+	
+	/**
+	 * Set the currently selected gem by the player.
+	 */
 	public void setSelectedgem(Gem selectedgem) {
 		this.selectedgem = selectedgem;
 	}
-
+	
+	/**
+	 * Gives back the gem currently selected by the player.
+	 * @return - The second gem selected.
+	 */
 	public Gem getSecondGem() {
 		return secondGem;
 	}
-
+	
+	/**
+	 * Set the second currently selected gem by the player.
+	 */
 	public void setSecondGem(Gem secondGem) {
 		this.secondGem = secondGem;
 	}
-
+	
+	/**
+	 * Set the two-dimensional gem array.
+	 * @param gems - Two-dimensional array of gems to set the old one as.
+	 */
 	public void setGems(Gem[][] gems) {
 		this.gems = gems;
 	}
 
 	/**
-	 * @return the current score
+	 * @return - The current score
 	 */
 	public static int getScore() {
 		return score;
 	}
 	
 	/**
-	 * Returns true iff Object other is equal to this.
+	 * @return - true iff Object other is equal to this.
 	 */
 	@Override
 	public boolean equals(Object other) {
-		if(other instanceof Board) {
+		if (other instanceof Board) {
 			Board that = (Board) other;
-			if(this.dimension == that.dimension &&
-					this.offsetx == that.offsetx &&
-					this.offsety == that.offsety) {
+			if (this.dimension == that.dimension
+					&& this.offsetx == that.offsetx 
+					&& this.offsety == that.offsety) {
 				return true;
 			}
 		}
