@@ -36,6 +36,10 @@ public final class GameLogic {
 	 * 
 	 */
 	private final int timePerGem = 5;
+	/*
+	 * 
+	 */
+	private HighScores highscores;
 	
 	Main main;
 
@@ -48,7 +52,7 @@ public final class GameLogic {
 	public GameLogic(final int offsetx, final int offsety, Main m, boolean loadImages) {
 		time = 90;
 		board = new Board(8, offsetx, offsety, loadImages);
-
+		highscores = new HighScores();
 		main = m;
 	}
 
@@ -66,6 +70,7 @@ public final class GameLogic {
 		board.draw(gc);
 		drawScore(gc);
 		drawTime(gc);
+		drawHighscores(gc);
 	}
 
 	/**
@@ -119,7 +124,7 @@ public final class GameLogic {
 	public void drawScore(final GraphicsContext gc) {
 		String s = "Score: ";
 		s += board.getScore();
-		gc.fillText(s, 60, 80);
+		gc.fillText(s, 240, 460);
 	}
 
 	/**
@@ -154,11 +159,22 @@ public final class GameLogic {
 		} else {
 			s += minutes + ":" + seconds;
 		}
-		gc.fillText(s, 60, 60);
+		gc.fillText(s, 240, 480);
 		
 		if(time < 1){
-			main.gameOver();
+			main.gameOver(highscores, board.getScore());
 			time = 90;
 		}
+	}
+	
+	/**
+	 * @param gc GraphicsContext
+	 * Draws the highscore next to the board
+	 */
+	public void drawHighscores(final GraphicsContext gc){
+		String hs = "Highscores:\n";
+		for(int score : highscores.getAllScores())
+			hs += score+"\n";
+		gc.fillText(hs, 100, 200);
 	}
 }
