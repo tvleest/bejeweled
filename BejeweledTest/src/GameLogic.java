@@ -1,12 +1,10 @@
-import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.scene.canvas.GraphicsContext;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+
 
 
 /**
@@ -16,7 +14,7 @@ import java.io.File;
 public final class GameLogic {
 
 	/**
-	 * 
+	 * board attribute.
 	 */
 	private Board board;
 	/**
@@ -26,41 +24,63 @@ public final class GameLogic {
 	/**
 	 * 
 	 */
-	private final int timePerGem = 5;
+	private final int timePerGem = 1;
+	/**
+	 * 
+	 */
+	private HighScores highscores;
+	/**
+	 * 
+	 */
+	private Main main;
 
 
 	/**
 	 * @param offsetx the offset on the x-axis
 	 * @param offsety the offset on the y-axis
 	 */
-	public GameLogic(final int offsetx, final int offsety) {
-		time = 90;
-		board = new Board(8, offsetx, offsety, true);
+	public GameLogic(final int offsetx, final int offsety, Main m, boolean i) {
+		time = 30;
+		board = new Board(8, offsetx, offsety, i);
+		highscores = new HighScores();
+		main = m;
 	}
 
 	/**
-	 * @return the board.
+	 * @return - The board.
 	 */
 	public Board getBoard() {
 		return board;
 	}
 
 	/**
-	 * @param gc the graphicscontext.
+	 * @param gc - the graphicscontext.
 	 */
-	public void draw(final GraphicsContext gc){
+	public void draw(final GraphicsContext gc) {
 		board.draw(gc);
 		drawScore(gc);
 		drawTime(gc);
+		drawHighscores(gc);
 	}
 
 	/**
-	 * @param row the row.
-	 * @param col the col.
+	 * @param row - the row index.
+	 * @param col - the col index.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
+<<<<<<< HEAD
 		Media select = new Media(new File("C:/Users/Jorien/Documents/GitHub/bejeweled/BejeweledTest/src/Sounds/select.mp3").toURI().toString());
 		new MediaPlayer(select).setAutoPlay(true);
+=======
+		try {
+			Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
+			new MediaPlayer(m).setAutoPlay(true);
+		}
+		catch (Exception e) {
+		    System.err.println("Caught Exception: " + e.getMessage() + "\n Are you running a test?");
+		}
+		
+>>>>>>> origin/master
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);
@@ -69,21 +89,21 @@ public final class GameLogic {
 			int firstgemrow = board.getSelectedgem().getRow();
 			int firstgemcol = board.getSelectedgem().getCol();
 			if (board.swap(firstgemrow, firstgemcol, row, col)) {
-				boolean first = board.deleteRows(board.getSelectedgem());
-				boolean second = board.deleteRows(board.getSecondGem());
-				if (first) {
-					updateTime();
-				}
-				// if there are no combinations found after the move
-				if (first == false && second == false) {
-					// switches the two switched gems back
+				int first = board.deleteRows(board.getSelectedgem());
+				int second = board.deleteRows(board.getSecondGem());
+				if (first + second > 0) {
+					for (int i = 0; i < first + second; i++) {
+						updateTime();
+					}
+				} else {			// if there are no combinations found after the move
 
+					// switches the two switched gems back
 					board.swap(firstgemrow, firstgemcol, row, col);
 					// TODO: error sound
 				}
-			} else {
+			} // else {
 				// TODO: error sound;
-			}
+			//}
 			board.getSelectedgem().setSelected(false);
 			board.setSelectedgem(null);
 			board.setSecondGem(null);
@@ -97,7 +117,7 @@ public final class GameLogic {
 	public void drawScore(final GraphicsContext gc) {
 		String s = "Score: ";
 		s += board.getScore();
-		gc.fillText(s, 60, 80);
+		gc.fillText(s, 240, 460);
 	}
 
 	/**
@@ -107,12 +127,16 @@ public final class GameLogic {
 		time += timePerGem;
 	}
 	
+	/**
+	 * Decreases the timer by 1.
+	 * This is  called every second.
+	 */
 	public void decrementTime() {
 		time--;
 	}
 
 	/**
-	 * @return the current time
+	 * @return - the current time left
 	 */
 	public int getTime() {
 		return time;
@@ -132,6 +156,27 @@ public final class GameLogic {
 		} else {
 			s += minutes + ":" + seconds;
 		}
-		gc.fillText(s, 60, 60);
+		if (time < 5000) {
+			gc.fillText(s, 240, 480);
+		} else {
+			gc.fillText("Time left: 0", 240, 480);
+		}
+		
+		if (time < 1) {
+			main.gameOver(highscores, board.getScore());
+			time = Integer.MAX_VALUE;
+		}
+	}
+	
+	/**
+	 * @param gc GraphicsContext
+	 * Draws the highscore next to the board
+	 */
+	public void drawHighscores(final GraphicsContext gc) {
+		String hs = "Highscores:\n";
+		for (int score : highscores.getAllScores()) {
+			hs += score + "\n";
+		}
+		gc.fillText(hs, 100, 200);
 	}
 }

@@ -14,7 +14,7 @@ import java.io.File;
  * @author Timo
  * This class is our Panel, handling mouse events and drawing the game
  */
-public class GameScene extends Scene{
+public class GameScene extends Scene {
 //TODO: public static Sounds GameSounds = new Sounds();
 
 	
@@ -25,29 +25,33 @@ public class GameScene extends Scene{
 	public final int OFFSETY = 115;
 	
 	/**
-	 * Constructor
+	 * GameScene Constructor.
+	 * Prepares the UI of the root and mouseclick handlers.
 	 */
-	public GameScene(Group root){
+	public GameScene(Group root, Main main) {
 		super(root);
 		Canvas canvas = new Canvas(800, 600);
-   		root.getChildren().add( canvas );
+   		root.getChildren().add(canvas);
    		gc = canvas.getGraphicsContext2D();
+<<<<<<< HEAD
    		gamelogic = new GameLogic(OFFSETX, OFFSETY);
    		//Media achtergrondmuziek = new Media(new File("C:/Users/Jorien/Documents/GitHub/bejeweled/BejeweledTest/src/Sounds/bejeweled.mp3").toURI().toString());
    		//new MediaPlayer(achtergrondmuziek).setAutoPlay(true);
+=======
+   		gamelogic = new GameLogic(OFFSETX, OFFSETY, main, true);
+>>>>>>> origin/master
    		
    		//this will handle mouseclicks
    		this.setOnMousePressed(
                 new EventHandler<MouseEvent>()
                 {
-                    public void handle(MouseEvent e)
-                    {
+                    public void handle(MouseEvent e) {
                     	//get the coordinates of the mouse pressed event
                 		int xvar = (int) (e.getX() - OFFSETX);
                         int yvar = (int) (e.getY() - OFFSETY);
-                        //calculate which column and row are clicked, integers will be rounded down by default
-                        int col = xvar/40;
-                        int row = yvar/40;
+                        //calculate which column and row are clicked
+                        int col = xvar / 40;
+                        int row = yvar / 40;
                         //check if the col and row are inside the board
                         if (col < 8 && row < 8 && col >= 0 && row >= 0) {
                         	gamelogic.handleMouseClicked(row, col);
@@ -57,11 +61,17 @@ public class GameScene extends Scene{
         draw();
 	}
 	
-	public void draw() {
-		gamelogic.draw(gc);
-	}
+	/**
+	 * requests the gamelogic to draw the UI.
+	 */
+	public final void draw() {
+			gamelogic.draw(gc);
+	    }
 	
-	public void decrementTime() {
+	/**
+	 * requests the gamelogic to decrement the timer (each second).
+	 */
+	public final void decrementTime() {
 		gamelogic.decrementTime();
 	}
 }
