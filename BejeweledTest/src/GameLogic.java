@@ -68,10 +68,6 @@ public final class GameLogic {
 	 * @param col - the col index.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
-<<<<<<< HEAD
-		Media select = new Media(new File("C:/Users/Jorien/Documents/GitHub/bejeweled/BejeweledTest/src/Sounds/select.mp3").toURI().toString());
-		new MediaPlayer(select).setAutoPlay(true);
-=======
 		try {
 			Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
 			new MediaPlayer(m).setAutoPlay(true);
@@ -79,8 +75,6 @@ public final class GameLogic {
 		catch (Exception e) {
 		    System.err.println("Caught Exception: " + e.getMessage() + "\n Are you running a test?");
 		}
-		
->>>>>>> origin/master
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);

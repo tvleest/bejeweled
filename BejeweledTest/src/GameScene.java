@@ -33,13 +33,7 @@ public class GameScene extends Scene {
 		Canvas canvas = new Canvas(800, 600);
    		root.getChildren().add(canvas);
    		gc = canvas.getGraphicsContext2D();
-<<<<<<< HEAD
-   		gamelogic = new GameLogic(OFFSETX, OFFSETY);
-   		//Media achtergrondmuziek = new Media(new File("C:/Users/Jorien/Documents/GitHub/bejeweled/BejeweledTest/src/Sounds/bejeweled.mp3").toURI().toString());
-   		//new MediaPlayer(achtergrondmuziek).setAutoPlay(true);
-=======
    		gamelogic = new GameLogic(OFFSETX, OFFSETY, main, true);
->>>>>>> origin/master
    		
    		//this will handle mouseclicks
    		this.setOnMousePressed(
