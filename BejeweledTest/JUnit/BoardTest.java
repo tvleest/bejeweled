@@ -188,6 +188,7 @@ public class BoardTest {
 		assertTrue(board.deleteRows(gems[0][0]) > 0);
 		gems[0][1].setType(2);
 		gems[1][0].setType(2);
+		gems[0][0].setType(1);
 		assertTrue(board.deleteRows(gems[0][0]) == 0);
 	}
 
