@@ -51,26 +51,4 @@ public class GameLogicTest {
 		gl.handleMouseClicked(1, 0);
 		assertEquals(gl.getTime(), 93);
 	}
-	
-	/**
-	 * Tests the updateTime method.
-	 */
-	@Test
-	public final void testUpdateTime() {
-		assertEquals(90, gl.getTime());
-		gl.updateTime();
-		assertEquals(91, gl.getTime());
-	}
-	
-	/**
-	 * Tests the decrementTime method.
-	 */
-	@Test
-	public final void testDecrementTime() {
-		assertEquals(90, gl.getTime());
-		gl.decrementTime();
-		assertEquals(89, gl.getTime());
-	}
-
-
 }

@@ -63,9 +63,9 @@ public class GameScene extends Scene {
 	    }
 	
 	/**
-	 * requests the gamelogic to decrement the timer (each second).
+	 * requests to decrement the timer (each second).
 	 */
 	public final void decrementTime() {
-		gamelogic.decrementTime();
+		gamelogic.getTime().decrementTime();
 	}
 }
