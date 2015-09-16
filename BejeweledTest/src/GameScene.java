@@ -60,6 +60,7 @@ public class GameScene extends Scene {
 	 */
 	public final void draw() {
 			gamelogic.draw(gc);
+			gamelogic.getTime().drawTime(gc);
 	    }
 	
 	/**
@@ -67,5 +68,9 @@ public class GameScene extends Scene {
 	 */
 	public final void decrementTime() {
 		gamelogic.getTime().decrementTime();
+	}
+	
+	public GameLogic getGameLogic() {
+		return gamelogic;
 	}
 }

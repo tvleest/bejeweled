@@ -12,7 +12,7 @@ public class TimeTest {
 	 */
 	@Before
 	public final void setUp() {
-		time = new Time(90);
+		time = new Time(90, new Main());
 	}
 	
 	/**
@@ -34,5 +34,15 @@ public class TimeTest {
 		time.decrementTime();
 		assertEquals(89, time.getTime());
 	}
-
+	
+	/**
+	 * Tests the toString() method.
+	 * toString should give back "Time left: m:ss"
+	 */
+	@Test
+	public final void testToString() {
+		assertEquals("Time left: 1:30", time.toString());
+		time.setTime(59);
+		assertEquals("Time left: 0:59", time.toString());
+	}
 }

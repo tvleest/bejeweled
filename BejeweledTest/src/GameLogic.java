@@ -40,7 +40,7 @@ public final class GameLogic {
 	 * @param offsety the offset on the y-axis
 	 */
 	public GameLogic(final int offsetx, final int offsety, Main m, boolean i) {
-		time = new Time(90);
+		time = new Time(90, m);
 		board = new Board(8, offsetx, offsety, i);
 		highscores = new HighScores();
 		main = m;
@@ -59,7 +59,6 @@ public final class GameLogic {
 	public void draw(final GraphicsContext gc) {
 		board.draw(gc);
 		drawScore(gc);
-		drawTime(gc);
 		drawHighscores(gc);
 	}
 
@@ -120,23 +119,6 @@ public final class GameLogic {
 	public Time getTime() {
 		return time;
 	}
-
-	/**
-	 * @param gc
-	 *            GraphicsContext to draw to Draws the time to the scene
-	 */
-	public void drawTime(final GraphicsContext gc) {
-		if (time.getTime() < 5000) {
-			gc.fillText(time.toString(), 240, 480);
-		} else {
-			gc.fillText("Time left: 0:00", 240, 480);
-		}
-		
-		if (time.getTime() < 1) {
-			main.gameOver(highscores, board.getScore());
-			time.setTime(Integer.MAX_VALUE);
-		}
-	}
 	
 	/**
 	 * @param gc GraphicsContext
@@ -148,5 +130,9 @@ public final class GameLogic {
 			hs += score + "\n";
 		}
 		gc.fillText(hs, 100, 200);
+	}
+	
+	public HighScores getHighScores() {
+		return highscores;
 	}
 }

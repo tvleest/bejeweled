@@ -142,7 +142,10 @@ public class Main extends Application {
 	 * @param highscores - highscores.
 	 * @param score - Achieved score.
 	 */
-	public final void gameOver(HighScores highscores, int score) {
+	public final void gameOver() {
+		int score = scene.getGameLogic().getBoard().getScore();
+		HighScores highscores = scene.getGameLogic().getHighScores();
+		
 		Popup popup = new Popup();
 		popup.centerOnScreen();
 		popup.setWidth(200);

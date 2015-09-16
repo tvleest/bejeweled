@@ -1,9 +1,13 @@
+import javafx.scene.canvas.GraphicsContext;
+
 
 public class Time {
 	private int time;
+	private Main main;
 	
-	public Time(int t) {
+	public Time(int t, Main m) {
 		time = t;
+		main = m;
 	}
 	
 	/**
@@ -19,6 +23,7 @@ public class Time {
 	 */
 	public void decrementTime() {
 		time--;
+		timeCheck();
 	}
 	
 	public void setTime(int t) {
@@ -39,5 +44,24 @@ public class Time {
 			s += minutes + ":" + seconds;
 		}
 		return s;
+	}
+	
+	/**
+	 * @param gc
+	 *            GraphicsContext to draw to Draws the time to the scene
+	 */
+	public void drawTime(final GraphicsContext gc) {
+		if (time < 5000) {
+			gc.fillText(toString(), 240, 480);
+		} else {
+			gc.fillText("Time left: 0:00", 240, 480);
+		}
+	}
+	
+	public void timeCheck() {
+		if (time < 1) {
+			time = Integer.MAX_VALUE;
+			main.gameOver();
+		}
 	}
 }
