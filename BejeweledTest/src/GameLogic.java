@@ -20,7 +20,7 @@ public final class GameLogic {
 	/**
 	 * 
 	 */
-	private int time;
+	private Time time;
 	/**
 	 * 
 	 */
@@ -40,7 +40,7 @@ public final class GameLogic {
 	 * @param offsety the offset on the y-axis
 	 */
 	public GameLogic(final int offsetx, final int offsety, Main m, boolean i) {
-		time = 30;
+		time = new Time(90, m);
 		board = new Board(8, offsetx, offsety, i);
 		highscores = new HighScores();
 		main = m;
@@ -59,7 +59,6 @@ public final class GameLogic {
 	public void draw(final GraphicsContext gc) {
 		board.draw(gc);
 		drawScore(gc);
-		drawTime(gc);
 		drawHighscores(gc);
 	}
 
@@ -87,7 +86,7 @@ public final class GameLogic {
 				int second = board.deleteRows(board.getSecondGem());
 				if (first + second > 0) {
 					for (int i = 0; i < first + second; i++) {
-						updateTime();
+						time.updateTime();
 					}
 				} else {			// if there are no combinations found after the move
 
@@ -115,51 +114,10 @@ public final class GameLogic {
 	}
 
 	/**
-	 * update the time.
+	 * @return - Time object in use.
 	 */
-	public void updateTime() {
-		time += timePerGem;
-	}
-	
-	/**
-	 * Decreases the timer by 1.
-	 * This is  called every second.
-	 */
-	public void decrementTime() {
-		time--;
-	}
-
-	/**
-	 * @return - the current time left
-	 */
-	public int getTime() {
+	public Time getTime() {
 		return time;
-	}
-
-	/**
-	 * @param gc
-	 *            GraphicsContext to draw to Draws the time to the scene
-	 */
-	public void drawTime(final GraphicsContext gc) {
-        
-		String s = "Time left: ";
-		int minutes = time / 60;
-		int seconds = time % 60;
-		if (seconds < 10) {
-			s += minutes + ":" + 0 + seconds;
-		} else {
-			s += minutes + ":" + seconds;
-		}
-		if (time < 5000) {
-			gc.fillText(s, 240, 480);
-		} else {
-			gc.fillText("Time left: 0", 240, 480);
-		}
-		
-		if (time < 1) {
-			main.gameOver(highscores, board.getScore());
-			time = Integer.MAX_VALUE;
-		}
 	}
 	
 	/**
@@ -172,5 +130,9 @@ public final class GameLogic {
 			hs += score + "\n";
 		}
 		gc.fillText(hs, 100, 200);
+	}
+	
+	public HighScores getHighScores() {
+		return highscores;
 	}
 }
