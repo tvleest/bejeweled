@@ -1,4 +1,7 @@
 
+import java.io.File;
+
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -8,26 +11,40 @@ import javafx.scene.media.MediaPlayer;
  *
  */
 public class Sounds {
-		/**
-		 * The media player.
-		 */
-		private MediaPlayer player;
+		AudioClip selectSound;
+		AudioClip combinationSound;
+		AudioClip backgroundSound;
     
 		/**
 		 * Assigns the sound to be played.
 		 */
 		public Sounds() {
-			Media sounds = new Media("Sounds/select.mp3");
-			player = new MediaPlayer(sounds);
+			 selectSound = new AudioClip(new File("src/Sounds/select.mp3").toURI().toString());
+			 combinationSound = new AudioClip(new File("src/Sounds/combination.mp3").toURI().toString());
+			 backgroundSound = new AudioClip(new File("src/Sounds/bejeweled.mp3").toURI().toString());
 		}
 		
 		/**
 		 * Plays the sound effect.
 		 */
-		public final void playSounds() {
-			player.play();
+		public final void playSelectSound() {
+			 selectSound.play();
 		}
-	
-    
+		
+		/**
+		 * Plays the sound effect.
+		 */
+		public final void playCombinationSound() {
+			 combinationSound.play();
+		}
+		
+		/**
+		 * Plays the sound effect.
+		 */
+		public final void playBackgroundSound() {
+			 backgroundSound.cycleCountProperty();
+			 backgroundSound.play();
+		}
+
 }
 
