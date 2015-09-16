@@ -33,6 +33,8 @@ public final class GameLogic {
 	 * 
 	 */
 	private Main main;
+	
+	private Sounds sounds;
 
 
 	/**
@@ -44,6 +46,7 @@ public final class GameLogic {
 		board = new Board(8, offsetx, offsety, i);
 		highscores = new HighScores();
 		main = m;
+		sounds = new Sounds();
 	}
 
 	/**
@@ -68,13 +71,7 @@ public final class GameLogic {
 	 * @param col - the col index.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
-		try {
-			Media m = new Media(new File("src/Sounds/select.mp3").toURI().toString());
-			new MediaPlayer(m).setAutoPlay(true);
-		}
-		catch (Exception e) {
-		    System.err.println("Caught Exception: " + e.getMessage() + "\n Are you running a test?");
-		}
+		sounds.playSelectSound();
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);
@@ -88,6 +85,7 @@ public final class GameLogic {
 				if (first + second > 0) {
 					for (int i = 0; i < first + second; i++) {
 						updateTime();
+						sounds.playCombinationSound();
 					}
 				} else {			// if there are no combinations found after the move
 
