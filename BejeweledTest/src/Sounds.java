@@ -22,6 +22,7 @@ public class Sounds {
 			 selectSound = new AudioClip(new File("src/Sounds/select.mp3").toURI().toString());
 			 combinationSound = new AudioClip(new File("src/Sounds/combination.mp3").toURI().toString());
 			 backgroundSound = new AudioClip(new File("src/Sounds/bejeweled.mp3").toURI().toString());
+			 backgroundSound.setVolume(0.5);
 		}
 		
 		/**
