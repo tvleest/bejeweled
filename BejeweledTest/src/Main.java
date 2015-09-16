@@ -36,6 +36,7 @@ public class Main extends Application {
 	private Stage stage;
 	private Timeline timeline;
 	private Group root;
+	private Sounds sound;
 
 	/**
 	 * @param args
@@ -58,6 +59,8 @@ public class Main extends Application {
 		timeline.setCycleCount(Animation.INDEFINITE);
 		
 	    primaryStage.show();
+   		sound = new Sounds();
+   		sound.playBackgroundSound();
 	}
 	
 	/**
