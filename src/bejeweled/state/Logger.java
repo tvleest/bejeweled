@@ -55,4 +55,8 @@ public class Logger {
 		}
 	}
 	
+	public File getFile() {
+		return file;
+	}
+	
 }
