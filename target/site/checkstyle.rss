@@ -25,8 +25,8 @@ under the License.
     <language>en-us</language>
     <copyright>&#169;2015</copyright>
     <item>
-      <title>File: 6,
-             Errors: 379,
+      <title>File: 12,
+             Errors: 366,
              Warnings: 0,
              Infos: 0
       </title>
@@ -46,7 +46,7 @@ under the License.
           <tbody>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#Sounds.java">Sounds.java</a>
+                  <a href="${project.url}/checkstyle.html#bejeweled.board.Gem.java">bejeweled/board/Gem.java</a>
                 </td>
                 <td>
                   0
@@ -55,12 +55,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  23
+                  54
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#GameScene.java">GameScene.java</a>
+                  <a href="${project.url}/checkstyle.html#bejeweled.game.GameScene.java">bejeweled/game/GameScene.java</a>
                 </td>
                 <td>
                   0
@@ -69,12 +69,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  36
+                  35
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#Gem.java">Gem.java</a>
+                  <a href="${project.url}/checkstyle.html#bejeweled.board.package-info.java">bejeweled/board/package-info.java</a>
                 </td>
                 <td>
                   0
@@ -83,12 +83,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  85
+                  2
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#Main.java">Main.java</a>
+                  <a href="${project.url}/checkstyle.html#bejeweled.game.GameLogic.java">bejeweled/game/GameLogic.java</a>
                 </td>
                 <td>
                   0
@@ -97,12 +97,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  12
+                  31
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#GameLogic.java">GameLogic.java</a>
+                  <a href="${project.url}/checkstyle.html#bejeweled.Sounds.java">bejeweled/Sounds.java</a>
                 </td>
                 <td>
                   0
@@ -111,12 +111,12 @@ under the License.
                   0
                 </td>
                 <td>
-                  81
+                  17
                 </td>
               </tr>
                           <tr>
                 <td>
-                  <a href="${project.url}/checkstyle.html#Board.java">Board.java</a>
+                  <a href="${project.url}/checkstyle.html#bejeweled.state.HighScores.java">bejeweled/state/HighScores.java</a>
                 </td>
                 <td>
                   0
@@ -125,7 +125,91 @@ under the License.
                   0
                 </td>
                 <td>
-                  142
+                  25
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#bejeweled.state.Time.java">bejeweled/state/Time.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  35
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#bejeweled.state.package-info.java">bejeweled/state/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#bejeweled.board.Board.java">bejeweled/board/Board.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  101
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#bejeweled.Main.java">bejeweled/Main.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  60
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#bejeweled.game.package-info.java">bejeweled/game/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="${project.url}/checkstyle.html#bejeweled.package-info.java">bejeweled/package-info.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  2
                 </td>
               </tr>
                       </tbody>
