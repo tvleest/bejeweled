@@ -11,6 +11,7 @@ import javafx.scene.media.MediaPlayer;
 import java.io.File;
 
 import bejeweled.Main;
+import bejeweled.state.Logger;
 
 /**
  * @author Timo

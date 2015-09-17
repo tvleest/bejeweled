@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import bejeweled.game.GameScene;
 import bejeweled.state.HighScores;
+import bejeweled.state.Logger;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -40,17 +41,20 @@ public class Main extends Application {
 	private Timeline timeline;
 	private Group root;
 	private Sounds sound;
+	static Logger logger;
 
 	/**
 	 * @param args
 	 * Main method
 	 */
-	public static void main(String[] args) {		
+	public static void main(String[] args) {
 		launch(args);
 	}
 
 	@Override
 	public final void start(Stage primaryStage) throws Exception {
+		logger = new Logger();
+		logger.updateLogger("The game has started.");
 		stage = primaryStage;
 		scene = new GameScene(new Group(), this);
 		primaryStage.setTitle("Bejeweled group 30");
@@ -152,6 +156,8 @@ public class Main extends Application {
 		int score = scene.getGameLogic().getBoard().getScore();
 		HighScores highscores = scene.getGameLogic().getHighScores();
 		
+		logger.updateLogger("The game is over. The final score is " + score + ".");
+		
 		Popup popup = new Popup();
 		popup.centerOnScreen();
 		popup.setWidth(200);
@@ -189,5 +195,9 @@ public class Main extends Application {
 			}
 		});
 		
+	}
+	
+	public static Logger getLogger() {
+		return logger;
 	}
 }
