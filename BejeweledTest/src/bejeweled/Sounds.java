@@ -1,3 +1,4 @@
+package bejeweled;
 
 import java.io.File;
 

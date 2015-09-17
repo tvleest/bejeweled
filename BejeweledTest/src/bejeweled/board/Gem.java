@@ -1,3 +1,4 @@
+package bejeweled.board;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -71,7 +72,7 @@ public class Gem {
 	/**
 	 * @param type - Type to change the gem to.
 	 */
-	final void setType(int type) {
+	public final void setType(int type) {
 		this.type = type;
 		if (loadImage) {
 			loadImage();

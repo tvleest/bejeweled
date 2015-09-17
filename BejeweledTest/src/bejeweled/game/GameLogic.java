@@ -1,9 +1,16 @@
+package bejeweled.game;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+
+import bejeweled.Main;
+import bejeweled.Sounds;
+import bejeweled.board.Board;
+import bejeweled.state.HighScores;
+import bejeweled.state.Time;
 
 
 

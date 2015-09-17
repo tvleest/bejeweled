@@ -1,3 +1,4 @@
+package bejeweled.board;
 import java.util.ArrayList;
 import java.util.Random;
 

@@ -1,14 +1,16 @@
+package bejeweled.game;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
-
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
+
+import bejeweled.Main;
 
 /**
  * @author Timo
@@ -19,7 +21,7 @@ public class GameScene extends Scene {
 
 	
 //to use the sounds in this class
-	GraphicsContext gc;
+	private GraphicsContext gc;
 	private GameLogic gamelogic;
 	public final int OFFSETX = 235;
 	public final int OFFSETY = 115;
@@ -72,5 +74,9 @@ public class GameScene extends Scene {
 	
 	public GameLogic getGameLogic() {
 		return gamelogic;
+	}
+	
+	public GraphicsContext getGraphicsContext() {
+		return gc;
 	}
 }

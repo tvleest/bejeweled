@@ -1,7 +1,10 @@
+package bejeweled.board.test;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import bejeweled.board.Gem;
 
 /**
  * Tests the Gem class.

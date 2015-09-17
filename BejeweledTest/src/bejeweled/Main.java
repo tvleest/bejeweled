@@ -1,6 +1,9 @@
+package bejeweled;
 
 import java.io.IOException;
 
+import bejeweled.game.GameScene;
+import bejeweled.state.HighScores;
 import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -131,7 +134,7 @@ public class Main extends Application {
 		  new AnimationTimer()
 		    {
 		        public void handle(long currentNanoTime) {
-		        	scene.gc.clearRect(0, 0, 800, 600);
+		        	scene.getGraphicsContext().clearRect(0, 0, 800, 600);
 		            scene.draw();
 		        }
 		    }.start();

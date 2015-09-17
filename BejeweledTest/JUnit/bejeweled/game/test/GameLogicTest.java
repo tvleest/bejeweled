@@ -1,7 +1,13 @@
+package bejeweled.game.test;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import bejeweled.Main;
+import bejeweled.board.Board;
+import bejeweled.board.Gem;
+import bejeweled.game.GameLogic;
 
 /**
  * Tests for the GameLogic class.
@@ -49,6 +55,6 @@ public class GameLogicTest {
 		assertNull(b.getSelectedgem());
 		gl.handleMouseClicked(0, 0);
 		gl.handleMouseClicked(1, 0);
-		assertEquals(gl.getTime(), 93);
+		assertEquals(gl.getTime().getTime(), 93);
 	}
 }

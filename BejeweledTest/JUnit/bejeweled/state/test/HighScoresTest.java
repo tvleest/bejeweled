@@ -1,3 +1,4 @@
+package bejeweled.state.test;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
@@ -5,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
+
+import bejeweled.state.HighScores;
 
 /**
  * Tests for the HighScores class.

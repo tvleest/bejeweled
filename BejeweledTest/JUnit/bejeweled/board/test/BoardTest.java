@@ -1,8 +1,12 @@
+package bejeweled.board.test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
 import org.junit.Test;
+
+import bejeweled.board.Board;
+import bejeweled.board.Gem;
 
 /**
  * @author Timo

@@ -1,7 +1,11 @@
+package bejeweled.state.test;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import bejeweled.Main;
+import bejeweled.state.Time;
 
 
 public class TimeTest {

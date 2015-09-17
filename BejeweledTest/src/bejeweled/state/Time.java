@@ -1,3 +1,5 @@
+package bejeweled.state;
+import bejeweled.Main;
 import javafx.scene.canvas.GraphicsContext;
 
 
