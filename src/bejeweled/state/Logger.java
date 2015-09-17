@@ -11,39 +11,44 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-public class Logger {
+/**
+ * @author Job, Timo
+ *
+ */
+public final class Logger {
 	
-	FileWriter writer;
-	File file;
-	String allLogs;
+	private FileWriter filewriter;
+	private BufferedWriter writer;
+	private File file;
 	
 	public Logger() {
 		Date d = new Date();
 		String date = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss").format(d);
-		file = new File("Logs/" + date);
-		allLogs = "";
-	}
-	
-	public void printText() {
+		file = new File("Logs/" + date +".txt");
 		try {
-			writer = new FileWriter(file);
-			writer.write("Er gebeurde iets!");
-			writer.close();
+			filewriter= new FileWriter(file);
 		} catch (IOException e) {
-			
-		}
-	}
-	
-	public void updateLogger(String s) {
-		Date d = new Date();
-		String date = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss").format(d);
-		allLogs += date + "  -  " + s + "\n";
-		try {
-			writer = new FileWriter(file);
-			writer.write(allLogs);
-			writer.close();
-		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			System.out.println("Something went wrong with the FileWriter in Logger");
+		}
+		writer = new BufferedWriter(filewriter);
+	}
+	
+	public void writeLineToLogger(String s){
+		Date d = new Date();
+		String date = new SimpleDateFormat("HH:mm:ss").format(d);
+		String logline = date + "  -  " + s + "\r\n";
+		try {
+			writer.write(logline);
+			writer.flush();
+		} catch (IOException e) {
+			System.out.println("Something went wrong while writing to the BufferedWriter in Logger");
+			try {
+				writer.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	
@@ -51,7 +56,7 @@ public class Logger {
 		try {
 			writer.close();
 		} catch (IOException e) {
-			System.out.println("Something went wrong with the FileWriter in Logger");
+			System.out.println("Something went wrong while closing the BufferedWriter in Logger");
 		}
 	}
 	
