@@ -53,8 +53,6 @@ public class Main extends Application {
 
 	@Override
 	public final void start(Stage primaryStage) throws Exception {
-		logger = new Logger();
-		logger.updateLogger("The game has started.");
 		stage = primaryStage;
 		scene = new GameScene(new Group(), this);
 		primaryStage.setTitle("Bejeweled group 30");
@@ -97,6 +95,8 @@ public class Main extends Application {
 			@Override
 			public void handle(ActionEvent e) {
 				switchGame();
+				logger = new Logger();
+				logger.writeLineToLogger("The game has started.");
 			}
 		}); //start the game
 		
@@ -156,7 +156,7 @@ public class Main extends Application {
 		int score = scene.getGameLogic().getBoard().getScore();
 		HighScores highscores = scene.getGameLogic().getHighScores();
 		
-		logger.updateLogger("The game is over. The final score is " + score + ".");
+		logger.writeLineToLogger("The game is over. The final score is " + score + ".");
 		
 		Popup popup = new Popup();
 		popup.centerOnScreen();
