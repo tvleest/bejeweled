@@ -54,6 +54,7 @@ public class Main extends Application {
 	@Override
 	public final void start(Stage primaryStage) throws Exception {
 		logger = new Logger();
+		logger.updateLogger("The game has started.");
 		stage = primaryStage;
 		scene = new GameScene(new Group(), this);
 		primaryStage.setTitle("Bejeweled group 30");
@@ -154,6 +155,8 @@ public class Main extends Application {
 	public final void gameOver() {
 		int score = scene.getGameLogic().getBoard().getScore();
 		HighScores highscores = scene.getGameLogic().getHighScores();
+		
+		logger.updateLogger("The game is over. The final score is " + score + ".");
 		
 		Popup popup = new Popup();
 		popup.centerOnScreen();
