@@ -16,7 +16,7 @@ public class TimeTest {
 	 */
 	@Before
 	public final void setUp() {
-		time = new Time(90, new Main());
+		time = new Time(90);
 	}
 	
 	/**

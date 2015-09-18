@@ -36,10 +36,10 @@ import javafx.util.Duration;
  *
  */
 public class Main extends Application {
-	private GameScene scene;
-	private Stage stage;
-	private Timeline timeline;
-	private Group root;
+	private static GameScene scene;
+	private static Stage stage;
+	private static Timeline timeline;
+	private static Group root;
 	private Sounds sound;
 	static Logger logger;
 
@@ -54,7 +54,7 @@ public class Main extends Application {
 	@Override
 	public final void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
-		scene = new GameScene(new Group(), this);
+		scene = new GameScene(new Group());
 		primaryStage.setTitle("Bejeweled group 30");
 	    switchMenu();
 	    
@@ -71,7 +71,7 @@ public class Main extends Application {
 	/**
 	 * Switch the current screen to the main menu.
 	 */
-	public final void switchMenu() {
+	public final static void switchMenu() {
 		root = new Group();
 		Font font = Font.font(72);
 		
@@ -125,7 +125,7 @@ public class Main extends Application {
 	/**
 	 * Switch the current screen to the Bejeweled screen.
 	 */
-	public final void switchGame() {
+	public static final void switchGame() {
 		timeline.playFromStart();
 		root = new Group();
 	    Image background = new Image("Images/Background.png");
@@ -133,7 +133,7 @@ public class Main extends Application {
 		imgView.setFitHeight(600);
 		imgView.setFitWidth(800);
 		root.getChildren().add(imgView);
-		scene = new GameScene(root, this);
+		scene = new GameScene(root);
 		
 		  new AnimationTimer()
 		    {
@@ -152,7 +152,7 @@ public class Main extends Application {
 	 * @param highscores - highscores.
 	 * @param score - Achieved score.
 	 */
-	public final void gameOver() {
+	public final static void gameOver() {
 		int score = scene.getGameLogic().getBoard().getScore();
 		HighScores highscores = scene.getGameLogic().getHighScores();
 		

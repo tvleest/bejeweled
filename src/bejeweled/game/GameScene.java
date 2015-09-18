@@ -31,12 +31,12 @@ public class GameScene extends Scene {
 	 * GameScene Constructor.
 	 * Prepares the UI of the root and mouseclick handlers.
 	 */
-	public GameScene(Group root, Main main) {
+	public GameScene(Group root) {
 		super(root);
 		Canvas canvas = new Canvas(800, 600);
    		root.getChildren().add(canvas);
    		gc = canvas.getGraphicsContext2D();
-   		gamelogic = new GameLogic(OFFSETX, OFFSETY, main, true);
+   		gamelogic = new GameLogic(OFFSETX, OFFSETY, true);
    		
    		//this will handle mouseclicks
    		this.setOnMousePressed(

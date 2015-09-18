@@ -23,8 +23,7 @@ public class GameLogicTest {
 	 */
 	@Before
 	public final void setUp() {
-		Main m = new Main();
-		gl = new GameLogic(0, 0, m, false);
+		gl = new GameLogic(0, 0, false);
 	}
 	
 	/**
