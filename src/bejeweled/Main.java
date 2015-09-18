@@ -40,7 +40,7 @@ public class Main extends Application {
 	private static Stage stage;
 	private static Timeline timeline;
 	private static Group root;
-	private Sounds sound;
+	private static Sounds sound;
 	static Logger logger;
 
 	/**
@@ -64,8 +64,6 @@ public class Main extends Application {
 		timeline.setCycleCount(Animation.INDEFINITE);
 		
 	    primaryStage.show();
-   		sound = new Sounds();
-   		sound.playBackgroundSound();
 	}
 	
 	/**
@@ -94,6 +92,8 @@ public class Main extends Application {
 
 			@Override
 			public void handle(ActionEvent e) {
+				sound = new Sounds();
+				sound.playSelectSound();
 				switchGame();
 				logger = new Logger();
 				logger.writeLineToLogger("The game has started.");
@@ -133,6 +133,9 @@ public class Main extends Application {
 		imgView.setFitHeight(600);
 		imgView.setFitWidth(800);
 		root.getChildren().add(imgView);
+		sound = new Sounds();
+   		sound.playBackgroundSound();
+   		sound.backgroundSound.cycleCountProperty();
 		scene = new GameScene(root);
 		
 		  new AnimationTimer()
@@ -153,7 +156,12 @@ public class Main extends Application {
 	 * @param score - Achieved score.
 	 */
 	public final static void gameOver() {
-		int score = scene.getGameLogic().getBoard().getScore();
+		int score = scene.getGameLogic().getBoard().getScore(); // get score
+		
+		sound = new Sounds(); // Play game over sound
+		sound.backgroundSound.stop();
+		sound.playGameOverSound(); 
+		
 		HighScores highscores = scene.getGameLogic().getHighScores();
 		
 		logger.writeLineToLogger("The game is over. The final score is " + score + ".");
@@ -167,6 +175,13 @@ public class Main extends Application {
 		rect.setArcWidth(30);
 		Text text = new Text("GAME OVER!");
 		Text name = new Text("You've scored " + score + " points!");
+		
+//		if (score >= HighScores.HighestScore{
+//			
+//			Text goodjob = new Text("You've got a new high score!");
+//			sound.backgroundSound.stop();
+//			sound.playGameOverSound(); 
+//		}
 		text.setLayoutX(200);
 		text.setLayoutY(30);
 		name.setLayoutX(30);

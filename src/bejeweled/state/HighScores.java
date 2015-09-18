@@ -37,6 +37,9 @@ public class HighScores {
 		}
 	 }
 	
+//	To determine the highest score in the ArrayList	
+//	public int HighestScore = allScores.get(1);
+		
 	/**
 	 * Add highscores from file to array allScores.
 	 * @param score - score to add to the highscores list.

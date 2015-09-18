@@ -101,6 +101,7 @@ public final class GameLogic {
 							board.getSecondGem().getRow() + ") are switched. This switch was unsuccesfull.");
 					// switches the two switched gems back
 					board.swap(firstgemrow, firstgemcol, row, col);
+					sounds.playErrorSound();
 				}
 			} // else {
 				// TODO: error sound;

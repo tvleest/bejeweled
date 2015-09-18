@@ -2,6 +2,7 @@ package bejeweled.board;
 import java.util.ArrayList;
 import java.util.Random;
 
+import bejeweled.Sounds;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -19,6 +20,7 @@ public class Board {
 	private boolean loadImages;
 	private static int score;
 	private final int scorePerGem = 10;
+	private Sounds sound;
 
 	/**
 	 * @param dimension - The dimensions of the board.
@@ -144,6 +146,8 @@ public class Board {
 	 */
 	public final boolean swap(int row1, int col1, int row2, int col2) {
 		if (!areNeighbours(gems[row1][col1], gems[row2][col2])) {
+			sound = new Sounds();
+	   		sound.playErrorSound();
 			return false;
 		}
 		Gem tempgem = gems[row1][col1];

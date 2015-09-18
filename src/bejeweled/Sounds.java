@@ -15,38 +15,60 @@ public class Sounds {
 		AudioClip selectSound;
 		AudioClip combinationSound;
 		AudioClip backgroundSound;
+		AudioClip errorSound;
+		AudioClip gameOverSound;
+		static int INDIFINITE;
     
 		/**
 		 * Assigns the sound to be played.
 		 */
 		public Sounds() {
-			 selectSound = new AudioClip(new File("src/Sounds/select.mp3").toURI().toString());
+			selectSound = new AudioClip(new File("src/Sounds/select.mp3").toURI().toString());
 			 combinationSound = new AudioClip(new File("src/Sounds/combination.mp3").toURI().toString());
+			 combinationSound.setVolume(0.5);
 			 backgroundSound = new AudioClip(new File("src/Sounds/bejeweled.mp3").toURI().toString());
 			 backgroundSound.setVolume(0.5);
+			 backgroundSound.setCycleCount(INDIFINITE);
+			 errorSound = new AudioClip(new File("src/Sounds/error.mp3").toURI().toString());
+			 gameOverSound = new AudioClip(new File("src/Sounds/gameover.mp3").toURI().toString());
 		}
 		
 		/**
-		 * Plays the sound effect.
+		 * Plays the select sound effect.
 		 */
 		public final void playSelectSound() {
 			 selectSound.play();
 		}
 		
 		/**
-		 * Plays the sound effect.
+		 * Plays the combination sound effect.
 		 */
 		public final void playCombinationSound() {
 			 combinationSound.play();
 		}
 		
 		/**
-		 * Plays the sound effect.
+		 * Plays the background sound effect.
 		 */
 		public final void playBackgroundSound() {
-			 backgroundSound.cycleCountProperty();
-			 backgroundSound.play();
+			  backgroundSound.play();
+			  backgroundSound.cycleCountProperty(); //it still doesn't loop properly..
 		}
+		
+		/**
+		 * Plays the error sound effect.
+		 */
+		public final void playErrorSound() {
+			 errorSound.play();
+		}
+		
+		/**
+		 * Plays the game over sound effect.
+		 */
+		public final void playGameOverSound() {
+			 gameOverSound.play();
+		}
+
 
 }
 
