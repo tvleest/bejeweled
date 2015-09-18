@@ -39,9 +39,7 @@ public final class GameLogic {
 	private HighScores highscores;
 	/**
 	 * 
-	 */
-	private Main main;
-	
+	 */	
 	private Sounds sounds;
 
 
@@ -49,11 +47,10 @@ public final class GameLogic {
 	 * @param offsetx the offset on the x-axis
 	 * @param offsety the offset on the y-axis
 	 */
-	public GameLogic(final int offsetx, final int offsety, Main m, boolean i) {
-		time = new Time(90, m);
+	public GameLogic(final int offsetx, final int offsety, boolean i) {
+		time = new Time(90);
 		board = new Board(8, offsetx, offsety, i);
 		highscores = new HighScores();
-		main = m;
 		sounds = new Sounds();
 	}
 

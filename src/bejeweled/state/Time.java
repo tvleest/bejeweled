@@ -5,11 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Time {
 	private int time;
-	private Main main;
 	
-	public Time(int t, Main m) {
+	public Time(int t) {
 		time = t;
-		main = m;
 	}
 	
 	/**
@@ -63,7 +61,7 @@ public class Time {
 	public void timeCheck() {
 		if (time < 1) {
 			time = Integer.MAX_VALUE;
-			main.gameOver();
+			Main.gameOver();
 		}
 	}
 }
