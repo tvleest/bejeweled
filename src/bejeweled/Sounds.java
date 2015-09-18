@@ -17,7 +17,6 @@ public class Sounds {
 		AudioClip backgroundSound;
 		AudioClip errorSound;
 		AudioClip gameOverSound;
-		static int INDIFINITE;
     
 		/**
 		 * Assigns the sound to be played.
@@ -26,9 +25,8 @@ public class Sounds {
 			selectSound = new AudioClip(new File("src/Sounds/select.mp3").toURI().toString());
 			 combinationSound = new AudioClip(new File("src/Sounds/combination.mp3").toURI().toString());
 			 combinationSound.setVolume(0.5);
-			 backgroundSound = new AudioClip(new File("src/Sounds/bejeweled.mp3").toURI().toString());
+			 backgroundSound = new AudioClip(new File("src/Sounds/bejeweled.wav").toURI().toString());
 			 backgroundSound.setVolume(0.5);
-			 backgroundSound.setCycleCount(INDIFINITE);
 			 errorSound = new AudioClip(new File("src/Sounds/error.mp3").toURI().toString());
 			 gameOverSound = new AudioClip(new File("src/Sounds/gameover.mp3").toURI().toString());
 		}
@@ -51,8 +49,8 @@ public class Sounds {
 		 * Plays the background sound effect.
 		 */
 		public final void playBackgroundSound() {
+			  backgroundSound.setCycleCount(AudioClip.INDEFINITE);
 			  backgroundSound.play();
-			  backgroundSound.cycleCountProperty(); //it still doesn't loop properly..
 		}
 		
 		/**
