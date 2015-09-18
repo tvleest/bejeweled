@@ -1,5 +1,7 @@
 bin/**
 bin/
 Bin/
+Logs/**
 highscores.txt
 testfile.txt
+target/classes/**
