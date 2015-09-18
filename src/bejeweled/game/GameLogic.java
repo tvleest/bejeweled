@@ -91,6 +91,12 @@ public final class GameLogic {
 					Main.getLogger().writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + "," + 
 							board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + "," + 
 							board.getSecondGem().getRow() + ") are switched. This switch was succesfull.");
+					if(first > 0) {
+						Main.getLogger().writeLineToLogger("A combination of " + first + " Gems was formed and deleted");
+					}
+					if(second > 0) {
+						Main.getLogger().writeLineToLogger("A combination of " + second + " Gems was formed and deleted");
+					}
 					for (int i = 0; i < first + second; i++) {
 						time.updateTime();
 						sounds.playCombinationSound();
