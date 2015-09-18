@@ -60,4 +60,8 @@ public final class Logger {
 		}
 	}
 	
+	public File getFile() {
+		return file;
+	}
+	
 }
