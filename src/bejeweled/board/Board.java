@@ -146,8 +146,7 @@ public class Board {
 	 */
 	public final boolean swap(int row1, int col1, int row2, int col2) {
 		if (!areNeighbours(gems[row1][col1], gems[row2][col2])) {
-			sound = new Sounds();
-	   		sound.playErrorSound();
+	   		Sounds.playErrorSound();
 			return false;
 		}
 		Gem tempgem = gems[row1][col1];

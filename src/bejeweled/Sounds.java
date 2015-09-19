@@ -12,11 +12,11 @@ import javafx.scene.media.MediaPlayer;
  *
  */
 public class Sounds {
-		AudioClip selectSound;
-		AudioClip combinationSound;
-		AudioClip backgroundSound;
-		AudioClip errorSound;
-		AudioClip gameOverSound;
+		static AudioClip selectSound;
+		static AudioClip combinationSound;
+		static AudioClip backgroundSound;
+		static AudioClip errorSound;
+		static AudioClip gameOverSound;
     
 		/**
 		 * Assigns the sound to be played.
@@ -34,21 +34,21 @@ public class Sounds {
 		/**
 		 * Plays the select sound effect.
 		 */
-		public final void playSelectSound() {
+		public static final void playSelectSound() {
 			 selectSound.play();
 		}
 		
 		/**
 		 * Plays the combination sound effect.
 		 */
-		public final void playCombinationSound() {
+		public static final void playCombinationSound() {
 			 combinationSound.play();
 		}
 		
 		/**
 		 * Plays the background sound effect.
 		 */
-		public final void playBackgroundSound() {
+		public static final void playBackgroundSound() {
 			  backgroundSound.setCycleCount(AudioClip.INDEFINITE);
 			  backgroundSound.play();
 		}
@@ -56,14 +56,14 @@ public class Sounds {
 		/**
 		 * Plays the error sound effect.
 		 */
-		public final void playErrorSound() {
+		public static final void playErrorSound() {
 			 errorSound.play();
 		}
 		
 		/**
 		 * Plays the game over sound effect.
 		 */
-		public final void playGameOverSound() {
+		public static final void playGameOverSound() {
 			 gameOverSound.play();
 		}
 
