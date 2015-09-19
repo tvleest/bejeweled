@@ -48,7 +48,7 @@ public final class GameLogic {
 	 * @param offsety the offset on the y-axis
 	 */
 	public GameLogic(final int offsetx, final int offsety, boolean i) {
-		time = new Time(90);
+		time = new Time(60); 		
 		board = new Board(8, offsetx, offsety, i);
 		highscores = new HighScores();
 		sounds = new Sounds();
@@ -101,11 +101,10 @@ public final class GameLogic {
 							board.getSecondGem().getRow() + ") are switched. This switch was unsuccesfull.");
 					// switches the two switched gems back
 					board.swap(firstgemrow, firstgemcol, row, col);
+					// play error sound
 					sounds.playErrorSound();
 				}
-			} // else {
-				// TODO: error sound;
-			//}
+			}
 			board.getSelectedgem().setSelected(false);
 			board.setSelectedgem(null);
 			board.setSecondGem(null);

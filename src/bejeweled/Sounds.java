@@ -22,13 +22,13 @@ public class Sounds {
 		 * Assigns the sound to be played.
 		 */
 		public Sounds() {
-			selectSound = new AudioClip(new File("src/Sounds/select.mp3").toURI().toString());
-			 combinationSound = new AudioClip(new File("src/Sounds/combination.mp3").toURI().toString());
+			selectSound = new AudioClip(new File("src/Sounds/select.wav").toURI().toString());
+			 combinationSound = new AudioClip(new File("src/Sounds/combination.wav").toURI().toString());
 			 combinationSound.setVolume(0.5);
 			 backgroundSound = new AudioClip(new File("src/Sounds/bejeweled.wav").toURI().toString());
 			 backgroundSound.setVolume(0.5);
-			 errorSound = new AudioClip(new File("src/Sounds/error.mp3").toURI().toString());
-			 gameOverSound = new AudioClip(new File("src/Sounds/gameover.mp3").toURI().toString());
+			 errorSound = new AudioClip(new File("src/Sounds/error.wav").toURI().toString());
+			 gameOverSound = new AudioClip(new File("src/Sounds/gameover.wav").toURI().toString());
 		}
 		
 		/**

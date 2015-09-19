@@ -159,7 +159,7 @@ public class Main extends Application {
 		int score = scene.getGameLogic().getBoard().getScore(); // get score
 		
 		sound = new Sounds(); // Play game over sound
-		sound.backgroundSound.stop();
+		sound.backgroundSound.stop(); // Stop background sound
 		sound.playGameOverSound(); 
 		
 		HighScores highscores = scene.getGameLogic().getHighScores();
@@ -175,13 +175,6 @@ public class Main extends Application {
 		rect.setArcWidth(30);
 		Text text = new Text("GAME OVER!");
 		Text name = new Text("You've scored " + score + " points!");
-		
-//		if (score >= HighScores.HighestScore{
-//			
-//			Text goodjob = new Text("You've got a new high score!");
-//			sound.backgroundSound.stop();
-//			sound.playGameOverSound(); 
-//		}
 		text.setLayoutX(200);
 		text.setLayoutY(30);
 		name.setLayoutX(30);

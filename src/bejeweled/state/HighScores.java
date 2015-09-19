@@ -36,9 +36,6 @@ public class HighScores {
 			e.printStackTrace();
 		}
 	 }
-	
-//	To determine the highest score in the ArrayList	
-//	public int HighestScore = allScores.get(1);
 		
 	/**
 	 * Add highscores from file to array allScores.
