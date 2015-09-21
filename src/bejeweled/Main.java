@@ -40,7 +40,7 @@ public class Main extends Application {
 	private static Stage stage;
 	private static Timeline timeline;
 	private static Group root;
-	private Sounds sound;
+	private static Sounds sound;
 	static Logger logger;
 
 	/**
@@ -53,6 +53,7 @@ public class Main extends Application {
 
 	@Override
 	public final void start(Stage primaryStage) throws Exception {
+		sound = new Sounds();
 		stage = primaryStage;
 		scene = new GameScene(new Group());
 		primaryStage.setTitle("Bejeweled group 30");
@@ -64,8 +65,6 @@ public class Main extends Application {
 		timeline.setCycleCount(Animation.INDEFINITE);
 		
 	    primaryStage.show();
-   		sound = new Sounds();
-   		sound.playBackgroundSound();
 	}
 	
 	/**
@@ -94,6 +93,7 @@ public class Main extends Application {
 
 			@Override
 			public void handle(ActionEvent e) {
+				Sounds.playSelectSound();
 				switchGame();
 				logger = new Logger();
 				logger.writeLineToLogger("The game has started.");
@@ -133,6 +133,7 @@ public class Main extends Application {
 		imgView.setFitHeight(600);
 		imgView.setFitWidth(800);
 		root.getChildren().add(imgView);
+   		Sounds.playBackgroundSound();
 		scene = new GameScene(root);
 		
 		  new AnimationTimer()
@@ -153,7 +154,11 @@ public class Main extends Application {
 	 * @param score - Achieved score.
 	 */
 	public final static void gameOver() {
-		int score = scene.getGameLogic().getBoard().getScore();
+		int score = scene.getGameLogic().getBoard().getScore(); // get score
+		
+		Sounds.stopBackgroundSound();// Stop background sound
+		Sounds.playGameOverSound(); 
+		
 		HighScores highscores = scene.getGameLogic().getHighScores();
 		
 		logger.writeLineToLogger("The game is over. The final score is " + score + ".");

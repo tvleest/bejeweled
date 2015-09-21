@@ -48,10 +48,9 @@ public final class GameLogic {
 	 * @param offsety the offset on the y-axis
 	 */
 	public GameLogic(final int offsetx, final int offsety, boolean i) {
-		time = new Time(90);
+		time = new Time(60); 		
 		board = new Board(8, offsetx, offsety, i);
 		highscores = new HighScores();
-		sounds = new Sounds();
 	}
 
 	/**
@@ -76,7 +75,7 @@ public final class GameLogic {
 	 */
 	public void handleMouseClicked(final int row, final int col) {
 		Main.getLogger().writeLineToLogger("Mouse clicked on row " + row + " and col " + col);
-		sounds.playSelectSound();
+		Sounds.playSelectSound();
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);
@@ -93,7 +92,7 @@ public final class GameLogic {
 							board.getSecondGem().getRow() + ") are switched. This switch was succesfull.");
 					for (int i = 0; i < first + second; i++) {
 						time.updateTime();
-						sounds.playCombinationSound();
+						Sounds.playCombinationSound();
 					}
 				} else {			// if there are no combinations found after the move
 					Main.getLogger().writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + "," + 
@@ -101,10 +100,10 @@ public final class GameLogic {
 							board.getSecondGem().getRow() + ") are switched. This switch was unsuccesfull.");
 					// switches the two switched gems back
 					board.swap(firstgemrow, firstgemcol, row, col);
+					// play error sound
+					Sounds.playErrorSound();
 				}
-			} // else {
-				// TODO: error sound;
-			//}
+			}
 			board.getSelectedgem().setSelected(false);
 			board.setSelectedgem(null);
 			board.setSecondGem(null);

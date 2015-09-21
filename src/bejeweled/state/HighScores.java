@@ -36,7 +36,7 @@ public class HighScores {
 			e.printStackTrace();
 		}
 	 }
-	
+		
 	/**
 	 * Add highscores from file to array allScores.
 	 * @param score - score to add to the highscores list.
