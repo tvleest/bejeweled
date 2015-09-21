@@ -12,11 +12,11 @@ import javafx.scene.media.MediaPlayer;
  *
  */
 public class Sounds {
-		static AudioClip selectSound;
-		static AudioClip combinationSound;
-		static AudioClip backgroundSound;
-		static AudioClip errorSound;
-		static AudioClip gameOverSound;
+		private static AudioClip selectSound;
+		private static AudioClip combinationSound;
+		private static AudioClip backgroundSound;
+		private static AudioClip errorSound;
+		private static AudioClip gameOverSound;
     
 		/**
 		 * Assigns the sound to be played.
@@ -27,6 +27,7 @@ public class Sounds {
 			 combinationSound.setVolume(0.5);
 			 backgroundSound = new AudioClip(new File("src/Sounds/bejeweled.wav").toURI().toString());
 			 backgroundSound.setVolume(0.5);
+			 backgroundSound.setCycleCount(AudioClip.INDEFINITE);
 			 errorSound = new AudioClip(new File("src/Sounds/error.wav").toURI().toString());
 			 gameOverSound = new AudioClip(new File("src/Sounds/gameover.wav").toURI().toString());
 		}
@@ -49,8 +50,14 @@ public class Sounds {
 		 * Plays the background sound effect.
 		 */
 		public static final void playBackgroundSound() {
-			  backgroundSound.setCycleCount(AudioClip.INDEFINITE);
 			  backgroundSound.play();
+		}
+		
+		/**
+		 * Stops the background sound effect.
+		 */
+		public static final void stopBackgroundSound() {
+			  backgroundSound.stop();
 		}
 		
 		/**

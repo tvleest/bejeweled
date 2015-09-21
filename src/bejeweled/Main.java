@@ -134,7 +134,6 @@ public class Main extends Application {
 		imgView.setFitWidth(800);
 		root.getChildren().add(imgView);
    		Sounds.playBackgroundSound();
-   		Sounds.backgroundSound.cycleCountProperty();
 		scene = new GameScene(root);
 		
 		  new AnimationTimer()
@@ -157,7 +156,7 @@ public class Main extends Application {
 	public final static void gameOver() {
 		int score = scene.getGameLogic().getBoard().getScore(); // get score
 		
-		Sounds.backgroundSound.stop(); // Stop background sound
+		Sounds.stopBackgroundSound();// Stop background sound
 		Sounds.playGameOverSound(); 
 		
 		HighScores highscores = scene.getGameLogic().getHighScores();

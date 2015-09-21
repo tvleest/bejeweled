@@ -1,8 +1,8 @@
 package bejeweled.board;
 import java.util.ArrayList;
 import java.util.Random;
-
 import bejeweled.Sounds;
+import bejeweled.Main;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
@@ -294,6 +294,7 @@ public class Board {
 		}
 
 		if (array.size() >= 2) {
+			Main.getLogger().writeLineToLogger("A horizontal combination of " + array.size() + " gems of type " + type + " was formed and deleted.");
 			return array;
 		} else {
 			return new ArrayList<Gem>();
@@ -324,6 +325,7 @@ public class Board {
 		}
 
 		if (array.size() >= 2) {
+			Main.getLogger().writeLineToLogger("A vertical combination of " + array.size() + " gems of type " + type + " was formed and deleted.");
 			return array;
 		} else {
 			return new ArrayList<Gem>();
@@ -335,7 +337,9 @@ public class Board {
 	 * Updates score based on an amount of gems
 	 */
 	public final void updateScore(int amountOfGems) {
-		score += scorePerGem * amountOfGems;
+		int increase = scorePerGem * amountOfGems;
+		score += increase;
+		Main.getLogger().writeLineToLogger("The player scores "+increase+" points. The total score is now: "+score);
 	}
 	
 	/**
