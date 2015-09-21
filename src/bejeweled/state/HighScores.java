@@ -33,7 +33,8 @@ public class HighScores {
 		try {
 			allScores = readScoreFile();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Could not find highscores.txt");
+			allScores = new ArrayList<Integer>();
 		}
 	 }
 		
