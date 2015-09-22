@@ -25,6 +25,7 @@ public class LoggerTest {
 	 */
 	@Before
 	public final void setUp() {
+		Logger.getInstance().disposeLogger();
 	}
 	
 	/**
