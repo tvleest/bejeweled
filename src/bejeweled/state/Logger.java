@@ -54,7 +54,7 @@ public final class Logger {
 			writer.write(logline);
 			if(flushCounter>amountOfLinesPerFlush){
 				writer.flush();
-				flushCounter=1;
+				flushCounter=0;
 			}
 		} catch (IOException e) {
 			System.out.println("Something went wrong while writing to the BufferedWriter in Logger");
