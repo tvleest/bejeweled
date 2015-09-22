@@ -35,6 +35,7 @@ public class LoggerTest {
 	public final void updateLoggerTest() {
 		File f = Logger.getInstance().getFile();
 		Logger.getInstance().writeLineToLogger("Hello World!");
+		Logger.getInstance().disposeLogger();
 		String line = null;
 		try {
 			BufferedReader readfile = new BufferedReader(new FileReader(f));
@@ -56,6 +57,7 @@ public class LoggerTest {
 		File f = Logger.getInstance().getFile();
 		Logger.getInstance().writeLineToLogger("Hello World!");
 		Logger.getInstance().writeLineToLogger("Second test");
+		Logger.getInstance().disposeLogger();
 		String line = null;
 		String line2 = null;
 		try {
