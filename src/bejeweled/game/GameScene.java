@@ -89,11 +89,12 @@ public class GameScene extends Scene {
 		return gc;
 	}
 	
-	public void DrawPopup() { // Not shure if this is the right spot to place this code
-		Time startTime = gamelogic.getTime();
+	public static void DrawPopup() { // Not shure if this is the right spot to place this code
+		Time startTime = Time.getTime();
+		int showtime = 2;
 		
-		while (GameLogic.getTime()+1 <= startTime){ 
-			// How do I get the current time en add 1 second to it?
+		while (startTime+showtime <= Time.getTime()){ 
+			// How do I get the current time and add 1 second to it?
 					
 		ArrayList<String> shouts = new ArrayList<>();
 		shouts.add(1, "Good Job!");
