@@ -20,8 +20,9 @@ public final class Logger {
 	private FileWriter filewriter;
 	private BufferedWriter writer;
 	private File file;
+	private static Logger logger = null;
 	
-	public Logger() {
+	private Logger() {
 		Date d = new Date();
 		String date = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss").format(d);
 		file = new File("Logs/" + date +".txt");
@@ -32,6 +33,14 @@ public final class Logger {
 			System.out.println("Something went wrong with the FileWriter in Logger");
 		}
 		writer = new BufferedWriter(filewriter);
+	}
+	
+	//this method 
+	public static Logger getInstance() {
+	      if(logger == null) {
+	         logger = new Logger();
+	      }
+	      return logger;
 	}
 	
 	public void writeLineToLogger(String s){
@@ -52,9 +61,10 @@ public final class Logger {
 		}
 	}
 	
-	public void close() {
+	public void disposeLogger() {
 		try {
 			writer.close();
+			logger = null;
 		} catch (IOException e) {
 			System.out.println("Something went wrong while closing the BufferedWriter in Logger");
 		}

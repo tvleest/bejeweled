@@ -41,7 +41,6 @@ public class Main extends Application {
 	private static Timeline timeline;
 	private static Group root;
 	private static Sounds sound;
-	static Logger logger;
 
 	/**
 	 * @param args
@@ -95,8 +94,7 @@ public class Main extends Application {
 			public void handle(ActionEvent e) {
 				Sounds.playSelectSound();
 				switchGame();
-				logger = new Logger();
-				logger.writeLineToLogger("The game has started.");
+				Logger.getInstance().writeLineToLogger("The game has started.");
 			}
 		}); //start the game
 		
@@ -161,7 +159,8 @@ public class Main extends Application {
 		
 		HighScores highscores = scene.getGameLogic().getHighScores();
 		
-		logger.writeLineToLogger("The game is over. The final score is " + score + ".");
+		Logger.getInstance().writeLineToLogger("The game is over. The final score is " + score + ".");
+		Logger.getInstance().disposeLogger();
 		
 		Popup popup = new Popup();
 		popup.centerOnScreen();
@@ -200,9 +199,5 @@ public class Main extends Application {
 			}
 		});
 		
-	}
-	
-	public static Logger getLogger() {
-		return logger;
 	}
 }

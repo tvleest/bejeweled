@@ -18,7 +18,6 @@ import bejeweled.state.Logger;
  * @author group30
  */
 public class LoggerTest {
-	Logger logger;
 	private final int STARTINDEX = 13;
 	
 	/**
@@ -26,7 +25,6 @@ public class LoggerTest {
 	 */
 	@Before
 	public final void setUp() {
-		logger = new Logger();
 	}
 	
 	/**
@@ -34,8 +32,8 @@ public class LoggerTest {
 	 */
 	@Test
 	public final void updateLoggerTest() {
-		File f = logger.getFile();
-		logger.writeLineToLogger("Hello World!");
+		File f = Logger.getInstance().getFile();
+		Logger.getInstance().writeLineToLogger("Hello World!");
 		String line = null;
 		try {
 			BufferedReader readfile = new BufferedReader(new FileReader(f));
@@ -54,9 +52,9 @@ public class LoggerTest {
 	 */
 	@Test
 	public final void updateLoggerTest2() {
-		File f = logger.getFile();
-		logger.writeLineToLogger("Hello World!");
-		logger.writeLineToLogger("Second test");
+		File f = Logger.getInstance().getFile();
+		Logger.getInstance().writeLineToLogger("Hello World!");
+		Logger.getInstance().writeLineToLogger("Second test");
 		String line = null;
 		String line2 = null;
 		try {
