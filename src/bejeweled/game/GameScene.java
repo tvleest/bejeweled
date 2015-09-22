@@ -4,14 +4,22 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
 
 import bejeweled.Main;
 import bejeweled.state.Logger;
+import bejeweled.state.Time;
 
 /**
  * @author Timo
@@ -80,4 +88,36 @@ public class GameScene extends Scene {
 	public GraphicsContext getGraphicsContext() {
 		return gc;
 	}
+	
+	public void DrawPopup() { // Not shure if this is the right spot to place this code
+		Time startTime = gamelogic.getTime();
+		
+		while (GameLogic.getTime()+1 <= startTime){ 
+			// How do I get the current time en add 1 second to it?
+					
+		ArrayList<String> shouts = new ArrayList<>();
+		shouts.add(1, "Good Job!");
+		shouts.add(2, "Keep on going!");
+		shouts.add(3, "Nice Work!");
+		
+		Random randomGenerator = new Random();
+		int index = randomGenerator.nextInt(shouts.size());
+		String item = shouts.get(index);
+				
+		DropShadow ds = new DropShadow();
+		ds.setOffsetY(3.0f);
+		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+		 
+		Text t = new Text();
+		t.setEffect(ds);
+		t.setCache(true);
+		t.setX(150);
+		t.setY(270);
+		t.setFill(Color.GOLD);
+		t.setText(item);
+		t.setFont(Font.font("Arial", FontWeight.BOLD, 72));
+		}
+	}
+	
+	
 }
