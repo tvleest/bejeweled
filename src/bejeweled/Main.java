@@ -52,7 +52,6 @@ public class Main extends Application {
 
 	@Override
 	public final void start(Stage primaryStage) throws Exception {
-		sound = new Sounds();
 		stage = primaryStage;
 		scene = new GameScene(new Group());
 		primaryStage.setTitle("Bejeweled group 30");
@@ -92,7 +91,7 @@ public class Main extends Application {
 
 			@Override
 			public void handle(ActionEvent e) {
-				Sounds.playSelectSound();
+				Sounds.getInstance().playSelectSound();
 				switchGame();
 				Logger.getInstance().writeLineToLogger("The game has started.");
 			}
@@ -131,7 +130,7 @@ public class Main extends Application {
 		imgView.setFitHeight(600);
 		imgView.setFitWidth(800);
 		root.getChildren().add(imgView);
-   		Sounds.playBackgroundSound();
+   		Sounds.getInstance().playBackgroundSound();
 		scene = new GameScene(root);
 		
 		  new AnimationTimer()
@@ -154,8 +153,8 @@ public class Main extends Application {
 	public final static void gameOver() {
 		int score = scene.getGameLogic().getBoard().getScore(); // get score
 		
-		Sounds.stopBackgroundSound();// Stop background sound
-		Sounds.playGameOverSound(); 
+		Sounds.getInstance().stopBackgroundSound();// Stop background sound
+		Sounds.getInstance().playGameOverSound(); 
 		
 		HighScores highscores = scene.getGameLogic().getHighScores();
 		

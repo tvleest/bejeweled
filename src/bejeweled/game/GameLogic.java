@@ -75,7 +75,7 @@ public final class GameLogic {
 	 */
 	public void handleMouseClicked(final int row, final int col) {
 		Logger.getInstance().writeLineToLogger("Mouse clicked on row " + row + " and col " + col);
-		Sounds.playSelectSound();
+		Sounds.getInstance().playSelectSound();
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);
@@ -92,7 +92,7 @@ public final class GameLogic {
 							board.getSecondGem().getRow() + ") are switched. This switch was succesfull.");
 					for (int i = 0; i < first + second; i++) {
 						time.updateTime();
-						Sounds.playCombinationSound();
+						Sounds.getInstance().playCombinationSound();
 					}
 				} else {			// if there are no combinations found after the move
 					Logger.getInstance().writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + "," + 
@@ -101,7 +101,7 @@ public final class GameLogic {
 					// switches the two switched gems back
 					board.swap(firstgemrow, firstgemcol, row, col);
 					// play error sound
-					Sounds.playErrorSound();
+					Sounds.getInstance().playErrorSound();
 				}
 			}
 			board.getSelectedgem().setSelected(false);

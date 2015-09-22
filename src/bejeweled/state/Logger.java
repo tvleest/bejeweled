@@ -35,7 +35,7 @@ public final class Logger {
 		writer = new BufferedWriter(filewriter);
 	}
 	
-	//this method 
+	//This method is part of the singleton pattern
 	public static Logger getInstance() {
 	      if(logger == null) {
 	         logger = new Logger();
