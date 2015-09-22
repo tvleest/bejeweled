@@ -2,6 +2,7 @@ package bejeweled;
 
 import java.io.File;
 
+import bejeweled.state.Logger;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -11,17 +12,19 @@ import javafx.scene.media.MediaPlayer;
  * @author - group 30
  *
  */
-public class Sounds {
+public final class Sounds {
 		private static AudioClip selectSound;
 		private static AudioClip combinationSound;
 		private static AudioClip backgroundSound;
 		private static AudioClip errorSound;
 		private static AudioClip gameOverSound;
+		
+		private static Sounds sounds = null;
     
 		/**
 		 * Assigns the sound to be played.
 		 */
-		public Sounds() {
+		private Sounds() {
 			selectSound = new AudioClip(new File("src/Sounds/select.wav").toURI().toString());
 			 combinationSound = new AudioClip(new File("src/Sounds/combination.wav").toURI().toString());
 			 combinationSound.setVolume(0.5);
@@ -32,45 +35,53 @@ public class Sounds {
 			 gameOverSound = new AudioClip(new File("src/Sounds/gameover.wav").toURI().toString());
 		}
 		
+		//This method is part of the singleton pattern
+		public static Sounds getInstance() {
+		      if(sounds == null) {
+		         sounds = new Sounds();
+		      }
+		      return sounds;
+		}
+		
 		/**
 		 * Plays the select sound effect.
 		 */
-		public static final void playSelectSound() {
+		public void playSelectSound() {
 			 selectSound.play();
 		}
 		
 		/**
 		 * Plays the combination sound effect.
 		 */
-		public static final void playCombinationSound() {
+		public void playCombinationSound() {
 			 combinationSound.play();
 		}
 		
 		/**
 		 * Plays the background sound effect.
 		 */
-		public static final void playBackgroundSound() {
+		public void playBackgroundSound() {
 			  backgroundSound.play();
 		}
 		
 		/**
 		 * Stops the background sound effect.
 		 */
-		public static final void stopBackgroundSound() {
+		public void stopBackgroundSound() {
 			  backgroundSound.stop();
 		}
 		
 		/**
 		 * Plays the error sound effect.
 		 */
-		public static final void playErrorSound() {
+		public void playErrorSound() {
 			 errorSound.play();
 		}
 		
 		/**
 		 * Plays the game over sound effect.
 		 */
-		public static final void playGameOverSound() {
+		public void playGameOverSound() {
 			 gameOverSound.play();
 		}
 

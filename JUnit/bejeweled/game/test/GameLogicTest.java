@@ -54,6 +54,6 @@ public class GameLogicTest {
 		assertNull(b.getSelectedgem());
 		gl.handleMouseClicked(0, 0);
 		gl.handleMouseClicked(1, 0);
-		assertEquals(gl.getTime().getTime(), 93);
+		assertEquals(gl.getTime().getTime(), 63);
 	}
 }

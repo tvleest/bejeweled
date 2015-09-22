@@ -2,6 +2,7 @@ package bejeweled.board;
 import java.util.ArrayList;
 import java.util.Random;
 import bejeweled.Sounds;
+import bejeweled.state.Logger;
 import bejeweled.Main;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -146,7 +147,7 @@ public class Board {
 	 */
 	public final boolean swap(int row1, int col1, int row2, int col2) {
 		if (!areNeighbours(gems[row1][col1], gems[row2][col2])) {
-	   		Sounds.playErrorSound();
+	   		Sounds.getInstance().playErrorSound();
 			return false;
 		}
 		Gem tempgem = gems[row1][col1];
@@ -294,7 +295,7 @@ public class Board {
 		}
 
 		if (array.size() >= 2) {
-			Main.getLogger().writeLineToLogger("A horizontal combination of " + array.size() + " gems of type " + type + " was formed and deleted.");
+			Logger.getInstance().writeLineToLogger("A horizontal combination of " + array.size() + " gems of type " + type + " was formed and deleted.");
 			return array;
 		} else {
 			return new ArrayList<Gem>();
@@ -325,7 +326,7 @@ public class Board {
 		}
 
 		if (array.size() >= 2) {
-			Main.getLogger().writeLineToLogger("A vertical combination of " + array.size() + " gems of type " + type + " was formed and deleted.");
+			Logger.getInstance().writeLineToLogger("A vertical combination of " + array.size() + " gems of type " + type + " was formed and deleted.");
 			return array;
 		} else {
 			return new ArrayList<Gem>();
@@ -339,7 +340,7 @@ public class Board {
 	public final void updateScore(int amountOfGems) {
 		int increase = scorePerGem * amountOfGems;
 		score += increase;
-		Main.getLogger().writeLineToLogger("The player scores "+increase+" points. The total score is now: "+score);
+		Logger.getInstance().writeLineToLogger("The player scores "+increase+" points. The total score is now: "+score);
 	}
 	
 	/**
