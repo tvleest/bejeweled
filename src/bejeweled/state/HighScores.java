@@ -33,10 +33,11 @@ public class HighScores {
 		try {
 			allScores = readScoreFile();
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Could not find highscores.txt");
+			allScores = new ArrayList<Integer>();
 		}
 	 }
-	
+		
 	/**
 	 * Add highscores from file to array allScores.
 	 * @param score - score to add to the highscores list.
