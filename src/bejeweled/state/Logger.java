@@ -21,6 +21,8 @@ public final class Logger {
 	private BufferedWriter writer;
 	private File file;
 	private static Logger logger = null;
+	private int flushCounter = 0;
+	private int amountOfLinesPerFlush = 5;
 	
 	private Logger() {
 		Date d = new Date();
@@ -44,12 +46,16 @@ public final class Logger {
 	}
 	
 	public void writeLineToLogger(String s){
+		flushCounter++;
 		Date d = new Date();
 		String date = new SimpleDateFormat("HH:mm:ss").format(d);
 		String logline = date + "  -  " + s + "\r\n";
 		try {
 			writer.write(logline);
-			writer.flush();
+			if(flushCounter>amountOfLinesPerFlush){
+				writer.flush();
+				flushCounter=1;
+			}
 		} catch (IOException e) {
 			System.out.println("Something went wrong while writing to the BufferedWriter in Logger");
 			try {
@@ -63,6 +69,7 @@ public final class Logger {
 	
 	public void disposeLogger() {
 		try {
+			writer.flush();
 			writer.close();
 			logger = null;
 		} catch (IOException e) {
