@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import bejeweled.game.GameScene;
+import bejeweled.gui.Buttons;
 import bejeweled.state.HighScores;
 import bejeweled.state.Logger;
 import javafx.animation.Animation;
@@ -74,7 +75,6 @@ public class Main extends Application {
 	 */
 	public final static void switchMenu() {
 		root = new Group();
-		Font font = Font.font(72);
 		
 		// load background
 		Image background = new Image("Images/MenuBackground.png");
@@ -83,14 +83,8 @@ public class Main extends Application {
 		imgView.setFitWidth(800);
 		
 		// make two buttons for the menu
-		Button newGameButton = new Button("NEW GAME");
-		newGameButton.setFont(font);
-		newGameButton.setLayoutX(170);
-		newGameButton.setLayoutY(270);
-		CornerRadii r = new CornerRadii(10);
-		Insets insets = new Insets(10);
-		Background buttonBack = new Background(new BackgroundFill(Color.GOLD, r, insets));
-		newGameButton.setBackground(buttonBack);
+		Button newGameButton = Buttons.menuButton("NEW GAME", 170, 270);
+		
 		newGameButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -101,11 +95,8 @@ public class Main extends Application {
 			}
 		}); //start the game
 		
-		Button exitButton = new Button("EXIT");
-		exitButton.setFont(font);
-		exitButton.setLayoutX(290);
-		exitButton.setLayoutY(430);
-		exitButton.setBackground(buttonBack);
+		Button exitButton = Buttons.menuButton("EXIT", 290, 430);
+
 		exitButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -114,13 +105,12 @@ public class Main extends Application {
 			}
 		});
 		
-		Button continueButton = new Button("CONTINUE");
-		continueButton.setFont(font);
-		continueButton.setLayoutX(183);
-		continueButton.setLayoutY(110);
-		continueButton.setBackground(buttonBack);
+		Button continueButton = Buttons.menuButton("CONTINUE", 183, 110);
 		continueButton.setOpacity(0.35);
+		continueButton.setDisable(true);
+		
 		if(file.exists()) {
+			continueButton.setDisable(false);
 			continueButton.setOpacity(1);
 			continueButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -154,46 +144,14 @@ public class Main extends Application {
 		imgView.setFitHeight(600);
 		imgView.setFitWidth(800);
 		
-		Image saveIcon = new Image("Images/save.png");
-		ImageView saveIconView = new ImageView(saveIcon);
-		
+
 		Rectangle rect = new Rectangle(210, 35, Color.CHOCOLATE);
 		rect.setLayoutX(555);
 		rect.setLayoutY(565);
 		
-		saveIconView.setFitHeight(25);
-		saveIconView.setFitWidth(25);
-		Button saveButton = new Button("", saveIconView);
-		Background buttonBack1 = new Background(new BackgroundFill(Color.WHITE, null, null));
-		Background buttonBack2 = new Background(new BackgroundFill(Color.BLACK, null, null));
-		saveButton.setBackground(buttonBack1);
-		saveButton.setLayoutX(700);
-		saveButton.setLayoutY(565);
 		
-		saveButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				saveButton.setBackground(buttonBack2);
-			}
-			
-		});
 		
-		saveButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				saveButton.setBackground(buttonBack1);
-			}
-		});
-		
-		saveButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				//Write gamestate to file to save the game.
-				System.out.println("test");
-			}
-		});
-		
-		root.getChildren().addAll(imgView, rect, saveButton);
+		root.getChildren().addAll(imgView, rect);
    		Sounds.getInstance().playBackgroundSound();
    		
    		if(!savedGame) {
