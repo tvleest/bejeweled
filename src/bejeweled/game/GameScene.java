@@ -1,16 +1,24 @@
 package bejeweled.game;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 
 import bejeweled.Main;
+import bejeweled.gui.Buttons;
 import bejeweled.state.Logger;
 
 /**
@@ -35,6 +43,18 @@ public class GameScene extends Scene {
 		super(root);
 		Canvas canvas = new Canvas(800, 600);
    		root.getChildren().add(canvas);
+		
+   		Image saveIcon = new Image("Images/save.png");
+   		Button saveButton = Buttons.subMenuButton(null, saveIcon, 700, 565);
+		
+		saveButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				//Write gamestate to file to save the game.
+			}
+		});
+		
+		root.getChildren().add(saveButton);
    		gc = canvas.getGraphicsContext2D();
    		gamelogic = new GameLogic(OFFSETX, OFFSETY, true);
    		
