@@ -2,6 +2,7 @@ package bejeweled.board;
 import java.util.ArrayList;
 import java.util.Random;
 import bejeweled.Sounds;
+import bejeweled.state.Logger;
 import bejeweled.Main;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -12,7 +13,6 @@ import javafx.scene.canvas.GraphicsContext;
 public class Board {
 	private Gem[][] gems;
 	private int dimension;
-	private Random random = new Random();
 	private Gem selectedgem = null;
 	private Gem secondGem = null;
 	private int offsetx;
@@ -43,7 +43,7 @@ public class Board {
 	 *            Backtrack method
 	 */
 	public final void fillBoard(int col, int row) {
-		int type = random.nextInt(6) + 1;
+		GemType type = GemType.getRandomGemType();
 		if (rowCheck(row, col, type) && colCheck(row, col, type)) {
 			Gem gem = new Gem(row, col, offsetx, offsety, type, loadImages);
 			gems[row][col] = gem;
@@ -73,7 +73,7 @@ public class Board {
 	 * @param type - type of the gem
 	 * @return - boolean based on the gem forming a combination or not.
 	 */
-	public final boolean rowCheck(int row, int col, int type) {
+	public final boolean rowCheck(int row, int col, GemType type) {
 		if (col <= 1) {
 			return true;
 		} else if (gems[row][col - 1].getType() == type && gems[row][col - 2].getType() == type) {
@@ -90,7 +90,7 @@ public class Board {
 	 * @param type - type of the gem
 	 * @return - boolean based on the gem forming a combination or not.
 	 */
-	public final boolean colCheck(int row, int col, int type) {
+	public final boolean colCheck(int row, int col, GemType type) {
 		if (row <= 1) {
 			return true;
 		} else if (gems[row - 1][col].getType() == type && gems[row - 2][col].getType() == type) {
@@ -119,16 +119,13 @@ public class Board {
 	 *            above this gem a place down
 	 */
 	public final void delete(int row, int col) {
-		gems[row][col].delete();
-
 		// move all blocks above the deleted block down
 		for (int r = row; r >= 0; r--) {
 			if (r >= 1) {
 				gems[r - 1][col].setPosition(r, col);
 				gems[r][col] = gems[r - 1][col];
 			} else {
-				int type = random.nextInt(6) + 1; // take a random number out of
-													// 1,2,3,4,5,6
+				GemType type = GemType.getRandomGemType();
 				Gem gem = new Gem(0, col, offsetx, offsety, type, loadImages);
 				gems[0][col] = gem;
 			}
@@ -146,7 +143,7 @@ public class Board {
 	 */
 	public final boolean swap(int row1, int col1, int row2, int col2) {
 		if (!areNeighbours(gems[row1][col1], gems[row2][col2])) {
-	   		Sounds.playErrorSound();
+	   		Sounds.getInstance().playErrorSound();
 			return false;
 		}
 		Gem tempgem = gems[row1][col1];
@@ -278,7 +275,7 @@ public class Board {
 	 * @return array - array of a combination. Empty if there is none.
 	 */
 	public final ArrayList<Gem> deleteHorizontal(Gem g) {
-		int type = g.getType();
+		GemType type = g.getType();
 		Gem leftgem = getLeft(g);
 		Gem rightgem = getRight(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
@@ -294,7 +291,7 @@ public class Board {
 		}
 
 		if (array.size() >= 2) {
-			Main.getLogger().writeLineToLogger("A horizontal combination of " + array.size() + " gems of type " + type + " was formed and deleted.");
+			Logger.getInstance().writeLineToLogger("A horizontal combination of " + array.size() + " gems of type " + type + " was formed and deleted.");
 			return array;
 		} else {
 			return new ArrayList<Gem>();
@@ -309,7 +306,7 @@ public class Board {
 	 * @return array - array of a combination. Empty if there is none.
 	 */
 	public final ArrayList<Gem> deleteVertical(Gem g) {
-		int type = g.getType();
+		GemType type = g.getType();
 		Gem upgem = getUpper(g);
 		Gem downgem = getBelow(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
@@ -325,7 +322,7 @@ public class Board {
 		}
 
 		if (array.size() >= 2) {
-			Main.getLogger().writeLineToLogger("A vertical combination of " + array.size() + " gems of type " + type + " was formed and deleted.");
+			Logger.getInstance().writeLineToLogger("A vertical combination of " + array.size() + " gems of type " + type + " was formed and deleted.");
 			return array;
 		} else {
 			return new ArrayList<Gem>();
@@ -339,7 +336,7 @@ public class Board {
 	public final void updateScore(int amountOfGems) {
 		int increase = scorePerGem * amountOfGems;
 		score += increase;
-		Main.getLogger().writeLineToLogger("The player scores "+increase+" points. The total score is now: "+score);
+		Logger.getInstance().writeLineToLogger("The player scores "+increase+" points. The total score is now: "+score);
 	}
 	
 	/**

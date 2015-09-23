@@ -20,8 +20,11 @@ public final class Logger {
 	private FileWriter filewriter;
 	private BufferedWriter writer;
 	private File file;
+	private static Logger logger = null;
+	private int flushCounter = 0;
+	private int amountOfLinesPerFlush = 5;
 	
-	public Logger() {
+	private Logger() {
 		Date d = new Date();
 		String date = new SimpleDateFormat("yyyy-MM-dd-HH.mm.ss").format(d);
 		file = new File("Logs/" + date +".txt");
@@ -34,13 +37,25 @@ public final class Logger {
 		writer = new BufferedWriter(filewriter);
 	}
 	
+	//This method is part of the singleton pattern
+	public static Logger getInstance() {
+	      if(logger == null) {
+	         logger = new Logger();
+	      }
+	      return logger;
+	}
+	
 	public void writeLineToLogger(String s){
+		flushCounter++;
 		Date d = new Date();
 		String date = new SimpleDateFormat("HH:mm:ss").format(d);
 		String logline = date + "  -  " + s + "\r\n";
 		try {
 			writer.write(logline);
-			writer.flush();
+			if(flushCounter>amountOfLinesPerFlush){
+				writer.flush();
+				flushCounter=0;
+			}
 		} catch (IOException e) {
 			System.out.println("Something went wrong while writing to the BufferedWriter in Logger");
 			try {
@@ -52,9 +67,11 @@ public final class Logger {
 		}
 	}
 	
-	public void close() {
+	public void disposeLogger() {
 		try {
+			writer.flush();
 			writer.close();
+			logger = null;
 		} catch (IOException e) {
 			System.out.println("Something went wrong while closing the BufferedWriter in Logger");
 		}

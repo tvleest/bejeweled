@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
+import bejeweled.board.GemType;
 
 /**
  * @author Timo
@@ -28,8 +29,8 @@ public class BoardTest {
 		gems = board.getGems();
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
-				assertTrue(1 <= gems[row][col].getType());
-				assertTrue(gems[row][col].getType() <= 6);
+				assertNotNull(gems[row][col].getType());
+				assertNotNull(gems[row][col].getType());
 			}
 		}
 	}
@@ -42,11 +43,11 @@ public class BoardTest {
 	public final void testRowCheck() {
 		board = new Board(3, 0, 0, false);
 		gems = board.getGems();
-		gems[0][0].setType(1);
-		gems[0][1].setType(1);
-		assertFalse(board.rowCheck(0, 2, 1));
-		gems[0][0].setType(2);
-		assertTrue(board.rowCheck(0, 2, 1));
+		gems[0][0].setType(GemType.RED);
+		gems[0][1].setType(GemType.RED);
+		assertFalse(board.rowCheck(0, 2, GemType.RED));
+		gems[0][0].setType(GemType.BLUE);
+		assertTrue(board.rowCheck(0, 2, GemType.RED));
 	}
 
 	/**
@@ -57,11 +58,11 @@ public class BoardTest {
 	public final void testColCheck() {
 		board = new Board(3, 0, 0, false);
 		gems = board.getGems();
-		gems[0][0].setType(1);
-		gems[1][0].setType(1);
-		assertFalse(board.colCheck(2, 0, 1));
-		gems[0][0].setType(2);
-		assertTrue(board.colCheck(2, 0, 1));
+		gems[0][0].setType(GemType.RED);
+		gems[1][0].setType(GemType.RED);
+		assertFalse(board.colCheck(2, 0, GemType.RED));
+		gems[0][0].setType(GemType.BLUE);
+		assertTrue(board.colCheck(2, 0, GemType.RED));
 	}
 
 	/**
@@ -73,8 +74,8 @@ public class BoardTest {
 	public final void testDelete() {
 		board = new Board(3, 0, 0, false);
 		gems = board.getGems();
-		gems[0][0].setType(1);
-		gems[1][0].setType(1);
+		gems[0][0].setType(GemType.RED);
+		gems[1][0].setType(GemType.RED);
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[1][0];
 		board.delete(2, 0);
@@ -186,13 +187,13 @@ public class BoardTest {
 	public final void testDeleteRows() {
 		board = new Board(3, 0, 0, false);
 		gems = board.getGems();
-		gems[0][0].setType(1);
-		gems[0][1].setType(1);
-		gems[0][2].setType(1);
+		gems[0][0].setType(GemType.RED);
+		gems[0][1].setType(GemType.RED);
+		gems[0][2].setType(GemType.RED);
 		assertTrue(board.deleteRows(gems[0][0]) > 0);
-		gems[0][1].setType(2);
-		gems[1][0].setType(2);
-		gems[0][0].setType(1);
+		gems[0][1].setType(GemType.BLUE);
+		gems[1][0].setType(GemType.BLUE);
+		gems[0][0].setType(GemType.RED);
 		assertTrue(board.deleteRows(gems[0][0]) == 0);
 	}
 
@@ -229,12 +230,12 @@ public class BoardTest {
 		gems = board.getGems();
 		for (int row = 0; row < 5; row++) {
 			for (int col = 0; col < 5 - row; col++) {
-				gems[row][col].setType(1);
+				gems[row][col].setType(GemType.RED);
 			}
 		}
-		gems[1][4].setType(2);
-		gems[2][3].setType(2);
-		gems[2][4].setType(2);
+		gems[1][4].setType(GemType.BLUE);
+		gems[2][3].setType(GemType.BLUE);
+		gems[2][4].setType(GemType.BLUE);
 		ArrayList<Gem> array1 = new ArrayList<Gem>();
 		array1.add(gems[0][1]);
 		array1.add(gems[0][2]);
@@ -268,12 +269,12 @@ public class BoardTest {
 		gems = board.getGems();
 		for (int col = 0; col < 5; col++) {
 			for (int row = 0; row < 5 - col; row++) {
-				gems[row][col].setType(1);
+				gems[row][col].setType(GemType.RED);
 			}
 		}
-		gems[4][1].setType(2);
-		gems[3][2].setType(2);
-		gems[4][2].setType(2);
+		gems[4][1].setType(GemType.BLUE);
+		gems[3][2].setType(GemType.BLUE);
+		gems[4][2].setType(GemType.BLUE);
 		ArrayList<Gem> array1 = new ArrayList<Gem>();
 		array1.add(gems[1][0]);
 		array1.add(gems[2][0]);
