@@ -342,10 +342,10 @@ public class Board {
 		int increase = scorePerGem * amountOfGems;
 		score += increase;	
 		int goodscore = 20;
-		if (increase >= goodscore) {
-			Main.drawPopup();
-			Logger.getInstance().writeLineToLogger("A pop up is drawn on the screen");
-		}	
+//		if (increase >= goodscore) {
+//			GameLogic.drawPopup();
+//			Logger.getInstance().writeLineToLogger("A pop up is drawn on the screen");
+//		}	
 		Logger.getInstance().writeLineToLogger("The player scores "+increase+" points. The total score is now: "+score);
 	}
 	

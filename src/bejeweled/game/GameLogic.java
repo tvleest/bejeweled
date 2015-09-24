@@ -1,10 +1,21 @@
 package bejeweled.game;
 
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.stage.Popup;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
 
 import bejeweled.Main;
 import bejeweled.Sounds;
@@ -67,6 +78,7 @@ public final class GameLogic {
 		board.draw(gc);
 		drawScore(gc);
 		drawHighscores(gc);
+		drawPopup(gc);
 	}
 
 	/**
@@ -141,5 +153,47 @@ public final class GameLogic {
 	
 	public HighScores getHighScores() {
 		return highscores;
+	}
+	
+	public static void drawPopup(final GraphicsContext gc) { 
+		long startTime = System.currentTimeMillis();
+		long showtime = 8*1000;
+		
+		while (startTime+showtime <= System.currentTimeMillis()){ 
+			
+		ArrayList<String> shouts = new ArrayList<>();
+		shouts.add(1, "Good Job!");
+		shouts.add(2, "Keep on going!");
+		shouts.add(3, "Nice Work!");
+		
+		Random randomGenerator = new Random();
+		int index = randomGenerator.nextInt(shouts.size());
+		String item = shouts.get(index);
+		
+		if (startTime+showtime <= System.currentTimeMillis()) {
+			Popup shout = new Popup();
+			shout.centerOnScreen();
+			shout.setWidth(100);
+			shout.setHeight(200);
+			DropShadow ds = new DropShadow();
+			ds.setOffsetY(3.0f);
+			ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+			 
+			Text t = new Text();
+			t.setEffect(ds);
+			t.setCache(true);
+			t.setX(150);
+			t.setY(270);
+			t.setFill(Color.GOLD);
+			t.setText(item);
+			t.setFont(Font.font("Arial", FontWeight.BOLD, 72));
+//			shout.getContent().addAll(t, ds);
+//			shout.show(stage);
+//			root.setDisable(true);
+			gc.fillText("test", 240, 460);
+			
+			}
+		
+		}
 	}
 }

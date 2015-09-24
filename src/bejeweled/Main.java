@@ -18,10 +18,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -30,7 +27,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -206,44 +202,6 @@ public class Main extends Application {
 		
 	}
 	
-	public static void drawPopup() { 
-		long startTime = System.currentTimeMillis();
-		long showtime = 2*1000;
-		
-		while (startTime+showtime <= System.currentTimeMillis()){ 
-			
-					
-		ArrayList<String> shouts = new ArrayList<>();
-		shouts.add(1, "Good Job!");
-		shouts.add(2, "Keep on going!");
-		shouts.add(3, "Nice Work!");
-		
-		Random randomGenerator = new Random();
-		int index = randomGenerator.nextInt(shouts.size());
-		String item = shouts.get(index);
-		
-		if (startTime+showtime <= System.currentTimeMillis()) {
-			Popup shout = new Popup();
-			shout.centerOnScreen();
-			shout.setWidth(100);
-			shout.setHeight(200);
-			DropShadow ds = new DropShadow();
-			ds.setOffsetY(3.0f);
-			ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-			 
-			Text t = new Text();
-			t.setEffect(ds);
-			t.setCache(true);
-			t.setX(150);
-			t.setY(270);
-			t.setFill(Color.GOLD);
-			t.setText(item);
-			t.setFont(Font.font("Arial", FontWeight.BOLD, 72));
-			shout.getContent().addAll(t, ds);
-			shout.show(stage);
-			root.setDisable(true);
-			}
-		
-		}
-	}
+	
+	
 }
