@@ -63,8 +63,12 @@ public class Main extends Application {
 	    switchMenu();
 	    
 	    timeline = new Timeline(new KeyFrame(
-		        Duration.millis(1000),
-		        ae -> scene.decrementTime()));
+		     Duration.millis(1000),new EventHandler<ActionEvent>() {
+		    	 @Override
+		    	 public void handle(ActionEvent actionEvent) {
+		    		 scene.decrementTime();
+		         }
+		     }));
 		timeline.setCycleCount(Animation.INDEFINITE);
 		
 	    primaryStage.show();
