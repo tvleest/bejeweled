@@ -343,7 +343,7 @@ public class Board {
 		score += increase;	
 		int goodscore = 20;
 		if (increase >= goodscore) {
-			GameScene.DrawPopup();
+			Main.drawPopup();
 			Logger.getInstance().writeLineToLogger("A pop up is drawn on the screen");
 		}	
 		Logger.getInstance().writeLineToLogger("The player scores "+increase+" points. The total score is now: "+score);
