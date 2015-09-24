@@ -14,6 +14,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.io.File;
 
@@ -56,6 +57,7 @@ public class GameScene extends Scene {
 		
 		root.getChildren().add(saveButton);
    		gc = canvas.getGraphicsContext2D();
+   		gc.setFont(new Font("Helvetica", 15));
    		gamelogic = new GameLogic(OFFSETX, OFFSETY, true);
    		
    		//this will handle mouseclicks
