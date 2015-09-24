@@ -28,7 +28,7 @@ public final class GameLogic {
 	/**
 	 * 
 	 */
-	private Time time;
+	private static Time time;
 	/**
 	 * 
 	 */
@@ -123,8 +123,12 @@ public final class GameLogic {
 	/**
 	 * @return - Time object in use.
 	 */
-	public Time getTime() {
+	public static Time getTime() {
 		return time;
+	}
+	
+	public static void setTime(Time t) {
+		time = t;
 	}
 	
 	/**

@@ -11,12 +11,12 @@ import javafx.scene.canvas.GraphicsContext;
  * Holds the double dimension array with gems and the board methods.
  */
 public class Board {
-	private Gem[][] gems;
+	private static Gem[][] gems;
 	private int dimension;
 	private Gem selectedgem = null;
 	private Gem secondGem = null;
-	private int offsetx;
-	private int offsety;
+	private static int offsetx;
+	private static int offsety;
 	private boolean loadImages;
 	private static int score;
 	private final int scorePerGem = 10;
@@ -62,7 +62,7 @@ public class Board {
 	 * 
 	 * @return Gem[][] gems
 	 */
-	public final Gem[][] getGems() {
+	public final static Gem[][] getGems() {
 		return gems;
 	}
 
@@ -373,8 +373,8 @@ public class Board {
 	 * Set the two-dimensional gem array.
 	 * @param gems - Two-dimensional array of gems to set the old one as.
 	 */
-	public final void setGems(Gem[][] gems) {
-		this.gems = gems;
+	public static final void setGems(Gem[][] g) {
+		gems = g;
 	}
 
 	/**
@@ -382,6 +382,18 @@ public class Board {
 	 */
 	public static int getScore() {
 		return score;
+	}
+	
+	public static void setScore(int s) {
+		score = s;
+	}
+	
+	public static int getOffsetX() {
+		return offsetx;
+	}
+	
+	public static int getOffsetY() {
+		return offsety;
 	}
 	
 	/**
@@ -399,7 +411,5 @@ public class Board {
 		}
 		return false;
 	}
-	
-	
 
 }
