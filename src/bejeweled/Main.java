@@ -335,7 +335,7 @@ public class Main extends Application {
 		        Duration.millis(showtime),
 		        ae -> popup.hide()));
 		timeline.play();
-				
+		root.setDisable(false);
 	}
 			
 }
