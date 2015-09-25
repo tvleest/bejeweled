@@ -2,6 +2,7 @@ package bejeweled.board;
 import java.util.ArrayList;
 import java.util.Random;
 import bejeweled.Sounds;
+import bejeweled.game.GameScene;
 import bejeweled.state.Logger;
 import bejeweled.Main;
 import javafx.scene.canvas.GraphicsContext;
@@ -22,7 +23,7 @@ public class Board {
 	private static int score;
 	private final int scorePerGem = 10;
 	private Sounds sound;
-
+	
 	/**
 	 * @param dimension - The dimensions of the board.
 	 * @param offsetx - standard offset in x, used for drawing and clicking. 
@@ -423,7 +424,13 @@ public class Board {
 	 */
 	public final void updateScore(int amountOfGems) {
 		int increase = scorePerGem * amountOfGems;
-		score += increase;
+		score += increase;	
+		int goodscore = 30;
+		// Something to trigger the shoutOut() method
+		if (increase > goodscore) {
+			Main.shoutOut();
+		}
+
 		Logger.getInstance().writeLineToLogger("The player scores "+increase+" points. The total score is now: "+score);
 	}
 	

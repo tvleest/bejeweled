@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
+import bejeweled.board.Board;
 import java.sql.Time;
 import java.util.Scanner;
-
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
 import bejeweled.board.GemType;
@@ -27,7 +29,9 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -37,6 +41,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -84,7 +89,7 @@ public class Main extends Application {
 	 */
 	public final static void switchMenu() {
 		root = new Group();
-		
+				
 		// load background
 		Image background = new Image("Images/MenuBackground.png");
 		ImageView imgView = new ImageView(background);
@@ -266,7 +271,53 @@ public class Main extends Application {
 		});
 		
 	}
-	
+
+	public final static void shoutOut() {
+							
+		// Create a popup for showing text on the board
+		Popup popup = new Popup();
+		popup.centerOnScreen();
+		popup.setWidth(600);
+		popup.setHeight(800);
+		
+		// Add various shouts to Array
+		String[] shouts = new String[] {"Good job!", "Keep on going!", "Nice work!"}; 
+		
+		// Pick a random shout
+		Random randomGenerator = new Random();
+		int index = randomGenerator.nextInt(shouts.length);
+		String item = shouts[index];
+		
+		// Include dropshadow
+		DropShadow ds = new DropShadow();
+		ds.setOffsetY(3.0f);
+		ds.setColor(Color.color(0.0f, 0.0f, 0.0f));
+		
+		// Format the text
+		Text t = new Text();
+		t.setEffect(ds);
+		t.setCache(true);
+		t.setX(60);
+		t.setY(200);
+		t.setFill(Color.RED);
+		t.setText(item);
+		t.setFont(Font.font("Helvetica", FontWeight.BOLD,60));
+		
+		// Put it all together in the pop up
+		popup.getContent().addAll(t);
+		popup.show(stage);
+		root.setDisable(true);
+		Sounds.getInstance().playShoutOutSound();
+		
+		// Show it for 1 second
+		int showtime = 1 * 1000;
+		Timeline timeline = new Timeline(new KeyFrame(
+		        Duration.millis(showtime),
+		        ae -> popup.hide()));
+		timeline.play();
+		root.setDisable(false);
+	}
+
 	public static Timeline getTimeline() {
 		return timeline;
 	}

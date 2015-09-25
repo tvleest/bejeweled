@@ -6,12 +6,11 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.control.Label;
+
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -21,11 +20,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.scene.text.Font;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
 import bejeweled.Main;
 import bejeweled.Sounds;
 import bejeweled.board.Board;
@@ -44,8 +41,8 @@ public class GameScene extends Scene {
 
 	
 //to use the sounds in this class
-	private GraphicsContext gc;
-	private GameLogic gamelogic;
+	private static GraphicsContext gc;
+	private static GameLogic gamelogic;
 	public final int OFFSETX = 235;
 	public final int OFFSETY = 115;
 	
@@ -153,7 +150,7 @@ public class GameScene extends Scene {
 	public final void draw() {
 			gamelogic.draw(gc);
 			gamelogic.getTime().drawTime(gc);
-	    }
+	}
 	
 	/**
 	 * requests to decrement the timer (each second).
@@ -169,4 +166,5 @@ public class GameScene extends Scene {
 	public GraphicsContext getGraphicsContext() {
 		return gc;
 	}
+	
 }

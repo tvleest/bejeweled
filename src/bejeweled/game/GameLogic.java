@@ -1,12 +1,7 @@
 package bejeweled.game;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
-import java.io.File;
-
-import bejeweled.Main;
 import bejeweled.Sounds;
 import bejeweled.board.Board;
 import bejeweled.state.HighScores;
@@ -67,7 +62,7 @@ public final class GameLogic {
 		board.draw(gc);
 		drawScore(gc);
 		drawHighscores(gc);
-	}
+		}
 
 	/**
 	 * @param row - the row index.
@@ -149,4 +144,5 @@ public final class GameLogic {
 	public HighScores getHighScores() {
 		return highscores;
 	}
+	
 }
