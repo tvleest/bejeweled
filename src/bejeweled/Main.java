@@ -1,11 +1,18 @@
 package bejeweled;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-
 import bejeweled.board.Board;
+import java.sql.Time;
+import java.util.Scanner;
+import bejeweled.board.Board;
+import bejeweled.board.Gem;
+import bejeweled.board.GemType;
+import bejeweled.game.GameLogic;
 import bejeweled.game.GameScene;
 import bejeweled.gui.Buttons;
 import bejeweled.state.HighScores;
@@ -122,9 +129,10 @@ public class Main extends Application {
 
 				@Override
 				public void handle(ActionEvent e) {
-					//Load the save file if there is one
-					//Go to the loaded game screen
-					//switchGame(true);
+					Sounds.getInstance().playSelectSound();
+					switchGame(true);
+					Logger.getInstance().writeLineToLogger("The saved game has been loaded.");
+					
 				}
 			});
 			
@@ -155,15 +163,15 @@ public class Main extends Application {
 		rect.setLayoutX(555);
 		rect.setLayoutY(565);
 		
-		
-		
 		root.getChildren().addAll(imgView, rect);
    		Sounds.getInstance().playBackgroundSound();
    		
-   		if(!savedGame) {
-   			scene = new GameScene(root);
-   		}
+   		scene = new GameScene(root);
 		
+   		if(savedGame) {
+	    	loadFile();
+	    }
+   		
 		  new AnimationTimer()
 		    {
 		        public void handle(long currentNanoTime) {
@@ -172,8 +180,57 @@ public class Main extends Application {
 		        }
 		    }.start();
 		    
+		
 	    stage.setScene(scene);
 	    
+	  
+	}
+	
+	/**
+	 * Reads the savefile File and changes the value of score, time and
+	 * all the Gems in the Game so it matches the saved Game.
+	 */
+	public static void loadFile() {
+		int x = Board.getOffsetX();
+		int y = Board.getOffsetY();
+		Scanner sc;
+    	int score2 = 0;
+		try {
+			sc = new Scanner(new File("savefile.txt"));
+	    	String time = sc.nextLine();
+	    	System.out.println(time);
+	    	if(sc.hasNext()) {
+	    		String score = sc.nextLine();
+	    		score2 = Integer.parseInt(score);
+	    		System.out.println(score);
+	    	}
+	    	Gem[][] board = new Gem[8][8];
+	    	for(int row = 0; row < board.length; row++) {
+	    		for(int col = 0; col < board.length; col++) {
+	    			if(sc.hasNext()) {
+	    				String type = sc.nextLine();
+	    				System.out.println(type);
+	    				GemType gtype = GemType.typeFromString(type);
+	    				board[row][col] = new Gem(row, col, x, y, gtype, true);
+	    			}
+	    		}
+	    	}
+	
+	    	String minutes = time.substring(0, time.indexOf(":"));
+	    	String seconds = time.substring(time.length() - 2, time.length());
+	    	System.out.println(minutes + " - " + seconds);
+	    	int m = Integer.parseInt(minutes);
+	    	int s = Integer.parseInt(seconds);
+	    	int t = m*60 + s;
+	    	bejeweled.state.Time time2 = new bejeweled.state.Time(t);
+	    	
+			GameLogic.setTime(time2);
+			Board.setScore(score2);
+			Board.setGems(board);
+	    	
+	    } catch (FileNotFoundException e) {
+			System.out.println("Savefile was not found!");
+	    }
 	}
 	
 	public static final void switchContinueGame() {

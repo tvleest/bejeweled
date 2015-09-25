@@ -23,7 +23,7 @@ public final class GameLogic {
 	/**
 	 * 
 	 */
-	private Time time;
+	private static Time time;
 	/**
 	 * 
 	 */
@@ -112,14 +112,18 @@ public final class GameLogic {
 	public void drawScore(final GraphicsContext gc) {
 		String s = "Score: ";
 		s += board.getScore();
-		gc.fillText(s, 240, 460);
+		gc.fillText(s, 60, 190);
 	}
 
 	/**
 	 * @return - Time object in use.
 	 */
-	public Time getTime() {
+	public static Time getTime() {
 		return time;
+	}
+	
+	public static void setTime(Time t) {
+		time = t;
 	}
 	
 	/**
@@ -131,7 +135,7 @@ public final class GameLogic {
 		for (int score : highscores.getAllScores()) {
 			hs += score + "\n";
 		}
-		gc.fillText(hs, 100, 200);
+		gc.fillText(hs, 60, 210);
 	}
 	
 	public HighScores getHighScores() {

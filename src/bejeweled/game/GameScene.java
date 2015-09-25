@@ -1,16 +1,25 @@
 package bejeweled.game;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import java.io.File;
-
+import java.io.FileWriter;
+import java.io.IOException;
+import bejeweled.Main;
+import bejeweled.board.Board;
+import bejeweled.board.Gem;
+import bejeweled.gui.Buttons;
 import bejeweled.state.Logger;
 import bejeweled.state.Time;
 
@@ -36,7 +45,48 @@ public class GameScene extends Scene {
 		super(root);
 		Canvas canvas = new Canvas(800, 600);
    		root.getChildren().add(canvas);
+		
+   		Image saveIcon = new Image("Images/save2.png");
+   		Button saveButton = Buttons.subMenuButton(null, saveIcon, 700, 565);
+		
+		saveButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				Time time = GameLogic.getTime();
+				String stime = time.toString().substring(11, time.toString().length());
+				int score = Board.getScore();
+				Gem[][] board = Board.getGems();
+				String save = stime + "\n" + score + "\n";
+				System.out.println(board.length);
+				for(int row = 0; row < board.length; row++) {
+					for(int col = 0; col < board.length; col++) {
+						save += board[row][col].getType() + "\n";
+					}
+				}
+				try {
+					FileWriter fw = new FileWriter("savefile.txt");
+					fw.write(save);
+					fw.close();
+				} catch (IOException e1) {
+					System.out.println("Something went wrong with the FileWriter in GameScene");
+				}
+			}
+		});
+		
+		Image hintIcon = new Image("Images/hintbutton.png");
+		Button hintButton = Buttons.subMenuButton(null, hintIcon, 655, 565);
+		
+		hintButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				//VOOR DE HINT FEATURE
+				//Highlight gem that can be moved on the board
+			}
+		});
+		
+		root.getChildren().addAll(hintButton, saveButton);
    		gc = canvas.getGraphicsContext2D();
+   		gc.setFont(new Font("Helvetica", 15));
    		gamelogic = new GameLogic(OFFSETX, OFFSETY, true);
    		
    		//this will handle mouseclicks
