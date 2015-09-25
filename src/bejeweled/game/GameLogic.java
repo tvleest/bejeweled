@@ -120,7 +120,7 @@ public final class GameLogic {
 	public void drawScore(final GraphicsContext gc) {
 		String s = "Score: ";
 		s += board.getScore();
-		gc.fillText(s, 240, 460);
+		gc.fillText(s, 60, 190);
 	}
 
 	/**
@@ -143,7 +143,7 @@ public final class GameLogic {
 		for (int score : highscores.getAllScores()) {
 			hs += score + "\n";
 		}
-		gc.fillText(hs, 100, 200);
+		gc.fillText(hs, 60, 210);
 	}
 	
 	public HighScores getHighScores() {
