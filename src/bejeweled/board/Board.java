@@ -337,9 +337,11 @@ public class Board {
 	public final void updateScore(int amountOfGems) {
 		int increase = scorePerGem * amountOfGems;
 		score += increase;	
-		int goodscore = 20;
+		int goodscore = 40;
 		// Something to trigger the drawShout method
-		Main.shoutOut();
+		//if (increase > goodscore) { (WORKING, BUT THIS IS EASIER FOR TESTING)
+			Main.shoutOut();
+		//}
 
 		Logger.getInstance().writeLineToLogger("The player scores "+increase+" points. The total score is now: "+score);
 	}
