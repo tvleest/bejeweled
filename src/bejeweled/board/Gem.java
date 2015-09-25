@@ -11,7 +11,7 @@ public class Gem {
 	private int dimension = 40; //the dimension (width and height) of the gems on the board
 	private int row;
 	private int col;
-	private int type; //which type of six gems
+	private GemType type; //which type of six gems
 	private Image image; //The image of the gem
 	private Image overlay; //The overlay image
 	private boolean selected = false;
@@ -25,7 +25,7 @@ public class Gem {
 	 * @param type - Type of the gem.
 	 * Constructor
 	 */
-	public Gem(int row, int col, int offsetx, int offsety, int type, boolean loadImages) {
+	public Gem(int row, int col, int offsetx, int offsety, GemType type, boolean loadImages) {
 		this.row = row;
 		this.col = col;
 		this.offsetx = offsetx;
@@ -45,22 +45,22 @@ public class Gem {
 	 */
 	private void loadImage() {
 		switch (type) {
-		case 1:
+		case BLUE:
 			image = new Image("Images/blue.png");
 			break;
-		case 2:
+		case GREEN:
 			image = new Image("Images/green.png");
 			break;
-		case 3:
+		case ORANGE:
 			image = new Image("Images/orange.png");
 			break;
-		case 4:
+		case PINK:
 			image = new Image("Images/pink.png");
 			break;
-		case 5:
+		case RED:
 			image = new Image("Images/red.png");
 			break;
-		case 6:
+		case YELLOW:
 			image = new Image("Images/yellow.png");
 			break;
 		default:
@@ -72,7 +72,7 @@ public class Gem {
 	/**
 	 * @param type - Type to change the gem to.
 	 */
-	public final void setType(int type) {
+	public final void setType(GemType type) {
 		this.type = type;
 		if (loadImage) {
 			loadImage();
@@ -88,13 +88,6 @@ public class Gem {
 		if (selected) {
 			gc.drawImage(overlay, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		}
-	}
-
-	/**
-	 * Deletes a gem by changing the type to 0.
-	 */
-	public final void delete() {
-		setType(0);
 	}
 
 	/**
@@ -141,7 +134,7 @@ public class Gem {
 	/**
 	 * @return - Type of gem.
 	 */
-	public final int getType() {
+	public final GemType getType() {
 		return this.type;
 	}
 	

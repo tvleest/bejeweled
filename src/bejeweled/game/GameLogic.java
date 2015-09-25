@@ -79,7 +79,7 @@ public final class GameLogic {
 		drawScore(gc);
 		drawHighscores(gc);
 		drawPopup(gc);
-	}
+		}
 
 	/**
 	 * @param row - the row index.
@@ -155,45 +155,53 @@ public final class GameLogic {
 		return highscores;
 	}
 	
-	public static void drawPopup(final GraphicsContext gc) { 
-		long startTime = System.currentTimeMillis();
-		long showtime = 8*1000;
-		
-		while (startTime+showtime <= System.currentTimeMillis()){ 
-			
-		ArrayList<String> shouts = new ArrayList<>();
-		shouts.add(1, "Good Job!");
-		shouts.add(2, "Keep on going!");
-		shouts.add(3, "Nice Work!");
-		
-		Random randomGenerator = new Random();
-		int index = randomGenerator.nextInt(shouts.size());
-		String item = shouts.get(index);
-		
-		if (startTime+showtime <= System.currentTimeMillis()) {
-			Popup shout = new Popup();
-			shout.centerOnScreen();
-			shout.setWidth(100);
-			shout.setHeight(200);
-			DropShadow ds = new DropShadow();
-			ds.setOffsetY(3.0f);
-			ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-			 
-			Text t = new Text();
-			t.setEffect(ds);
-			t.setCache(true);
-			t.setX(150);
-			t.setY(270);
-			t.setFill(Color.GOLD);
-			t.setText(item);
-			t.setFont(Font.font("Arial", FontWeight.BOLD, 72));
-//			shout.getContent().addAll(t, ds);
+	public void drawPopup(final GraphicsContext gc) { 
+//		long startTime = System.currentTimeMillis();
+//		long showtime = 8*1000;
+//		
+//		while (startTime+showtime <= System.currentTimeMillis()){ 
+//			
+//		ArrayList<String> shouts = new ArrayList<>();
+//		shouts.add(1, "Good Job!");
+//		shouts.add(2, "Keep on going!");
+//		shouts.add(3, "Nice Work!");
+//		
+//		Random randomGenerator = new Random();
+//		int index = randomGenerator.nextInt(shouts.size());
+//		String item = shouts.get(index);
+//		
+//		if (startTime+showtime <= System.currentTimeMillis()) {
+//			Popup shout = new Popup();
+//			shout.centerOnScreen();
+//			shout.setWidth(100);
+//			shout.setHeight(200);
+//			DropShadow ds = new DropShadow();
+//			ds.setOffsetY(3.0f);
+//			ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+//			 
+//			Text t = new Text();
+//			t.setEffect(ds);
+//			t.setCache(true);
+//			t.setX(150);
+//			t.setY(270);
+//			t.setFill(Color.GOLD);
+//			t.setText("test");
+//			t.setFont(Font.font("Helvetica", FontWeight.BOLD,150));
+//			shout.getContent().addAll(t);
 //			shout.show(stage);
 //			root.setDisable(true);
-			gc.fillText("test", 240, 460);
-			
+			if (Board.drawShout = true) {
+				String testtext = "TEST";
+				gc.fillText(testtext, 400, 300);
 			}
+			else {
+				String testtext = "FALSE";
+				gc.fillText(testtext, 400, 300);
+			}
+			
+			
+	
 		
-		}
+		//}
 	}
 }

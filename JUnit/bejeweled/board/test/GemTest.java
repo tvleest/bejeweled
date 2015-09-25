@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bejeweled.board.Gem;
+import bejeweled.board.GemType;
 
 /**
  * Tests the Gem class.
@@ -23,7 +24,7 @@ public class GemTest {
 	 */
 	@Before
 	public final void setUp() {
-		gem = new Gem(0, 0, 0, 0, 1, false);
+		gem = new Gem(0, 0, 0, 0, GemType.RED, false);
 	}
 
 	/**
@@ -31,18 +32,8 @@ public class GemTest {
 	 */
 	@Test
 	public final void typeTest() {
-		gem.setType(2);
-		assertEquals(gem.getType(), 2);
-	}
-	
-	/**
-	 * Tests the delete method, by running in on the 
-	 * Gem and checking of the type is right.
-	 */
-	@Test
-	public final void deleteTest() {
-		gem.delete();
-		assertEquals(gem.getType(), 0);
+		gem.setType(GemType.BLUE);
+		assertEquals(gem.getType(), GemType.BLUE);
 	}
 
 	/**

@@ -23,8 +23,8 @@ public class GameScene extends Scene {
 
 	
 //to use the sounds in this class
-	private GraphicsContext gc;
-	private GameLogic gamelogic;
+	private static GraphicsContext gc;
+	private static GameLogic gamelogic;
 	public final int OFFSETX = 235;
 	public final int OFFSETY = 115;
 	
@@ -65,7 +65,7 @@ public class GameScene extends Scene {
 	public final void draw() {
 			gamelogic.draw(gc);
 			gamelogic.getTime().drawTime(gc);
-	    }
+	}
 	
 	/**
 	 * requests to decrement the timer (each second).

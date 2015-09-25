@@ -14,7 +14,6 @@ import javafx.scene.canvas.GraphicsContext;
 public class Board {
 	private Gem[][] gems;
 	private int dimension;
-	private Random random = new Random();
 	private Gem selectedgem = null;
 	private Gem secondGem = null;
 	private int offsetx;
@@ -23,7 +22,8 @@ public class Board {
 	private static int score;
 	private final int scorePerGem = 10;
 	private Sounds sound;
-
+	public static boolean drawShout;
+	
 	/**
 	 * @param dimension - The dimensions of the board.
 	 * @param offsetx - standard offset in x, used for drawing and clicking. 
@@ -45,7 +45,7 @@ public class Board {
 	 *            Backtrack method
 	 */
 	public final void fillBoard(int col, int row) {
-		int type = random.nextInt(6) + 1;
+		GemType type = GemType.getRandomGemType();
 		if (rowCheck(row, col, type) && colCheck(row, col, type)) {
 			Gem gem = new Gem(row, col, offsetx, offsety, type, loadImages);
 			gems[row][col] = gem;
@@ -75,7 +75,7 @@ public class Board {
 	 * @param type - type of the gem
 	 * @return - boolean based on the gem forming a combination or not.
 	 */
-	public final boolean rowCheck(int row, int col, int type) {
+	public final boolean rowCheck(int row, int col, GemType type) {
 		if (col <= 1) {
 			return true;
 		} else if (gems[row][col - 1].getType() == type && gems[row][col - 2].getType() == type) {
@@ -92,7 +92,7 @@ public class Board {
 	 * @param type - type of the gem
 	 * @return - boolean based on the gem forming a combination or not.
 	 */
-	public final boolean colCheck(int row, int col, int type) {
+	public final boolean colCheck(int row, int col, GemType type) {
 		if (row <= 1) {
 			return true;
 		} else if (gems[row - 1][col].getType() == type && gems[row - 2][col].getType() == type) {
@@ -121,16 +121,13 @@ public class Board {
 	 *            above this gem a place down
 	 */
 	public final void delete(int row, int col) {
-		gems[row][col].delete();
-
 		// move all blocks above the deleted block down
 		for (int r = row; r >= 0; r--) {
 			if (r >= 1) {
 				gems[r - 1][col].setPosition(r, col);
 				gems[r][col] = gems[r - 1][col];
 			} else {
-				int type = random.nextInt(6) + 1; // take a random number out of
-													// 1,2,3,4,5,6
+				GemType type = GemType.getRandomGemType();
 				Gem gem = new Gem(0, col, offsetx, offsety, type, loadImages);
 				gems[0][col] = gem;
 			}
@@ -280,7 +277,7 @@ public class Board {
 	 * @return array - array of a combination. Empty if there is none.
 	 */
 	public final ArrayList<Gem> deleteHorizontal(Gem g) {
-		int type = g.getType();
+		GemType type = g.getType();
 		Gem leftgem = getLeft(g);
 		Gem rightgem = getRight(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
@@ -311,7 +308,7 @@ public class Board {
 	 * @return array - array of a combination. Empty if there is none.
 	 */
 	public final ArrayList<Gem> deleteVertical(Gem g) {
-		int type = g.getType();
+		GemType type = g.getType();
 		Gem upgem = getUpper(g);
 		Gem downgem = getBelow(g);
 		ArrayList<Gem> array = new ArrayList<Gem>();
@@ -342,10 +339,9 @@ public class Board {
 		int increase = scorePerGem * amountOfGems;
 		score += increase;	
 		int goodscore = 20;
-//		if (increase >= goodscore) {
-//			GameLogic.drawPopup();
-//			Logger.getInstance().writeLineToLogger("A pop up is drawn on the screen");
-//		}	
+		// Something to trigger the drawShout method
+		drawShout = true;
+
 		Logger.getInstance().writeLineToLogger("The player scores "+increase+" points. The total score is now: "+score);
 	}
 	

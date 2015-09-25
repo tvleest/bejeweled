@@ -1,10 +1,13 @@
 package bejeweled;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import bejeweled.board.Board;
 import bejeweled.game.GameScene;
+import bejeweled.gui.Buttons;
 import bejeweled.state.HighScores;
 import bejeweled.state.Logger;
 import javafx.animation.Animation;
@@ -21,6 +24,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -43,6 +47,7 @@ public class Main extends Application {
 	private static Timeline timeline;
 	private static Group root;
 	private static Sounds sound;
+	private static File file;
 
 	/**
 	 * @param args
@@ -54,9 +59,11 @@ public class Main extends Application {
 
 	@Override
 	public final void start(Stage primaryStage) throws Exception {
+		file = new File("saveFile.txt");
 		stage = primaryStage;
 		scene = new GameScene(new Group());
 		primaryStage.setTitle("Bejeweled group 30");
+		Board.drawShout = false;
 	    switchMenu();
 	    
 	    timeline = new Timeline(new KeyFrame(
@@ -72,8 +79,8 @@ public class Main extends Application {
 	 */
 	public final static void switchMenu() {
 		root = new Group();
-		Font font = Font.font(72);
-		
+		Board.drawShout = false;
+				
 		// load background
 		Image background = new Image("Images/MenuBackground.png");
 		ImageView imgView = new ImageView(background);
@@ -81,29 +88,20 @@ public class Main extends Application {
 		imgView.setFitWidth(800);
 		
 		// make two buttons for the menu
-		Button startGameButton = new Button("START GAME");
-		startGameButton.setFont(font);
-		startGameButton.setLayoutX(150);
-		startGameButton.setLayoutY(270);
-		CornerRadii r = new CornerRadii(10);
-		Insets insets = new Insets(10);
-		Background buttonBack = new Background(new BackgroundFill(Color.GOLD, r, insets));
-		startGameButton.setBackground(buttonBack);
-		startGameButton.setOnAction(new EventHandler<ActionEvent>() {
+		Button newGameButton = Buttons.menuButton("NEW GAME", 170, 270);
+		
+		newGameButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent e) {
 				Sounds.getInstance().playSelectSound();
-				switchGame();
+				switchGame(false);
 				Logger.getInstance().writeLineToLogger("The game has started.");
 			}
 		}); //start the game
 		
-		Button exitButton = new Button("EXIT");
-		exitButton.setFont(font);
-		exitButton.setLayoutX(290);
-		exitButton.setLayoutY(430);
-		exitButton.setBackground(buttonBack);
+		Button exitButton = Buttons.menuButton("EXIT", 290, 430);
+
 		exitButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -112,7 +110,26 @@ public class Main extends Application {
 			}
 		});
 		
-		root.getChildren().addAll(imgView, startGameButton, exitButton);
+		Button continueButton = Buttons.menuButton("CONTINUE", 183, 110);
+		continueButton.setOpacity(0.35);
+		continueButton.setDisable(true);
+		
+		if(file.exists()) {
+			continueButton.setDisable(false);
+			continueButton.setOpacity(1);
+			continueButton.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent e) {
+					//Load the save file if there is one
+					//Go to the loaded game screen
+					//switchGame(true);
+				}
+			});
+			
+		}
+
+		root.getChildren().addAll(imgView, newGameButton, exitButton, continueButton);
 		if (stage.getScene() == null) {
 			Scene sc = new Scene(root);
 			stage.setScene(sc);
@@ -124,16 +141,27 @@ public class Main extends Application {
 	/**
 	 * Switch the current screen to the Bejeweled screen.
 	 */
-	public static final void switchGame() {
+	public static final void switchGame(boolean savedGame) {
 		timeline.playFromStart();
 		root = new Group();
 	    Image background = new Image("Images/Background.png");
 		ImageView imgView = new ImageView(background);
 		imgView.setFitHeight(600);
 		imgView.setFitWidth(800);
-		root.getChildren().add(imgView);
+		
+
+		Rectangle rect = new Rectangle(210, 35, Color.CHOCOLATE);
+		rect.setLayoutX(555);
+		rect.setLayoutY(565);
+		
+		
+		
+		root.getChildren().addAll(imgView, rect);
    		Sounds.getInstance().playBackgroundSound();
-		scene = new GameScene(root);
+   		
+   		if(!savedGame) {
+   			scene = new GameScene(root);
+   		}
 		
 		  new AnimationTimer()
 		    {
@@ -145,6 +173,10 @@ public class Main extends Application {
 		    
 	    stage.setScene(scene);
 	    
+	}
+	
+	public static final void switchContinueGame() {
+		
 	}
 	
 	/**
