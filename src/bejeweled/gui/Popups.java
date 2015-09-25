@@ -1,6 +1,13 @@
 package bejeweled.gui;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 import bejeweled.Main;
+import bejeweled.board.Board;
+import bejeweled.board.Gem;
+import bejeweled.game.GameLogic;
+import bejeweled.state.Time;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -85,7 +92,24 @@ public class Popups {
 		save.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				// Save to file.
+				Time time = GameLogic.getTime();
+				String stime = time.toString().substring(11, time.toString().length());
+				int score = Board.getScore();
+				Gem[][] board = Board.getGems();
+				String save = stime + "\n" + score + "\n";
+				System.out.println(board.length);
+				for(int row = 0; row < board.length; row++) {
+					for(int col = 0; col < board.length; col++) {
+						save += board[row][col].getType() + "\n";
+					}
+				}
+				try {
+					FileWriter fw = new FileWriter("savefile.txt");
+					fw.write(save);
+					fw.close();
+				} catch (IOException e1) {
+					System.out.println("Something went wrong with the FileWriter in GameScene");
+				}
 				popup.getContent().add(saved);
 			}
 		});

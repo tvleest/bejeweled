@@ -20,13 +20,19 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.scene.text.Font;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import bejeweled.Main;
+import bejeweled.board.Board;
+import bejeweled.board.Gem;
 import bejeweled.gui.Buttons;
 import bejeweled.gui.Popups;
 import bejeweled.state.Logger;
+import bejeweled.state.Time;
 
 /**
  * @author Timo
@@ -57,11 +63,28 @@ public class GameScene extends Scene {
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				//Write gamestate to file to save the game.
+				Time time = GameLogic.getTime();
+				String stime = time.toString().substring(11, time.toString().length());
+				int score = Board.getScore();
+				Gem[][] board = Board.getGems();
+				String save = stime + "\n" + score + "\n";
+				System.out.println(board.length);
+				for(int row = 0; row < board.length; row++) {
+					for(int col = 0; col < board.length; col++) {
+						save += board[row][col].getType() + "\n";
+					}
+				}
+				try {
+					FileWriter fw = new FileWriter("savefile.txt");
+					fw.write(save);
+					fw.close();
+				} catch (IOException e1) {
+					System.out.println("Something went wrong with the FileWriter in GameScene");
+				}
 			}
 		});
 		
-		Image hintIcon = new Image("Images/hint.png");
+		Image hintIcon = new Image("Images/hintbutton.png");
 		Button hintButton = Buttons.subMenuButton(null, hintIcon, 655, 565);
 		
 		hintButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -86,6 +109,7 @@ public class GameScene extends Scene {
 		
 		root.getChildren().addAll(hintButton, saveButton, pauseButton);
    		gc = canvas.getGraphicsContext2D();
+   		gc.setFont(new Font("Helvetica", 15));
    		gamelogic = new GameLogic(OFFSETX, OFFSETY, true);
    		
    		//this will handle mouseclicks
