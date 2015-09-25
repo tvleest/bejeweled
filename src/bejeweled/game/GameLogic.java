@@ -74,6 +74,9 @@ public final class GameLogic {
 	 * @param col - the col index.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
+		if(board.getHintedgem()!=null){
+			board.getHintedgem().setHinted(false); 
+		}
 		Logger.getInstance().writeLineToLogger("Mouse clicked on row " + row + " and col " + col);
 		Sounds.getInstance().playSelectSound();
 		if (board.getSelectedgem() == null) {
