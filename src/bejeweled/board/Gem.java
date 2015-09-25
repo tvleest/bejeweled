@@ -14,6 +14,7 @@ public class Gem {
 	private GemType type; //which type of six gems
 	private Image image; //The image of the gem
 	private Image overlay; //The overlay image
+	private Image hintedoverlay;
 	private boolean selected = false;
 	private boolean hinted = false;
 	private int offsetx;
@@ -36,6 +37,7 @@ public class Gem {
 		if (loadImages) {
 			loadImage();
 			overlay = new Image("Images/overlay.png");
+			hintedoverlay = new Image("Images/hint.png");
 		}
 	}
 	
@@ -89,7 +91,7 @@ public class Gem {
 		if (selected) {
 			gc.drawImage(overlay, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		} else if(hinted){
-			gc.drawImage(overlay, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
+			gc.drawImage(hintedoverlay, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		}
 	}
 
