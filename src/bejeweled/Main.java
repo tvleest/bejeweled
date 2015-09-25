@@ -270,6 +270,7 @@ public class Main extends Application {
 		popup.getContent().addAll(t);
 		popup.show(stage);
 		root.setDisable(true);
+		Sounds.getInstance().playShoutOutSound();
 		
 		// Show it for 1 second
 		int showtime = 1 * 1000;

@@ -18,6 +18,7 @@ public final class Sounds {
 		private static AudioClip backgroundSound;
 		private static AudioClip errorSound;
 		private static AudioClip gameOverSound;
+		private static AudioClip shoutOutSound;
 		
 		private static Sounds sounds = null;
     
@@ -33,6 +34,7 @@ public final class Sounds {
 			 backgroundSound.setCycleCount(AudioClip.INDEFINITE);
 			 errorSound = new AudioClip(new File("src/Sounds/error.wav").toURI().toString());
 			 gameOverSound = new AudioClip(new File("src/Sounds/gameover.wav").toURI().toString());
+			 shoutOutSound = new AudioClip(new File("src/Sounds/perfect.wav").toURI().toString());
 		}
 		
 		//This method is part of the singleton pattern
@@ -83,6 +85,13 @@ public final class Sounds {
 		 */
 		public void playGameOverSound() {
 			 gameOverSound.play();
+		}
+		
+		/**
+		 * Plays the shout out sound effect.
+		 */
+		public void playShoutOutSound() {
+			 shoutOutSound.play();
 		}
 
 
