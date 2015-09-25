@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -14,11 +15,17 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 
 import java.io.File;
 
 import bejeweled.Main;
 import bejeweled.gui.Buttons;
+import bejeweled.gui.Popups;
 import bejeweled.state.Logger;
 
 /**
@@ -39,7 +46,7 @@ public class GameScene extends Scene {
 	 * GameScene Constructor.
 	 * Prepares the UI of the root and mouseclick handlers.
 	 */
-	public GameScene(Group root) {
+	public GameScene(Group root, Stage stage) {
 		super(root);
 		Canvas canvas = new Canvas(800, 600);
    		root.getChildren().add(canvas);
@@ -65,7 +72,19 @@ public class GameScene extends Scene {
 			}
 		});
 		
-		root.getChildren().addAll(hintButton, saveButton);
+		Button pauseButton = Buttons.subMenuButton(null, null, 610, 565);
+		pauseButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				Main.getTimeline().pause();
+				Popup popup = Popups.pausePopup(root);
+				popup.show(stage);
+				root.setDisable(true);
+
+			}
+		});
+		
+		root.getChildren().addAll(hintButton, saveButton, pauseButton);
    		gc = canvas.getGraphicsContext2D();
    		gamelogic = new GameLogic(OFFSETX, OFFSETY, true);
    		

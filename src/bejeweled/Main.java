@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import bejeweled.game.GameScene;
 import bejeweled.gui.Buttons;
+import bejeweled.gui.Popups;
 import bejeweled.state.HighScores;
 import bejeweled.state.Logger;
 import javafx.animation.Animation;
@@ -58,7 +59,7 @@ public class Main extends Application {
 	public final void start(Stage primaryStage) throws Exception {
 		file = new File("saveFile.txt");
 		stage = primaryStage;
-		scene = new GameScene(new Group());
+		scene = new GameScene(new Group(), stage);
 		primaryStage.setTitle("Bejeweled group 30");
 	    switchMenu();
 	    
@@ -144,18 +145,15 @@ public class Main extends Application {
 		imgView.setFitHeight(600);
 		imgView.setFitWidth(800);
 		
-
 		Rectangle rect = new Rectangle(210, 35, Color.CHOCOLATE);
 		rect.setLayoutX(555);
 		rect.setLayoutY(565);
-		
-		
 		
 		root.getChildren().addAll(imgView, rect);
    		Sounds.getInstance().playBackgroundSound();
    		
    		if(!savedGame) {
-   			scene = new GameScene(root);
+   			scene = new GameScene(root, stage);
    		}
 		
 		  new AnimationTimer()
@@ -176,10 +174,8 @@ public class Main extends Application {
 	
 	/**
 	 * Show a GameOver popup.
-	 * @param highscores - highscores.
-	 * @param score - Achieved score.
 	 */
-	public final static void gameOver() {
+	public static final void gameOver() {
 		int score = scene.getGameLogic().getBoard().getScore(); // get score
 		
 		Sounds.getInstance().stopBackgroundSound();// Stop background sound
@@ -190,27 +186,10 @@ public class Main extends Application {
 		Logger.getInstance().writeLineToLogger("The game is over. The final score is " + score + ".");
 		Logger.getInstance().disposeLogger();
 		
-		Popup popup = new Popup();
-		popup.centerOnScreen();
-		popup.setWidth(200);
-		popup.setHeight(500);
-		Rectangle rect = new Rectangle(500, 300, Color.GOLD);
-		rect.setArcHeight(30);
-		rect.setArcWidth(30);
-		Text text = new Text("GAME OVER!");
-		Text name = new Text("You've scored " + score + " points!");
-		text.setLayoutX(200);
-		text.setLayoutY(30);
-		name.setLayoutX(30);
-		name.setLayoutY(150);
-		text.setFill(Color.BLACK);
-		Button confirm = new Button("Continue");
-		confirm.setLayoutX(205);
-		confirm.setLayoutY(255);
-		popup.getContent().addAll(rect, text, confirm, name);
+		Popup popup = Popups.gameOverPopup(score);
 		popup.show(stage);
 		root.setDisable(true);
-		
+		Button confirm = (Button) popup.getContent().get(2);
 		confirm.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -219,7 +198,6 @@ public class Main extends Application {
 				try {
 					highscores.writeScoreFile();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				popup.hide();
@@ -227,5 +205,9 @@ public class Main extends Application {
 			}
 		});
 		
+	}
+	
+	public static Timeline getTimeline() {
+		return timeline;
 	}
 }
