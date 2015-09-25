@@ -90,8 +90,7 @@ public class GameScene extends Scene {
 		hintButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				//VOOR DE HINT FEATURE
-				//Highlight gem that can be moved on the board
+				gamelogic.getBoard().hintCheck(0, 0);
 			}
 		});
 		

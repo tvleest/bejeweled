@@ -37,7 +37,7 @@ public class Gem {
 		if (loadImages) {
 			loadImage();
 			overlay = new Image("Images/overlay.png");
-			hintedoverlay = new Image("Images/hint.png");
+			hintedoverlay = new Image("Images/hinttemp.png");
 		}
 	}
 	
