@@ -113,73 +113,80 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * Checks if a hint can be given
+	 * @param col
+	 * @param row
+	 */
+	
 	public void hintCheck(int col, int row){
 		GemType type = gems[row][col].getType(); 
-		if(getRight(gems[row][col]).getType()==type){
+		if(getRight(gems[row][col])!=null && getRight(gems[row][col]).getType()==type){
 			checkSurround(col,row,type,1);		
-		}else if(getBelow(gems[row][col]).getType()==type){
+		}else if(getBelow(gems[row][col])!=null && getBelow(gems[row][col]).getType()==type){
 			checkSurround(col,row,type,-1);			
 		}else if(col<dimension-1){
 			hintCheck(col+1,row);
 		}else if(row<dimension-1){
 			hintCheck(0,row+1);
-		}else{
-			Main.gameOver();
 		}		
 	}
 	
+	/**
+	 * Checks if there can be made combinations and illustrates the hint
+	 * @param col
+	 * @param row
+	 * @param type
+	 * @param site
+	 */
 	public void checkSurround(int col, int row, GemType type, int site){
 		if(site==1){
-			if(getLeft(getLeft(gems[row][col])).getType()==type){
-				//gems[row][col-1].setHinted(true);
+			if(getLeft(getLeft(gems[row][col]))!=null && getLeft(getLeft(gems[row][col])).getType()==type){
 				gems[row][col-2].setHinted(true);
 				setSelectedgem(gems[row][col-2]);
-			}else if(getBelow(getLeft(gems[row][col])).getType()==type){
-				//gems[row][col-1].setHinted(true);
+			}else if(getBelow(getLeft(gems[row][col]))!=null && getBelow(getLeft(gems[row][col])).getType()==type){
 				gems[row+1][col-1].setHinted(true);
 				setSelectedgem(gems[row+1][col-1]);
-			}else if(getUpper(getLeft(gems[row][col])).getType()==type){
-				//gems[row][col-1].setHinted(true);
+			}else if(getUpper(getLeft(gems[row][col]))!=null && getUpper(getLeft(gems[row][col])).getType()==type){
 				gems[row-1][col-1].setHinted(true);
 				setSelectedgem(gems[row-1][col-1]);
-			}else if(getRight(getRight(gems[row][col+1])).getType()==type){
-				//gems[row][col+2].setHinted(true);
+			}else if(getRight(getRight(gems[row][col+1]))!=null && getRight(getRight(gems[row][col+1])).getType()==type){
 				gems[row][col+3].setHinted(true);
 				setSelectedgem(gems[row][col+3]);
-			}else if(getBelow(getRight(gems[row][col+1])).getType()==type){
-				//gems[row][col+2].setHinted(true);
+			}else if(getBelow(getRight(gems[row][col+1]))!=null && getBelow(getRight(gems[row][col+1])).getType()==type){
 				gems[row+1][col+2].setHinted(true);
 				setSelectedgem(gems[row+1][col+2]);
-			}else if(getUpper(getRight(gems[row][col+1])).getType()==type){
-				//gems[row][col+2].setHinted(true);
+			}else if(getUpper(getRight(gems[row][col+1]))!=null && getUpper(getRight(gems[row][col+1])).getType()==type){
 				gems[row-1][col+2].setHinted(true);
 				setSelectedgem(gems[row-1][col+2]);
+			}else if(col<dimension-1){
+				hintCheck(col+1,row);
+			}else if(row<dimension-1){
+				hintCheck(0,row+1);
 			}			
 		}else{
-			if(getLeft(getUpper(gems[row][col])).getType()==type){
-				//gems[row-1][col].setHinted(true);
+			if(getLeft(getUpper(gems[row][col]))!=null && getLeft(getUpper(gems[row][col])).getType()==type){
 				gems[row-1][col-1].setHinted(true);
 				setSelectedgem(gems[row-1][col-1]);
-			}else if(getRight(getUpper(gems[row][col])).getType()==type){
-				//gems[row-1][col].setHinted(true);
+			}else if(getRight(getUpper(gems[row][col]))!=null && getRight(getUpper(gems[row][col])).getType()==type){
 				gems[row-1][col+1].setHinted(true);
 				setSelectedgem(gems[row-1][col+1]);
-			}else if(getUpper(getUpper(gems[row][col])).getType()==type){
-				//gems[row-1][col].setHinted(true);
+			}else if(getUpper(getUpper(gems[row][col]))!=null && getUpper(getUpper(gems[row][col])).getType()==type){
 				gems[row-2][col].setHinted(true);
 				setSelectedgem(gems[row-2][col]);
-			}else if(getRight(getBelow(gems[row+1][col])).getType()==type){
-				//gems[row+2][col].setHinted(true);
+			}else if(getRight(getBelow(gems[row+1][col]))!=null && getRight(getBelow(gems[row+1][col])).getType()==type){
 				gems[row+2][col+1].setHinted(true);
 				setSelectedgem(gems[row+2][col+1]);
-			}else if(getBelow(getBelow(gems[row+1][col])).getType()==type){
-				//gems[row+2][col].setHinted(true);
+			}else if(getBelow(getBelow(gems[row+1][col]))!=null && getBelow(getBelow(gems[row+1][col])).getType()==type){
 				gems[row+3][col].setHinted(true);
 				setSelectedgem(gems[row+3][col]);
-			}else if(getLeft(getBelow(gems[row+1][col])).getType()==type){
-				//gems[row+2][col].setHinted(true);
+			}else if(getLeft(getBelow(gems[row+1][col]))!=null && getLeft(getBelow(gems[row+1][col])).getType()==type){
 				gems[row+2][col-1].setHinted(true);
 				setSelectedgem(gems[row+2][col-1]);
+			}else if(col<dimension-1){
+				hintCheck(col+1,row);
+			}else if(row<dimension-1){
+				hintCheck(0,row+1);
 			}		
 		}
 	}
@@ -231,7 +238,9 @@ public class Board {
 	 * @return - The upper neighbour of the gem.
 	 */
 	public final Gem getUpper(Gem g) {
-		if (g.getRow() > 0) {
+		if(g==null){
+			return null;
+		}else if (g.getRow() > 0) {
 			return (gems[g.getRow() - 1][g.getCol()]);
 		}
 		return null;
@@ -242,7 +251,9 @@ public class Board {
 	 * @return - The right hand neighbour of the gem.
 	 */
 	public final Gem getRight(Gem g) {
-		if (g.getCol() < dimension - 1) {
+		if(g==null){
+			return null;
+		}else if (g.getCol() < dimension - 1) {
 			return (gems[g.getRow()][g.getCol() + 1]);
 		}
 		return null;
@@ -253,7 +264,9 @@ public class Board {
 	 * @return - The gem below the gem passed in.
 	 */
 	public final Gem getBelow(Gem g) {
-		if (g.getRow() < dimension - 1) {
+		if(g==null){
+			return null;
+		}else if (g.getRow() < dimension - 1) {
 			return (gems[g.getRow() + 1][g.getCol()]);
 		}
 		return null;
@@ -264,7 +277,9 @@ public class Board {
 	 * @return - The left hand neighbour of the gem.
 	 */
 	public final Gem getLeft(Gem g) {
-		if (g.getCol() > 0) {
+		if(g==null){
+			return null;
+		}else if (g.getCol() > 0) {
 			return (gems[g.getRow()][g.getCol() - 1]);
 		}
 		return null;
