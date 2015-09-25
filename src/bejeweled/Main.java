@@ -21,7 +21,9 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -31,6 +33,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -63,7 +66,6 @@ public class Main extends Application {
 		stage = primaryStage;
 		scene = new GameScene(new Group());
 		primaryStage.setTitle("Bejeweled group 30");
-		Board.drawShout = false;
 	    switchMenu();
 	    
 	    timeline = new Timeline(new KeyFrame(
@@ -79,7 +81,6 @@ public class Main extends Application {
 	 */
 	public final static void switchMenu() {
 		root = new Group();
-		Board.drawShout = false;
 				
 		// load background
 		Image background = new Image("Images/MenuBackground.png");
@@ -233,6 +234,82 @@ public class Main extends Application {
 		});
 		
 	}
+	
+	public final static void shoutOut() {
+		
+		Popup popup = new Popup();
+		popup.centerOnScreen();
+		popup.setWidth(200);
+		popup.setHeight(500);
+				
+		DropShadow ds = new DropShadow();
+		ds.setOffsetY(3.0f);
+		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+		
+		Text t = new Text();
+		t.setEffect(ds);
+		t.setCache(true);
+		t.setX(150);
+		t.setY(270);
+		t.setFill(Color.RED);
+		t.setText("test");
+		t.setFont(Font.font("Arial", FontWeight.BOLD,150));
+		popup.getContent().addAll(t);
+		popup.show(stage);
+		root.setDisable(true);
+		
+		
+		// OLD STUFF
+		
+//			// To let the popup be visible for x seconds
+//			long startTime = System.currentTimeMillis();
+//			long showtime = 8*1000;
+//			
+//			while (startTime+showtime <= System.currentTimeMillis()){ 
+//				
+//			ArrayList<String> shouts = new ArrayList<>();
+//			shouts.add(1, "Good Job!");
+//			shouts.add(2, "Keep on going!");
+//			shouts.add(3, "Nice Work!");
+//			
+//			Random randomGenerator = new Random();
+//			int index = randomGenerator.nextInt(shouts.size());
+//			String item = shouts.get(index);
+//			
+//				Popup shout = new Popup();
+//				shout.centerOnScreen();
+//				shout.setWidth(100);
+//				shout.setHeight(200);
+//				DropShadow ds = new DropShadow();
+//				ds.setOffsetY(3.0f);
+//				ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+//				 
+//				Text t = new Text();
+//				t.setEffect(ds);
+//				t.setCache(true);
+//				t.setX(150);
+//				t.setY(270);
+//				t.setFill(Color.GOLD);
+//				t.setText("test");
+//				t.setFont(Font.font("Helvetica", FontWeight.BOLD,150));
+//				if (Board.drawShout = true) {
+//					String testtext = "TEST";
+//					gc.fillText(testtext, 400, 300);
+//				}
+//				else {
+//					String testtext = "FALSE";
+//					gc.fillText(testtext, 400, 300);
+//				}
+				
+				
+		
+			
+			//}
+		
+		
+		};
+		
+	
 	
 	
 	

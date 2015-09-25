@@ -22,7 +22,6 @@ public class Board {
 	private static int score;
 	private final int scorePerGem = 10;
 	private Sounds sound;
-	public static boolean drawShout;
 	
 	/**
 	 * @param dimension - The dimensions of the board.
@@ -340,7 +339,7 @@ public class Board {
 		score += increase;	
 		int goodscore = 20;
 		// Something to trigger the drawShout method
-		drawShout = true;
+		Main.shoutOut();
 
 		Logger.getInstance().writeLineToLogger("The player scores "+increase+" points. The total score is now: "+score);
 	}
