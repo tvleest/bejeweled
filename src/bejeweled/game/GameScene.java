@@ -44,7 +44,7 @@ public class GameScene extends Scene {
 		Canvas canvas = new Canvas(800, 600);
    		root.getChildren().add(canvas);
 		
-   		Image saveIcon = new Image("Images/save.png");
+   		Image saveIcon = new Image("Images/save2.png");
    		Button saveButton = Buttons.subMenuButton(null, saveIcon, 700, 565);
 		
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -54,7 +54,18 @@ public class GameScene extends Scene {
 			}
 		});
 		
-		root.getChildren().add(saveButton);
+		Image hintIcon = new Image("Images/hint.png");
+		Button hintButton = Buttons.subMenuButton(null, hintIcon, 655, 565);
+		
+		hintButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				//VOOR DE HINT FEATURE
+				//Highlight gem that can be moved on the board
+			}
+		});
+		
+		root.getChildren().addAll(hintButton, saveButton);
    		gc = canvas.getGraphicsContext2D();
    		gamelogic = new GameLogic(OFFSETX, OFFSETY, true);
    		
