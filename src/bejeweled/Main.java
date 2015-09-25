@@ -154,7 +154,7 @@ public class Main extends Application {
 		imgView.setFitHeight(600);
 		imgView.setFitWidth(800);
 		
-		Rectangle rect = new Rectangle(210, 35, Color.CHOCOLATE);
+		Rectangle rect = new Rectangle(200, 35, Color.CHOCOLATE);
 		rect.setLayoutX(555);
 		rect.setLayoutY(565);
 		

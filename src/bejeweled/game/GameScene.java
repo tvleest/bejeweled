@@ -27,6 +27,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import bejeweled.Main;
+import bejeweled.Sounds;
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
 import bejeweled.gui.Buttons;
@@ -57,7 +58,7 @@ public class GameScene extends Scene {
 		Canvas canvas = new Canvas(800, 600);
    		root.getChildren().add(canvas);
 		
-   		Image saveIcon = new Image("Images/save2.png");
+   		Image saveIcon = new Image("Images/save.png");
    		Button saveButton = Buttons.subMenuButton(null, saveIcon, 700, 565);
 		
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -107,7 +108,21 @@ public class GameScene extends Scene {
 			}
 		});
 		
-		root.getChildren().addAll(hintButton, saveButton, pauseButton);
+		Image musicIcon = new Image("Images/music2.png");
+		Button musicButton = Buttons.subMenuButton(null, musicIcon, 565, 565);
+		
+		musicButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				if(Sounds.getInstance().backgroundSoundPlaying()) {
+					Sounds.getInstance().stopBackgroundSound();
+				} else {
+					Sounds.getInstance().playBackgroundSound();
+				}
+			}
+		});
+		
+		root.getChildren().addAll(hintButton, saveButton, pauseButton, musicButton);
    		gc = canvas.getGraphicsContext2D();
    		gc.setFont(new Font("Helvetica", 15));
    		gamelogic = new GameLogic(OFFSETX, OFFSETY, true);
