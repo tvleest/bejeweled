@@ -236,96 +236,48 @@ public class Main extends Application {
 	}
 	
 	public final static void shoutOut() {
-	
+							
+		// Create a popup for showing text on the board
 		Popup popup = new Popup();
 		popup.centerOnScreen();
-		popup.setWidth(200);
-		popup.setHeight(500);
+		popup.setWidth(600);
+		popup.setHeight(800);
 		
-//		ArrayList<String> shouts = new ArrayList<>();
-//		shouts.add(1, "Good Job!");
-//		shouts.add(2, "Keep on going!");
-//		shouts.add(3, "Nice Work!");
-//		
-//		Random randomGenerator = new Random();
-//		int index = randomGenerator.nextInt(shouts.size());
-//		String item = shouts.get(index);
+		// Add various shouts to Array
+		String[] shouts = new String[] {"Good job!", "Keep on going!", "Nice work!"}; 
 		
+		// Pick a random shout
+		Random randomGenerator = new Random();
+		int index = randomGenerator.nextInt(shouts.length);
+		String item = shouts[index];
+		
+		// Include dropshadow
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(3.0f);
-		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+		ds.setColor(Color.color(0.0f, 0.0f, 0.0f));
 		
-		// Problem with text vs. string in setText argument
+		// Format the text
 		Text t = new Text();
 		t.setEffect(ds);
 		t.setCache(true);
-		t.setX(150);
-		t.setY(270);
-		t.setFill(Color.GOLD);
-		t.setText("TEST");
-		t.setFont(Font.font("Arial", FontWeight.BOLD,110));
+		t.setX(60);
+		t.setY(200);
+		t.setFill(Color.RED);
+		t.setText(item);
+		t.setFont(Font.font("Helvetica", FontWeight.BOLD,60));
+		
+		// Put it all together in the pop up
 		popup.getContent().addAll(t);
 		popup.show(stage);
 		root.setDisable(true);
 		
-		long startTime = System.currentTimeMillis();
-		long showTime = 8*1000;
-		if (System.currentTimeMillis() > startTime+showTime) {
-			popup.hide();
-		}
-		
-		// OLD STUFF
-		
-//			// To let the popup be visible for x seconds
-//			long startTime = System.currentTimeMillis();
-//			long showtime = 8*1000;
-//			
-//			while (startTime+showtime <= System.currentTimeMillis()){ 
-//				
-//			ArrayList<String> shouts = new ArrayList<>();
-//			shouts.add(1, "Good Job!");
-//			shouts.add(2, "Keep on going!");
-//			shouts.add(3, "Nice Work!");
-//			
-//			Random randomGenerator = new Random();
-//			int index = randomGenerator.nextInt(shouts.size());
-//			String item = shouts.get(index);
-//			
-//				Popup shout = new Popup();
-//				shout.centerOnScreen();
-//				shout.setWidth(100);
-//				shout.setHeight(200);
-//				DropShadow ds = new DropShadow();
-//				ds.setOffsetY(3.0f);
-//				ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
-//				 
-//				Text t = new Text();
-//				t.setEffect(ds);
-//				t.setCache(true);
-//				t.setX(150);
-//				t.setY(270);
-//				t.setFill(Color.GOLD);
-//				t.setText("test");
-//				t.setFont(Font.font("Helvetica", FontWeight.BOLD,150));
-//				if (Board.drawShout = true) {
-//					String testtext = "TEST";
-//					gc.fillText(testtext, 400, 300);
-//				}
-//				else {
-//					String testtext = "FALSE";
-//					gc.fillText(testtext, 400, 300);
-//				}
+		// Show it for 1 second
+		int showtime = 1 * 1000;
+		Timeline timeline = new Timeline(new KeyFrame(
+		        Duration.millis(showtime),
+		        ae -> popup.hide()));
+		timeline.play();
 				
-				
-		
+	}
 			
-			//}
-		
-		
-		};
-		
-	
-	
-	
-	
 }
