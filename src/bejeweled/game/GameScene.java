@@ -16,10 +16,15 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import bejeweled.Main;
+import bejeweled.board.Board;
+import bejeweled.board.Gem;
 import bejeweled.gui.Buttons;
 import bejeweled.state.Logger;
+import bejeweled.state.Time;
 
 /**
  * @author Timo
@@ -50,7 +55,24 @@ public class GameScene extends Scene {
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				//Write gamestate to file to save the game.
+				Time time = GameLogic.getTime();
+				String stime = time.toString().substring(11, time.toString().length());
+				int score = Board.getScore();
+				Gem[][] board = Board.getGems();
+				String save = stime + "\n" + score + "\n";
+				System.out.println(board.length);
+				for(int row = 0; row < board.length; row++) {
+					for(int col = 0; col < board.length; col++) {
+						save += board[row][col].getType() + "\n";
+					}
+				}
+				try {
+					FileWriter fw = new FileWriter("savefile.txt");
+					fw.write(save);
+					fw.close();
+				} catch (IOException e1) {
+					System.out.println("Something went wrong with the FileWriter in GameScene");
+				}
 			}
 		});
 		
