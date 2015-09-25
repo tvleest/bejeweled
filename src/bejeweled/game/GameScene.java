@@ -54,7 +54,7 @@ public class GameScene extends Scene {
 			}
 		});
 		
-		Image hintIcon = new Image("Images/hint.png");
+		Image hintIcon = new Image("Images/hintbutton.png");
 		Button hintButton = Buttons.subMenuButton(null, hintIcon, 655, 565);
 		
 		hintButton.setOnAction(new EventHandler<ActionEvent>() {
