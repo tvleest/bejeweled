@@ -14,6 +14,7 @@ public class Board {
 	private static Gem[][] gems;
 	private int dimension;
 	private Gem selectedgem = null;
+	private Gem hintedgem = null;
 	private Gem secondGem = null;
 	private static int offsetx;
 	private static int offsety;
@@ -111,6 +112,77 @@ public class Board {
 			}
 		}
 	}
+	
+	public void hintCheck(int col, int row){
+		GemType type = gems[row][col].getType(); 
+		if(getRight(gems[row][col]).getType()==type){
+			checkSurround(col,row,type,1);		
+		}else if(getBelow(gems[row][col]).getType()==type){
+			checkSurround(col,row,type,-1);			
+		}else if(col<dimension-1){
+			hintCheck(col+1,row);
+		}else if(row<dimension-1){
+			hintCheck(0,row+1);
+		}else{
+			Main.gameOver();
+		}		
+	}
+	
+	public void checkSurround(int col, int row, GemType type, int site){
+		if(site==1){
+			if(getLeft(getLeft(gems[row][col])).getType()==type){
+				//gems[row][col-1].setHinted(true);
+				gems[row][col-2].setHinted(true);
+				setSelectedgem(gems[row][col-2]);
+			}else if(getBelow(getLeft(gems[row][col])).getType()==type){
+				//gems[row][col-1].setHinted(true);
+				gems[row+1][col-1].setHinted(true);
+				setSelectedgem(gems[row+1][col-1]);
+			}else if(getUpper(getLeft(gems[row][col])).getType()==type){
+				//gems[row][col-1].setHinted(true);
+				gems[row-1][col-1].setHinted(true);
+				setSelectedgem(gems[row-1][col-1]);
+			}else if(getRight(getRight(gems[row][col+1])).getType()==type){
+				//gems[row][col+2].setHinted(true);
+				gems[row][col+3].setHinted(true);
+				setSelectedgem(gems[row][col+3]);
+			}else if(getBelow(getRight(gems[row][col+1])).getType()==type){
+				//gems[row][col+2].setHinted(true);
+				gems[row+1][col+2].setHinted(true);
+				setSelectedgem(gems[row+1][col+2]);
+			}else if(getUpper(getRight(gems[row][col+1])).getType()==type){
+				//gems[row][col+2].setHinted(true);
+				gems[row-1][col+2].setHinted(true);
+				setSelectedgem(gems[row-1][col+2]);
+			}			
+		}else{
+			if(getLeft(getUpper(gems[row][col])).getType()==type){
+				//gems[row-1][col].setHinted(true);
+				gems[row-1][col-1].setHinted(true);
+				setSelectedgem(gems[row-1][col-1]);
+			}else if(getRight(getUpper(gems[row][col])).getType()==type){
+				//gems[row-1][col].setHinted(true);
+				gems[row-1][col+1].setHinted(true);
+				setSelectedgem(gems[row-1][col+1]);
+			}else if(getUpper(getUpper(gems[row][col])).getType()==type){
+				//gems[row-1][col].setHinted(true);
+				gems[row-2][col].setHinted(true);
+				setSelectedgem(gems[row-2][col]);
+			}else if(getRight(getBelow(gems[row+1][col])).getType()==type){
+				//gems[row+2][col].setHinted(true);
+				gems[row+2][col+1].setHinted(true);
+				setSelectedgem(gems[row+2][col+1]);
+			}else if(getBelow(getBelow(gems[row+1][col])).getType()==type){
+				//gems[row+2][col].setHinted(true);
+				gems[row+3][col].setHinted(true);
+				setSelectedgem(gems[row+3][col]);
+			}else if(getLeft(getBelow(gems[row+1][col])).getType()==type){
+				//gems[row+2][col].setHinted(true);
+				gems[row+2][col-1].setHinted(true);
+				setSelectedgem(gems[row+2][col-1]);
+			}		
+		}
+	}
 
 	/**
 	 * @param row - row number integer
@@ -198,6 +270,7 @@ public class Board {
 		return null;
 	}
 
+	
 	/**
 	 * @param gem1 - One of the gems involved in the check
 	 * @param gem2 - The second of the gems involved in the check
@@ -347,11 +420,19 @@ public class Board {
 		return selectedgem;
 	}
 	
+	public final Gem getHintedgem() {
+		return hintedgem;
+	}
+	
 	/**
 	 * Set the currently selected gem by the player.
 	 */
 	public final void setSelectedgem(Gem selectedgem) {
 		this.selectedgem = selectedgem;
+	}
+	
+	public final void setHintedgem(Gem hintedgem) {
+		this.hintedgem = hintedgem;
 	}
 	
 	/**

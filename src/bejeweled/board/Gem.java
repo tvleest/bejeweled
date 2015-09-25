@@ -14,7 +14,9 @@ public class Gem {
 	private GemType type; //which type of six gems
 	private Image image; //The image of the gem
 	private Image overlay; //The overlay image
+	private Image hintedoverlay;
 	private boolean selected = false;
+	private boolean hinted = false;
 	private int offsetx;
 	private int offsety;
 	private boolean loadImage;
@@ -35,6 +37,7 @@ public class Gem {
 		if (loadImages) {
 			loadImage();
 			overlay = new Image("Images/overlay.png");
+			hintedoverlay = new Image("Images/hint.png");
 		}
 	}
 	
@@ -87,6 +90,8 @@ public class Gem {
 		gc.drawImage(image, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		if (selected) {
 			gc.drawImage(overlay, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
+		} else if(hinted){
+			gc.drawImage(hintedoverlay, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		}
 	}
 
@@ -107,6 +112,10 @@ public class Gem {
 	public final boolean isSelected() {
 		return selected;
 	}
+	
+	public final boolean isHinted() {
+		return hinted;
+	}
 
 	/**
 	 * @param selected - boolean to select or deselect the gem.
@@ -114,6 +123,10 @@ public class Gem {
 	 */
 	public final void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	
+	public final void setHinted(boolean hinted) {
+		this.hinted = hinted;
 	}
 	
 	/**

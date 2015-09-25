@@ -52,7 +52,9 @@ public class Time {
 	 */
 	public void drawTime(final GraphicsContext gc) {
 		if (time < 5000) {
-			gc.fillText(toString(), 240, 480);
+			//gc.fillText(toString(), 240, 480);
+			gc.fillText("Time left:", 240, 480);
+			gc.fillRect(310, 465, time, 20);
 		} else {
 			gc.fillText("Time left: 0:00", 240, 480);
 		}
