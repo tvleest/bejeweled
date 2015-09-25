@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import bejeweled.Main;
+import bejeweled.Sounds;
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
 import bejeweled.game.GameLogic;
@@ -80,6 +81,7 @@ public class Popups {
 			@Override
 			public void handle(ActionEvent e) {
 				Main.switchMenu();
+				Sounds.getInstance().stopBackgroundSound();
 				popup.hide();
 			}
 		});

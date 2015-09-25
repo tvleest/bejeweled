@@ -95,7 +95,8 @@ public class GameScene extends Scene {
 			}
 		});
 		
-		Button pauseButton = Buttons.subMenuButton(null, null, 610, 565);
+		Image pauseIcon = new Image("Images/pause.png");
+		Button pauseButton = Buttons.subMenuButton(null, pauseIcon, 610, 565);
 		pauseButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
