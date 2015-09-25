@@ -19,7 +19,7 @@ public final class Sounds {
 		private static AudioClip errorSound;
 		private static AudioClip gameOverSound;
 		private static AudioClip shoutOutSound;
-		
+		private static boolean backgroundMusic;
 		private static Sounds sounds = null;
     
 		/**
@@ -64,6 +64,7 @@ public final class Sounds {
 		 */
 		public void playBackgroundSound() {
 			  backgroundSound.play();
+			  backgroundMusic = true;
 		}
 		
 		/**
@@ -71,6 +72,7 @@ public final class Sounds {
 		 */
 		public void stopBackgroundSound() {
 			  backgroundSound.stop();
+			  backgroundMusic = false;
 		}
 		
 		/**
@@ -94,6 +96,8 @@ public final class Sounds {
 			 shoutOutSound.play();
 		}
 
-
+		public boolean backgroundSoundPlaying() {
+			return backgroundMusic;
+		}
 }
 
