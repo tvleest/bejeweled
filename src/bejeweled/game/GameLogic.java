@@ -24,9 +24,9 @@ public final class GameLogic {
 	 * @param offsety
 	 *            the offset on the y-axis
 	 */
-	public GameLogic(final int offsetx, final int offsety, boolean i) {
+	public GameLogic(boolean i) {
 		time = new Time(60);
-		board = new Board(8, offsetx, offsety, i);
+		board = new Board(8, i);
 		highscores = new HighScores();
 	}
 
@@ -108,11 +108,11 @@ public final class GameLogic {
 	/**
 	 * @return - Time object in use.
 	 */
-	public static Time getTime() {
+	public Time getTime() {
 		return time;
 	}
 
-	public static void setTime(Time t) {
+	public void setTime(Time t) {
 		time = t;
 	}
 

@@ -153,7 +153,6 @@ public final class Main extends Application {
 		Sounds.getInstance().playBackgroundSound();
 
 		scene = new GameScene(root, stage);
-
 		if (savedGame) {
 			loadFile();
 		}
@@ -168,12 +167,13 @@ public final class Main extends Application {
 
 	/**
 	 * Reads the savefile File and changes the value of score, time and all the
-	 * Gems in the Game so it matches the saved Game. TODO: put this in a
+	 * Gems in the Game so it matches the saved Game. 
+	 * TODO: put this in a
 	 * different save class
 	 */
 	public static void loadFile() {
-		int x = Board.getOffsetX();
-		int y = Board.getOffsetY();
+		GameLogic gamelogic = scene.getGameLogic();
+		Board boardinstance = gamelogic.getBoard();
 		Scanner sc;
 		int score2 = 0;
 		try {
@@ -192,7 +192,7 @@ public final class Main extends Application {
 						String type = sc.nextLine();
 						System.out.println(type);
 						GemType gtype = GemType.typeFromString(type);
-						board[row][col] = new Gem(row, col, x, y, gtype, true);
+						board[row][col] = new Gem(row, col, gtype, true);
 					}
 				}
 			}
@@ -205,9 +205,9 @@ public final class Main extends Application {
 			int t = m * 60 + s;
 			bejeweled.state.Time time2 = new bejeweled.state.Time(t);
 
-			GameLogic.setTime(time2);
-			Board.setScore(score2);
-			Board.setGems(board);
+			gamelogic.setTime(time2);
+			boardinstance.setScore(score2);
+			boardinstance.setGems(board);
 
 		} catch (FileNotFoundException e) {
 			System.out.println("Savefile was not found!");

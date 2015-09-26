@@ -8,19 +8,16 @@ import javafx.scene.canvas.GraphicsContext;
 
 /**
  * @author Group 30 Holds the double dimension array with gems and the board
- *         methods. TODO: half the class is static, half is not, we might wanna
- *         get rid of the static or implement the singleton pattern
+ *         methods. 
  */
 public final class Board {
-	private static Gem[][] gems;
+	private Gem[][] gems;
 	private int dimension;
 	private Gem selectedgem = null;
 	private Gem hintedgem = null;
-	private Gem secondGem = null;
-	private static int offsetx;
-	private static int offsety;
+	private Gem secondGem = null;;
 	private boolean loadImages;
-	private static int score;
+	private int score;
 	private final int scorePerGem = 10;
 
 	/**
@@ -31,11 +28,9 @@ public final class Board {
 	 * @param offsety
 	 *            - standard offset in y, used for drawing and clicking.
 	 */
-	public Board(int dimension, int offsetx, int offsety, boolean loadImages) {
+	public Board(int dimension, boolean loadImages) {
 		score = 0;
 		this.dimension = dimension;
-		this.offsetx = offsetx;
-		this.offsety = offsety;
 		this.loadImages = loadImages;
 		gems = new Gem[dimension][dimension];
 		fillBoard(0, 0);
@@ -50,7 +45,7 @@ public final class Board {
 	public void fillBoard(int col, int row) {
 		GemType type = GemType.getRandomGemType();
 		if (rowCheck(row, col, type) && colCheck(row, col, type)) {
-			Gem gem = new Gem(row, col, offsetx, offsety, type, loadImages);
+			Gem gem = new Gem(row, col, type, loadImages);
 			gems[row][col] = gem;
 			if (col < dimension - 1) {
 				fillBoard(col + 1, row);
@@ -67,7 +62,7 @@ public final class Board {
 	 * 
 	 * @return Gem[][] gems
 	 */
-	public static Gem[][] getGems() {
+	public Gem[][] getGems() {
 		return gems;
 	}
 
@@ -230,7 +225,7 @@ public final class Board {
 				gems[r][col] = gems[r - 1][col];
 			} else {
 				GemType type = GemType.getRandomGemType();
-				Gem gem = new Gem(0, col, offsetx, offsety, type, loadImages);
+				Gem gem = new Gem(0, col, type, loadImages);
 				gems[0][col] = gem;
 			}
 		}
@@ -520,27 +515,19 @@ public final class Board {
 	 * @param gems
 	 *            - Two-dimensional array of gems to set the old one as.
 	 */
-	public static void setGems(Gem[][] g) {
+	public void setGems(Gem[][] g) {
 		gems = g;
 	}
 
 	/**
 	 * @return - The current score
 	 */
-	public static int getScore() {
+	public int getScore() {
 		return score;
 	}
 
-	public static void setScore(int s) {
+	public void setScore(int s) {
 		score = s;
-	}
-
-	public static int getOffsetX() {
-		return offsetx;
-	}
-
-	public static int getOffsetY() {
-		return offsety;
 	}
 
 	/**
@@ -550,7 +537,7 @@ public final class Board {
 	public boolean equals(Object other) {
 		if (other instanceof Board) {
 			Board that = (Board) other;
-			if (this.dimension == that.dimension && this.offsetx == that.offsetx && this.offsety == that.offsety) {
+			if (this.dimension == that.dimension) {
 				return true;
 			}
 		}

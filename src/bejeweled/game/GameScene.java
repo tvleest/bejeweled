@@ -32,8 +32,8 @@ public final class GameScene extends Scene {
 	// to use the sounds in this class
 	private static GraphicsContext gc;
 	private static GameLogic gamelogic;
-	private final int offsetx = 235;
-	private final int offsety = 115;
+	private final static int offsetx = 235;
+	private final static int offsety = 115;
 
 	/**
 	 * GameScene Constructor. Prepares the UI of the root and mouseclick
@@ -50,10 +50,10 @@ public final class GameScene extends Scene {
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				Time time = GameLogic.getTime();
+				Time time = gamelogic.getTime();
 				String stime = time.toString().substring(11, time.toString().length());
-				int score = Board.getScore();
-				Gem[][] board = Board.getGems();
+				int score = gamelogic.getBoard().getScore();
+				Gem[][] board = gamelogic.getBoard().getGems();
 				String save = stime + "\n" + score + "\n";
 				System.out.println(board.length);
 				for (int row = 0; row < board.length; row++) {
@@ -87,7 +87,7 @@ public final class GameScene extends Scene {
 			@Override
 			public void handle(ActionEvent e) {
 				Main.getTimeline().pause();
-				Popup popup = Popups.pausePopup(root);
+				Popup popup = Popups.pausePopup(root, gamelogic);
 				popup.show(stage);
 				root.setDisable(true);
 
@@ -111,7 +111,7 @@ public final class GameScene extends Scene {
 		root.getChildren().addAll(hintButton, saveButton, pauseButton, musicButton);
 		gc = canvas.getGraphicsContext2D();
 		gc.setFont(new Font("Helvetica", 15));
-		gamelogic = new GameLogic(offsetx, offsety, true);
+		gamelogic = new GameLogic(true);
 
 		// this will handle mouse clicks
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -153,5 +153,15 @@ public final class GameScene extends Scene {
 	public GraphicsContext getGraphicsContext() {
 		return gc;
 	}
+
+	public static int getOffsetx() {
+		return offsetx;
+	}
+
+	public static int getOffsety() {
+		return offsety;
+	}
+	
+	
 
 }

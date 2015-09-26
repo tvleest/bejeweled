@@ -8,6 +8,7 @@ import bejeweled.Sounds;
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
 import bejeweled.game.GameLogic;
+import bejeweled.game.GameScene;
 import bejeweled.state.Time;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,7 +28,8 @@ import javafx.stage.Popup;
  *
  */
 public class Popups {
-
+	
+	
 	/**
 	 * Makes a pause menu as a Popup.
 	 * 
@@ -35,7 +37,7 @@ public class Popups {
 	 *            - The gamescene which needs to be reenabled.
 	 * @return - The pause menu.
 	 */
-	public static Popup pausePopup(Group root) {
+	public static Popup pausePopup(Group root, GameLogic gamelogic) {
 		Popup popup = new Popup();
 		popup.setWidth(330);
 		popup.setHeight(460);
@@ -99,10 +101,10 @@ public class Popups {
 		save.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				Time time = GameLogic.getTime();
+				Time time = gamelogic.getTime();
 				String stime = time.toString().substring(11, time.toString().length());
-				int score = Board.getScore();
-				Gem[][] board = Board.getGems();
+				int score = gamelogic.getBoard().getScore();
+				Gem[][] board = gamelogic.getBoard().getGems();
 				String save = stime + "\n" + score + "\n";
 				System.out.println(board.length);
 				for (int row = 0; row < board.length; row++) {

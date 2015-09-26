@@ -1,4 +1,5 @@
 package bejeweled.board;
+import bejeweled.game.GameScene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -27,11 +28,11 @@ public class Gem {
 	 * @param type - Type of the gem.
 	 * Constructor
 	 */
-	public Gem(int row, int col, int offsetx, int offsety, GemType type, boolean loadImages) {
+	public Gem(int row, int col, GemType type, boolean loadImages) {
 		this.row = row;
 		this.col = col;
-		this.offsetx = offsetx;
-		this.offsety = offsety;
+		offsetx = GameScene.getOffsetx();
+		offsety = GameScene.getOffsety();
 		this.type = type;
 		this.loadImage = loadImages;
 		if (loadImages) {

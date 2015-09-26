@@ -26,7 +26,6 @@ public final class Logger {
 		try {
 			filewriter= new FileWriter(file);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Something went wrong with the FileWriter in Logger");
 		}
 		writer = new BufferedWriter(filewriter);
@@ -56,7 +55,6 @@ public final class Logger {
 			try {
 				writer.close();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
