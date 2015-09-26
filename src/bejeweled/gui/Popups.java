@@ -22,14 +22,17 @@ import javafx.stage.Popup;
 
 /**
  * A class dedicated to making popups.
+ * 
  * @author group30
  *
  */
 public class Popups {
-	
+
 	/**
 	 * Makes a pause menu as a Popup.
-	 * @param root - The gamescene which needs to be reenabled.
+	 * 
+	 * @param root
+	 *            - The gamescene which needs to be reenabled.
 	 * @return - The pause menu.
 	 */
 	public static Popup pausePopup(Group root) {
@@ -44,24 +47,24 @@ public class Popups {
 		bejeweled.setTextFill(Color.WHITE);
 		bejeweled.setLayoutX(30);
 		bejeweled.setLayoutY(20);
-		
+
 		Label paused = new Label("-GAME PAUSED-");
 		paused.setFont(new Font("Comic Sans MS", 20));
 		paused.setTextFill(Color.WHITESMOKE);
 		paused.setLayoutX(82);
 		paused.setLayoutY(75);
-		
+
 		Label saved = new Label("Game saved!");
 		saved.setFont(new Font("Comic Sans MS", 18));
 		saved.setTextFill(Color.WHITE);
 		saved.setLayoutX(115);
 		saved.setLayoutY(420);
-		
+
 		Button resume = Buttons.pauseMenuButton("RESUME", 107, 110);
-		
-		/* Pressing resume will continue the timer 
-		 * and reenable the bejeweled playing field
-		 * as well as hiding the pause menu. 
+
+		/*
+		 * Pressing resume will continue the timer and reenable the bejeweled
+		 * playing field as well as hiding the pause menu.
 		 */
 		resume.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -71,11 +74,12 @@ public class Popups {
 				Main.getTimeline().play();
 			}
 		});
-		
+
 		Button quit = Buttons.pauseMenuButton("QUIT", 123, 165);
-		
-		/* Pressing quit will remove the pause menu
-		 * and bring the player back to the main menu.
+
+		/*
+		 * Pressing quit will remove the pause menu and bring the player back to
+		 * the main menu.
 		 */
 		quit.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -85,11 +89,12 @@ public class Popups {
 				popup.hide();
 			}
 		});
-		
+
 		Button save = Buttons.pauseMenuButton("SAVE", 123, 220);
-		
-		/* Pressing the save button will save the current state
-		 * of the game to a savefile.
+
+		/*
+		 * Pressing the save button will save the current state of the game to a
+		 * savefile.
 		 */
 		save.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -100,8 +105,8 @@ public class Popups {
 				Gem[][] board = Board.getGems();
 				String save = stime + "\n" + score + "\n";
 				System.out.println(board.length);
-				for(int row = 0; row < board.length; row++) {
-					for(int col = 0; col < board.length; col++) {
+				for (int row = 0; row < board.length; row++) {
+					for (int col = 0; col < board.length; col++) {
 						save += board[row][col].getType() + "\n";
 					}
 				}
@@ -115,14 +120,16 @@ public class Popups {
 				popup.getContent().add(saved);
 			}
 		});
-		
+
 		popup.getContent().addAll(rect, bejeweled, paused, resume, quit, save);
 		return popup;
 	}
-	
+
 	/**
 	 * Makes the game over popup when the time is up.
-	 * @param score - Achieved score this game.
+	 * 
+	 * @param score
+	 *            - Achieved score this game.
 	 * @return - The game over popup.
 	 */
 	public static Popup gameOverPopup(int score) {
