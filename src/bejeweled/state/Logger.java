@@ -1,15 +1,10 @@
 package bejeweled.state;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Observable;
-import java.util.Observer;
-
 
 /**
  * @author Job, Timo
@@ -31,7 +26,6 @@ public final class Logger {
 		try {
 			filewriter= new FileWriter(file);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println("Something went wrong with the FileWriter in Logger");
 		}
 		writer = new BufferedWriter(filewriter);
@@ -61,7 +55,6 @@ public final class Logger {
 			try {
 				writer.close();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
