@@ -34,7 +34,7 @@ public final class Sounds {
 	}
 
 	// This method is part of the singleton pattern
-	public static Sounds getInstance() {
+	public static synchronized Sounds getInstance() {
 		if (sounds == null) {
 			sounds = new Sounds();
 		}

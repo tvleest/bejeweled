@@ -32,7 +32,7 @@ public final class Logger {
 	}
 	
 	//This method is part of the singleton pattern
-	public static Logger getInstance() {
+	public static synchronized Logger getInstance() {
 	      if(logger == null) {
 	         logger = new Logger();
 	      }
