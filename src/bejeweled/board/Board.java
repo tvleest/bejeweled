@@ -17,8 +17,6 @@ public final class Board {
 	private Gem hintedgem = null;
 	private Gem secondGem = null;;
 	private boolean loadImages;
-	private int score;
-	private final int scorePerGem = 10;
 
 	/**
 	 * @param dimension
@@ -29,7 +27,6 @@ public final class Board {
 	 *            - standard offset in y, used for drawing and clicking.
 	 */
 	public Board(int dimension, boolean loadImages) {
-		score = 0;
 		this.dimension = dimension;
 		this.loadImages = loadImages;
 		gems = new Gem[dimension][dimension];
@@ -366,7 +363,6 @@ public final class Board {
 				}
 			}
 		}
-		updateScore(array2.size());
 		for (int k = 0; k < array2.size(); k++) {
 			delete(array2.get(k).getRow(), array2.get(k).getCol()); // deletes
 																	// all gems
@@ -452,24 +448,6 @@ public final class Board {
 	}
 
 	/**
-	 * @param amountOfGems
-	 *            - number of gems deleted due to a formed combination. Updates
-	 *            score based on an amount of gems
-	 */
-	public void updateScore(int amountOfGems) {
-		int increase = scorePerGem * amountOfGems;
-		score += increase;
-		int goodscore = 30;
-		// Something to trigger the shoutOut() method
-		if (increase > goodscore) {
-			Main.shoutOut();
-		}
-
-		Logger.getInstance()
-				.writeLineToLogger("The player scores " + increase + " points. The total score is now: " + score);
-	}
-
-	/**
 	 * Gives back the gem currently selected by the player.
 	 * 
 	 * @return - The selected gem.
@@ -517,17 +495,6 @@ public final class Board {
 	 */
 	public void setGems(Gem[][] g) {
 		gems = g;
-	}
-
-	/**
-	 * @return - The current score
-	 */
-	public int getScore() {
-		return score;
-	}
-
-	public void setScore(int s) {
-		score = s;
 	}
 
 	/**

@@ -313,18 +313,6 @@ public class BoardTest {
 	}
 	
 	/**
-	 * Tests updateScore and getScore methods. First, the score should be 0. 
-	 * Then the score is updated with 20 (2 Gems). Then the score should be 20.
-	 */
-	@Test
-	public final void scoreTest() {
-		board = new Board(2, false);
-		assertEquals(board.getScore(), 0);
-		board.updateScore(2);
-		assertEquals(board.getScore(), 20);
-	}
-	
-	/**
 	 * Tests the setSecondGem and getSecondGem methods, by first setting a Gem
 	 * on second and then checking with getSecondGem if it was second.
 	 */
