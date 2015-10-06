@@ -1,6 +1,9 @@
 package bejeweled.board;
 
+import java.util.EnumMap;
 import java.util.Random;
+
+import javafx.scene.image.Image;
 
 /**
  * @author Timo This class defines the different types of gems.
@@ -10,7 +13,24 @@ public enum GemType {
 
 	private static GemType[] allgems = values();
 	private static Random random = new Random();
-
+	private static EnumMap<GemType, Image> typeToImage;
+	
+	public static Image getImage(GemType gt) {
+        if (typeToImage == null)
+            initMapping();
+        return typeToImage.get(gt);
+    }
+ 
+    private static void initMapping() {
+    	typeToImage = new EnumMap<>(GemType.class);
+    	typeToImage.put(GemType.BLUE, new Image("Images/blue.png"));
+    	typeToImage.put(GemType.GREEN, new Image("Images/green.png"));
+    	typeToImage.put(GemType.ORANGE, new Image("Images/orange.png"));
+    	typeToImage.put(GemType.PINK, new Image("Images/pink.png"));
+    	typeToImage.put(GemType.RED, new Image("Images/red.png"));
+    	typeToImage.put(GemType.YELLOW, new Image("Images/yellow.png"));
+    }
+	
 	public static GemType getRandomGemType() {
 		return allgems[random.nextInt(allgems.length)];
 	}

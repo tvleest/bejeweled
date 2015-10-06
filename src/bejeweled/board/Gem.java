@@ -13,14 +13,12 @@ public class Gem {
 	private int row;
 	private int col;
 	private GemType type; //which type of six gems
-	private Image image; //The image of the gem
-	private Image overlay; //The overlay image
-	private Image hintedoverlay;
+	private static Image overlay; //The overlay image
+	private static Image hintedoverlay;
 	private boolean selected = false;
 	private boolean hinted = false;
 	private int offsetx;
 	private int offsety;
-	private boolean loadImage;
 	
 	/**
 	 * @param row - Row index of the gem.
@@ -28,59 +26,19 @@ public class Gem {
 	 * @param type - Type of the gem.
 	 * Constructor
 	 */
-	public Gem(int row, int col, GemType type, boolean loadImages) {
+	public Gem(int row, int col, GemType type) {
 		this.row = row;
 		this.col = col;
 		offsetx = GameScene.getOffsetx();
 		offsety = GameScene.getOffsety();
 		this.type = type;
-		this.loadImage = loadImages;
-		if (loadImages) {
-			loadImage();
-			overlay = new Image("Images/overlay.png");
-			hintedoverlay = new Image("Images/hint.png");
-		}
-	}
-	
-	/**
-	 * Loads the correct image according to the type of the gem.
-	 * Should be called when type changes.
-	 * Type 0 will return a null image, creating an empty cell.
-	 */
-	private void loadImage() {
-		switch (type) {
-		case BLUE:
-			image = new Image("Images/blue.png");
-			break;
-		case GREEN:
-			image = new Image("Images/green.png");
-			break;
-		case ORANGE:
-			image = new Image("Images/orange.png");
-			break;
-		case PINK:
-			image = new Image("Images/pink.png");
-			break;
-		case RED:
-			image = new Image("Images/red.png");
-			break;
-		case YELLOW:
-			image = new Image("Images/yellow.png");
-			break;
-		default:
-			image = null;
-			break;
-		}
-    }		
+	}	
 
 	/**
 	 * @param type - Type to change the gem to.
 	 */
 	public final void setType(GemType type) {
 		this.type = type;
-		if (loadImage) {
-			loadImage();
-		}
 	}
 	
 	/**
@@ -88,14 +46,31 @@ public class Gem {
 	 * 	this method draws a gem, should be called from the paintcomponent
 	 */
 	final void draw(final GraphicsContext gc) {
-		gc.drawImage(image, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
+		gc.drawImage(GemType.getImage(type), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		if (selected) {
-			gc.drawImage(overlay, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
+			gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		} else if(hinted){
-			gc.drawImage(hintedoverlay, offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
+			gc.drawImage(getHintedImage(), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		}
 	}
 
+	private static Image getOverlayImage(){
+		if(overlay == null)
+			initImages();
+		return overlay;
+	}
+	
+	private static Image getHintedImage(){
+		if(hintedoverlay == null)
+			initImages();
+		return hintedoverlay;
+	}
+	
+	private static void initImages(){
+		overlay = new Image("Images/overlay.png");
+		hintedoverlay = new Image("Images/hint.png");
+	}
+	
 	/**
 	 * @param row - The row index to set this gem to.
 	 * @param col - The column index to set this gem to.
@@ -151,6 +126,4 @@ public class Gem {
 	public final GemType getType() {
 		return this.type;
 	}
-	
-	
 }

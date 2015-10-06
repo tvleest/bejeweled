@@ -25,10 +25,10 @@ public final class GameLogic {
 	 * @param offsety
 	 *            the offset on the y-axis
 	 */
-	public GameLogic(boolean i) {
+	public GameLogic() {
 		time = new Time(60);
 		score = new Score(0);
-		board = new Board(8, i);
+		board = new Board(8);
 		highscores = new HighScores();
 	}
 

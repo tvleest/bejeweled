@@ -24,7 +24,7 @@ public class GemTest {
 	 */
 	@Before
 	public final void setUp() {
-		gem = new Gem(0, 0, GemType.RED, false);
+		gem = new Gem(0, 0, GemType.RED);
 	}
 
 	/**
