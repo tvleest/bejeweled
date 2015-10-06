@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
  * @author Timo
  * Gem class
  */
-public class Gem {
+public final class Gem {
 
 	private int dimension = 40; //the dimension (width and height) of the gems on the board
 	private int row;
@@ -17,8 +17,11 @@ public class Gem {
 	private static Image hintedoverlay;
 	private boolean selected = false;
 	private boolean hinted = false;
+	private boolean moving = false;
 	private int offsetx;
 	private int offsety;
+	private int animationx = 0;
+	private int animationy = 0;
 	
 	/**
 	 * @param row - Row index of the gem.
@@ -37,7 +40,7 @@ public class Gem {
 	/**
 	 * @param type - Type to change the gem to.
 	 */
-	public final void setType(GemType type) {
+	public void setType(GemType type) {
 		this.type = type;
 	}
 	
@@ -45,24 +48,29 @@ public class Gem {
 	 * @param gc - The graphicscontext.
 	 * 	this method draws a gem, should be called from the paintcomponent
 	 */
-	final void draw(final GraphicsContext gc) {
-		gc.drawImage(GemType.getImage(type), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
+	public void draw(final GraphicsContext gc) {
+		if(moving){
+			gc.drawImage(GemType.getImage(type), animationx, animationy);
+		}
+		gc.drawImage(GemType.getImage(type), offsetx + col * dimension, offsety + row * dimension);
 		if (selected) {
-			gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
+			gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension);
 		} else if(hinted){
-			gc.drawImage(getHintedImage(), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
+			gc.drawImage(getHintedImage(), offsetx + col * dimension, offsety + row * dimension);
 		}
 	}
 
 	private static Image getOverlayImage(){
-		if(overlay == null)
+		if(overlay == null){
 			initImages();
+		}
 		return overlay;
 	}
 	
 	private static Image getHintedImage(){
-		if(hintedoverlay == null)
+		if(hintedoverlay == null){
 			initImages();
+		}
 		return hintedoverlay;
 	}
 	
@@ -77,7 +85,7 @@ public class Gem {
 	 * Sets the gem to a new position
 	 * 
 	 */
-	public final void setPosition(int row, int col) {
+	public void setPosition(int row, int col) {
 		this.row = row;
 		this.col = col;
 	}
@@ -85,11 +93,11 @@ public class Gem {
 	/**
 	 * @return - true if the gem is currently selected
 	 */
-	public final boolean isSelected() {
+	public boolean isSelected() {
 		return selected;
 	}
 	
-	public final boolean isHinted() {
+	public boolean isHinted() {
 		return hinted;
 	}
 
@@ -97,11 +105,11 @@ public class Gem {
 	 * @param selected - boolean to select or deselect the gem.
 	 * Set the selected variable
 	 */
-	public final void setSelected(boolean selected) {
+	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
 	
-	public final void setHinted(boolean hinted) {
+	public void setHinted(boolean hinted) {
 		this.hinted = hinted;
 	}
 	
@@ -109,21 +117,31 @@ public class Gem {
 	 * @return - Row of gem
 	 */
 	
-	public final int getRow() {
+	public int getRow() {
 		return this.row;
 	}
 	
 	/**
 	 * @return - Column of gem
 	 */
-	public final int getCol() {
+	public int getCol() {
 		return this.col;
 	}
 	
 	/**
 	 * @return - Type of gem.
 	 */
-	public final GemType getType() {
+	public GemType getType() {
 		return this.type;
 	}
+
+	public boolean isMoving() {
+		return moving;
+	}
+
+	public void setMoving(boolean moving) {
+		this.moving = moving;
+	}
+	
+	
 }
