@@ -16,7 +16,6 @@ public final class Board {
 	private Gem selectedgem = null;
 	private Gem hintedgem = null;
 	private Gem secondGem = null;;
-	private boolean loadImages;
 
 	/**
 	 * @param dimension
@@ -26,9 +25,8 @@ public final class Board {
 	 * @param offsety
 	 *            - standard offset in y, used for drawing and clicking.
 	 */
-	public Board(int dimension, boolean loadImages) {
+	public Board(int dimension) {
 		this.dimension = dimension;
-		this.loadImages = loadImages;
 		gems = new Gem[dimension][dimension];
 		fillBoard(0, 0);
 	}
