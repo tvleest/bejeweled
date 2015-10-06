@@ -4,4 +4,5 @@ Bin/
 Logs/**
 highscores.txt
 testfile.txt
+savefile.txt
 target/classes/**
