@@ -2,6 +2,11 @@ package bejeweled.state;
 
 import bejeweled.Main;
 
+/**
+ * Score class
+ * @author Job
+ *
+ */
 public final class Score {
 	
 	private int score;
@@ -12,6 +17,10 @@ public final class Score {
 		scorePerGem = 10;
 	}
 	
+	/**
+	 * Updates the score with number of gems * score per gem
+	 * @param gems
+	 */
 	public void updateScore(int gems) {
 		score += gems*scorePerGem;
 		int goodscore = 30;
