@@ -52,7 +52,7 @@ public final class GameScene extends Scene {
 			public void handle(ActionEvent e) {
 				Time time = gamelogic.getTime();
 				String stime = time.toString().substring(11, time.toString().length());
-				int score = gamelogic.getBoard().getScore();
+				int score = gamelogic.getScore().getScore();
 				Gem[][] board = gamelogic.getBoard().getGems();
 				String save = stime + "\n" + score + "\n";
 				System.out.println(board.length);

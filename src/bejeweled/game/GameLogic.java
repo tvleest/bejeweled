@@ -1,11 +1,11 @@
 package bejeweled.game;
 
 import javafx.scene.canvas.GraphicsContext;
-
 import bejeweled.Sounds;
 import bejeweled.board.Board;
 import bejeweled.state.HighScores;
 import bejeweled.state.Logger;
+import bejeweled.state.Score;
 import bejeweled.state.Time;
 
 /**
@@ -16,6 +16,7 @@ public final class GameLogic {
 
 	private Board board;
 	private static Time time;
+	private static Score score;
 	private HighScores highscores;
 
 	/**
@@ -26,6 +27,7 @@ public final class GameLogic {
 	 */
 	public GameLogic(boolean i) {
 		time = new Time(60);
+		score = new Score(0);
 		board = new Board(8, i);
 		highscores = new HighScores();
 	}
@@ -69,6 +71,7 @@ public final class GameLogic {
 			if (board.swap(firstgemrow, firstgemcol, row, col)) {
 				int first = board.deleteRows(board.getSelectedgem());
 				int second = board.deleteRows(board.getSecondGem());
+				score.updateScore(first+second);
 				if (first + second > 0) {
 					Logger.getInstance()
 							.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
@@ -101,7 +104,7 @@ public final class GameLogic {
 	 */
 	public void drawScore(final GraphicsContext gc) {
 		String s = "Score: ";
-		s += board.getScore();
+		s += score.getScore();
 		gc.fillText(s, 60, 190);
 	}
 
@@ -130,5 +133,13 @@ public final class GameLogic {
 
 	public HighScores getHighScores() {
 		return highscores;
+	}
+	
+	public Score getScore() {
+		return score;
+	}
+	
+	public void setScore(int s) {
+		score.setScore(s);
 	}
 }
