@@ -3,7 +3,11 @@ import bejeweled.Main;
 import javafx.scene.canvas.GraphicsContext;
 
 
-public class Time {
+/**
+ * @author Tim
+ * This will keep track of time.
+ */
+public final class Time {
 	private int time;
 	
 	public Time(int t) {
