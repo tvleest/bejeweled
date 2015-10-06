@@ -42,7 +42,7 @@ public final class Board {
 	public void fillBoard(int col, int row) {
 		GemType type = GemType.getRandomGemType();
 		if (rowCheck(row, col, type) && colCheck(row, col, type)) {
-			Gem gem = new Gem(row, col, type, loadImages);
+			Gem gem = new Gem(row, col, type);
 			gems[row][col] = gem;
 			if (col < dimension - 1) {
 				fillBoard(col + 1, row);
@@ -222,7 +222,7 @@ public final class Board {
 				gems[r][col] = gems[r - 1][col];
 			} else {
 				GemType type = GemType.getRandomGemType();
-				Gem gem = new Gem(0, col, type, loadImages);
+				Gem gem = new Gem(0, col, type);
 				gems[0][col] = gem;
 			}
 		}
