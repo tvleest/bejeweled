@@ -17,8 +17,8 @@ public final class Time {
 	/**
 	 * update the time.
 	 */
-	public void updateTime() {
-		time++;
+	public void updateTime(int amount) {
+		time += amount;
 	}
 	
 	/**

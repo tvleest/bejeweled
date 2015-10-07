@@ -1,6 +1,9 @@
 package bejeweled.game;
 
 import javafx.scene.canvas.GraphicsContext;
+
+import java.util.ArrayList;
+
 import bejeweled.Sounds;
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
@@ -24,6 +27,7 @@ public final class GameLogic {
 	private int firstgemcol;
 	private int secondgemrow;
 	private int secondgemcol;
+	private boolean combinationsFormed = false;
 	/**
 	 * @param offsetx
 	 *            the offset on the x-axis
@@ -64,7 +68,6 @@ public final class GameLogic {
 	public void handleMouseClicked(final int row, final int col) {
 		if(isanimating)
 			return;
-		
 		secondgemrow = row;
 		secondgemcol = col;
 		if (board.getHintedgem() != null) {
@@ -79,8 +82,9 @@ public final class GameLogic {
 			board.setSecondGem(board.getGems()[row][col]);
 			firstgemrow = board.getSelectedgem().getRow();
 			firstgemcol = board.getSelectedgem().getCol();
-			if (board.swap(firstgemrow, firstgemcol, row, col)) {
+			if (board.swap(board.getSelectedgem(), board.getSecondGem())) {
 				//swap animation
+				isanimating = true;
 				animationhandler.animate();
 				//swap animation
 			}
@@ -138,36 +142,45 @@ public final class GameLogic {
 
 	public void returnFromAnimation() {
 		System.out.println("returned from animation");
-		handleSwapAfterAnimation();
+		if(isanimating)
+			checkForCombinations();
 	}
 
-	private void handleSwapAfterAnimation() {
-		int first = board.deleteRows(board.getSelectedgem());
-		int second = board.deleteRows(board.getSecondGem());
-		score.updateScore(first + second);
-		if (first + second > 0) {
-			Logger.getInstance()
-					.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
-							+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
-							+ board.getSecondGem().getRow() + ") are switched. This switch was succesfull.");
-			for (int i = 0; i < first + second; i++) {
-				time.updateTime();
-				Sounds.getInstance().playCombinationSound();
-			}
-		} else { // if there are no combinations found after the move
-			Logger.getInstance()
-					.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
-							+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
-							+ board.getSecondGem().getRow() + ") are switched. This switch was unsuccesfull.");
-			// switches the two switched gems back
-			board.swap(firstgemrow, firstgemcol, secondgemrow, secondgemcol);
-			// play error sound
-			Sounds.getInstance().playErrorSound();
+	private void checkForCombinations() {
+		ArrayList<Gem> combinations = board.checkForCombinations();
+		
+		if(combinations.size()>0){
+			combinationsFormed = true;
+			Sounds.getInstance().playCombinationSound();
+			score.updateScore(combinations.size());
+			time.updateTime(combinations.size());
+			board.delete(combinations);
+			animationhandler.animate();
 		}
-		board.getSelectedgem().setSelected(false);
-		board.setSelectedgem(null);
-		board.setSecondGem(null);
+		else{
+			isanimating=false;
+			if (!combinationsFormed){
+				swapBack();
+			}
+			board.getSelectedgem().setSelected(false);
+			board.setSelectedgem(null);
+			board.setSecondGem(null);
+			combinationsFormed = false;
+		}
 	}
+	
+	private void swapBack(){
+		Logger.getInstance()
+		.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
+				+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
+				+ board.getSecondGem().getRow() + ") are switched. This switch was unsuccesfull.");
+		// switches the two switched gems back
+		board.swap(board.getSelectedgem(), board.getSecondGem());
+		animationhandler.animate();
+		// play error sound
+		Sounds.getInstance().playErrorSound();
+	}
+
 }
 	
 	
