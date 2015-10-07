@@ -4,28 +4,29 @@ import java.util.ArrayList;
 
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 /**
  * @author Timo
  *
  */
-public final class AnimationHandler implements Runnable{
+public final class AnimationHandler{
 
 	private boolean running = false; //this should stay true, might need to stop this when a game ends;
 	private boolean isAnimating = false;
 	private GameLogic gamelogic;
 	private Board board;
-	private Thread animationThread; // for the animation
 	private int period = 20;
 	private ArrayList<Gem> animatedgems;
+	private Timeline timeline;
 
 
 	public AnimationHandler(GameLogic gamelogic){
 		this.gamelogic = gamelogic;
 		this.board = gamelogic.getBoard();
-		animationThread = new Thread(this);
-		animationThread.setDaemon(true); //thread will close when game closes.
-		animationThread.start();
 	}
 	
 	//this will do one animation move
@@ -47,8 +48,9 @@ public final class AnimationHandler implements Runnable{
 			}
 		}
 		if(animatedgems.size()<1){
-			isAnimating = true;
-			gamelogic.setAnimating(false);
+			isAnimating = false;
+			timeline.stop();
+			gamelogic.returnFromAnimation();
 		}
 	}
 	
@@ -64,45 +66,17 @@ public final class AnimationHandler implements Runnable{
 		}
 	}
 
-	public void start() {
-		if (animationThread == null || !running) {
-			animationThread = new Thread(this);
-			animationThread.start();
-		}
+	public void animate(){
+		isAnimating=true;
+		timeline = new Timeline(new KeyFrame(Duration.millis(10), ae -> gameUpdate()));
+		timeline.setCycleCount(Animation.INDEFINITE);
+		timeline.play();
 	}
-
+	
 	private void gameUpdate() {
-		if (!isAnimating) {
+		if (isAnimating) {
 			getAnimatedGems();
 			runAnimation();
 		}
-	}
-
-	public void stopAnimationThread() {
-		// called by the user to stop execution
-		running = false;
-	}
-	
-	public void run()
-	{
-		long beforeTime, timeDiff, sleepTime;
-		beforeTime = System.currentTimeMillis();
-		running = true;
-		while (running) {
-			gameUpdate();
-			timeDiff = System.currentTimeMillis() - beforeTime;
-			sleepTime = period - timeDiff; // time left in this loop
-			if (sleepTime <= 0) // update/render took longer than period
-				sleepTime = 5; // sleep a bit anyway
-			try {
-				Thread.sleep(sleepTime); // in ms
-			} catch (InterruptedException ex) {
-			}
-			beforeTime = System.currentTimeMillis();
-		}
-	}
-
-	public void setIsAnimating(boolean b) {
-		isAnimating=b;
 	}
 }

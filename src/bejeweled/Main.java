@@ -230,7 +230,6 @@ public final class Main extends Application {
 
 		Logger.getInstance().writeLineToLogger("The game is over. The final score is " + score + ".");
 		Logger.getInstance().disposeLogger();
-		scene.getGameLogic().getAnimationhandler().stopAnimationThread();
 		Popup popup = Popups.gameOverPopup(score);
 		popup.show(stage);
 		root.setDisable(true);

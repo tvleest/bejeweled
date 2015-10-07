@@ -14,14 +14,16 @@ import bejeweled.state.Time;
  *
  */
 public final class GameLogic {
-
+	private boolean isanimating = false;
 	private Board board;
 	private static Time time;
 	private static Score score;
 	private HighScores highscores;
 	private AnimationHandler animationhandler;
-	private boolean animating = false;
-
+	private int firstgemrow;
+	private int firstgemcol;
+	private int secondgemrow;
+	private int secondgemcol;
 	/**
 	 * @param offsetx
 	 *            the offset on the x-axis
@@ -60,11 +62,11 @@ public final class GameLogic {
 	 *            - the col index.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
-		
-		//no mouseclicks handled during animations
-		if(animating) 
+		if(isanimating)
 			return;
 		
+		secondgemrow = row;
+		secondgemcol = col;
 		if (board.getHintedgem() != null) {
 			board.getHintedgem().setHinted(false);
 		}
@@ -75,39 +77,13 @@ public final class GameLogic {
 			board.getGems()[row][col].setSelected(true);
 		} else {
 			board.setSecondGem(board.getGems()[row][col]);
-			int firstgemrow = board.getSelectedgem().getRow();
-			int firstgemcol = board.getSelectedgem().getCol();
+			firstgemrow = board.getSelectedgem().getRow();
+			firstgemcol = board.getSelectedgem().getCol();
 			if (board.swap(firstgemrow, firstgemcol, row, col)) {
 				//swap animation
-				animating = true;
-				animationhandler.setIsAnimating(false);
+				animationhandler.animate();
 				//swap animation
-				int first = board.deleteRows(board.getSelectedgem());
-				int second = board.deleteRows(board.getSecondGem());
-				score.updateScore(first+second);
-				if (first + second > 0) {
-					Logger.getInstance()
-							.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
-									+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
-									+ board.getSecondGem().getRow() + ") are switched. This switch was succesfull.");
-					for (int i = 0; i < first + second; i++) {
-						time.updateTime();
-						Sounds.getInstance().playCombinationSound();
-					}
-				} else { // if there are no combinations found after the move
-					Logger.getInstance()
-							.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
-									+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
-									+ board.getSecondGem().getRow() + ") are switched. This switch was unsuccesfull.");
-					// switches the two switched gems back
-					board.swap(firstgemrow, firstgemcol, row, col);
-					// play error sound
-					Sounds.getInstance().playErrorSound();
-				}
 			}
-			board.getSelectedgem().setSelected(false);
-			board.setSelectedgem(null);
-			board.setSecondGem(null);
 		}
 	}
 
@@ -156,13 +132,43 @@ public final class GameLogic {
 		score.setScore(s);
 	}
 
-	public void setAnimating(boolean animating) {
-		this.animating = animating;
-	}
-
 	public AnimationHandler getAnimationhandler() {
 		return animationhandler;
 	}
-	
-	
+
+	public void returnFromAnimation() {
+		System.out.println("returned from animation");
+		handleSwapAfterAnimation();
+	}
+
+	private void handleSwapAfterAnimation() {
+		int first = board.deleteRows(board.getSelectedgem());
+		int second = board.deleteRows(board.getSecondGem());
+		score.updateScore(first + second);
+		if (first + second > 0) {
+			Logger.getInstance()
+					.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
+							+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
+							+ board.getSecondGem().getRow() + ") are switched. This switch was succesfull.");
+			for (int i = 0; i < first + second; i++) {
+				time.updateTime();
+				Sounds.getInstance().playCombinationSound();
+			}
+		} else { // if there are no combinations found after the move
+			Logger.getInstance()
+					.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
+							+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
+							+ board.getSecondGem().getRow() + ") are switched. This switch was unsuccesfull.");
+			// switches the two switched gems back
+			board.swap(firstgemrow, firstgemcol, secondgemrow, secondgemcol);
+			// play error sound
+			Sounds.getInstance().playErrorSound();
+		}
+		board.getSelectedgem().setSelected(false);
+		board.setSelectedgem(null);
+		board.setSecondGem(null);
+	}
 }
+	
+	
+
