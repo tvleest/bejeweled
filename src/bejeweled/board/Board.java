@@ -122,17 +122,19 @@ public final class Board {
 	 * @param row
 	 */
 
-	public void hintCheck(int row, int col) {
+	public void hintCheck(int row, int col, boolean hint) {
 		GemType type = gems[row][col].getType();
 		if (doubleRow(row, col, type)) {
-			checkSurroundRow(row, col, type);
+			checkSurroundRow(row, col, type, hint);
 		} else if (doubleCol(row, col, type)) {
-			checkSurroundCol(row, col, type);
+			checkSurroundCol(row, col, type, hint);
 		} else if (col < dimension - 1) {
-			hintCheck(row, col + 1);
+			hintCheck(row, col + 1, hint);
 		} else if (row < dimension - 1) {
-			hintCheck(row + 1, 0);
-		} 
+			hintCheck(row + 1, 0, hint);
+		} else {
+			Main.gameOver();
+		}
 	}
 
 	/**
@@ -143,23 +145,23 @@ public final class Board {
 	 * @param type
 	 * @param site
 	 */
-	public void checkSurroundRow(int row, int col, GemType type) {
+	public void checkSurroundRow(int row, int col, GemType type, boolean hint) {
 		if (doubleLeft(row, col, type)) {
-			gems[row][col - 2].setHinted(true);
+			gems[row][col - 2].setHinted(hint);
 		} else if (downLeft(row, col, type)) {
-			gems[row + 1][col - 1].setHinted(true);
+			gems[row + 1][col - 1].setHinted(hint);
 		} else if (upperLeft(row, col, type)) {
-			gems[row - 1][col - 1].setHinted(true);
+			gems[row - 1][col - 1].setHinted(hint);
 		} else if (doubleRight(row, col + 1, type)) {
-			gems[row][col + 3].setHinted(true);
+			gems[row][col + 3].setHinted(hint);
 		} else if (downRight(row, col + 1, type)) {
-			gems[row + 1][col + 2].setHinted(true);
+			gems[row + 1][col + 2].setHinted(hint);
 		} else if (upperRight(row, col + 1, type)) {
-			gems[row - 1][col + 2].setHinted(true);
+			gems[row - 1][col + 2].setHinted(hint);
 		} else if (col < dimension - 1) {
-			hintCheck(row, col + 1);
+			hintCheck(row, col + 1, hint);
 		} else if (row < dimension - 1) {
-			hintCheck(row + 1, 0);
+			hintCheck(row + 1, 0, hint);
 		} 
 	}
 	
@@ -171,23 +173,23 @@ public final class Board {
 	 * @param type
 	 * @param site
 	 */
-	public void checkSurroundCol(int row, int col, GemType type) {
+	public void checkSurroundCol(int row, int col, GemType type, boolean hint) {
 		if (upperLeft(row, col, type)) {
-			gems[row - 1][col - 1].setHinted(true);
+			gems[row - 1][col - 1].setHinted(hint);
 		} else if (upperRight(row, col, type)) {
-			gems[row - 1][col + 1].setHinted(true);
+			gems[row - 1][col + 1].setHinted(hint);
 		} else if (doubleUpper(row, col, type)) {
-			gems[row - 2][col].setHinted(true);
+			gems[row - 2][col].setHinted(hint);
 		} else if (downRight(row + 1, col, type)) {
-			gems[row + 2][col + 1].setHinted(true);
+			gems[row + 2][col + 1].setHinted(hint);
 		} else if (doubleDown(row + 1, col, type)) {
-			gems[row + 3][col].setHinted(true);
+			gems[row + 3][col].setHinted(hint);
 		} else if (downLeft(row + 1, col, type)) {
-			gems[row + 2][col - 1].setHinted(true);
+			gems[row + 2][col - 1].setHinted(hint);
 		} else if (col < dimension - 1) {
-			hintCheck(row, col + 1);
+			hintCheck(row, col + 1, hint);
 		} else if (row < dimension - 1) {
-			hintCheck(row + 1, 0);
+			hintCheck(row + 1, 0, hint);
 		} 
 	}
 

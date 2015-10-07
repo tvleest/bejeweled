@@ -77,7 +77,7 @@ public final class GameScene extends Scene {
 		hintButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				gamelogic.getBoard().hintCheck(0, 0);
+				gamelogic.getBoard().hintCheck(0, 0, true);
 			}
 		});
 

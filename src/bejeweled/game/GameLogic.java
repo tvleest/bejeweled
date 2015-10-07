@@ -87,6 +87,7 @@ public final class GameLogic {
 				//swap animation
 				isanimating = true;
 				animationhandler.animate();
+				getBoard().hintCheck(0, 0, false);
 			}
 		}
 	}
