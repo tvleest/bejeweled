@@ -88,6 +88,10 @@ public final class GameLogic {
 				isanimating = true;
 				animationhandler.animate();
 			}
+			else{
+				board.getSelectedgem().setSelected(false);
+				board.setSelectedgem(null);
+			}
 		}
 	}
 	
