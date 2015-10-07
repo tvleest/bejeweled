@@ -57,7 +57,7 @@ public final class Gem {
 		if (selected) {
 			gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension);
 		} else if(hinted){
-			gc.drawImage(getHintedImage(), offsetx + col * dimension, offsety + row * dimension);
+			gc.drawImage(getHintedImage(), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 		}
 		}
 	}

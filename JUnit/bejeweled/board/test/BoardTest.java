@@ -65,23 +65,21 @@ public class BoardTest {
 		assertTrue(board.colCheck(2, 0, GemType.RED));
 	}
 
-//	/**
-//	 * Tests the delete method, by deleting a gem and 
-//	 * checking if it has disappeared and if the other 
-//	 * gems are on the right place.
-//	 */
-//	@Test
-//	public final void testDelete() {
-//		board = new Board(3);
-//		gems = board.getGems();
-//		gems[0][0].setType(GemType.RED);
-//		gems[1][0].setType(GemType.RED);
-//		Gem gem1 = gems[0][0];
-//		Gem gem2 = gems[1][0];
-//		board.delete(2, 0);
-//		assertEquals(gems[2][0], gem2);
-//		assertEquals(gems[1][0], gem1);
-//	}
+	/**
+	 * Tests the delete method, by deleting a gem and 
+	 * checking if the gem above it has shoved
+	 */
+	@Test
+	public final void testDelete() {
+		board = new Board(3);
+		gems = board.getGems();
+		gems[0][0] = new Gem(0, 0, GemType.RED);
+		gems[1][0] = new Gem(1, 0, GemType.RED);
+		Gem gem1 = gems[0][0];
+		Gem gem2 = gems[1][0];
+		board.delete(gem2);
+		assertEquals(gems[1][0], gem1);
+	}
 
 	/**
 	 * Tests the swap method by swapping two gems and 
@@ -89,18 +87,19 @@ public class BoardTest {
 	 * Also, it checks whether the gems are not changed 
 	 * if they are not next to each other.
 	 */
-//	@Test
-//	public final void testSwap() {
-//		board = new Board(2);
-//		assertFalse(board.swap(0, 1, 1, 0));
-//		gems = board.getGems();
-//		Gem gem1 = gems[0][0];
-//		Gem gem2 = gems[0][1];
-//		assertTrue(board.swap(0, 0, 0, 1));
-//		assertEquals(gems[0][0], gem2);
-//		assertEquals(gems[0][1], gem1);
-//		assertTrue(board.swap(0, 0, 1, 0));
-//	}
+	@Test
+	public final void testSwap() {
+		board = new Board(2);
+		gems = board.getGems();
+		Gem gemnoswap = gems[1][1];
+		Gem gem1 = gems[0][0];
+		Gem gem2 = gems[0][1];
+		assertFalse(board.swap(gem1, gemnoswap));
+		assertTrue(board.swap(gem1, gem2));
+		assertEquals(gems[0][0], gem2);
+		assertEquals(gems[0][1], gem1);
+		assertTrue(board.swap(gem1, gem2));
+	}
 
 	/**
 	 * Tests the getUpper method by checking if 

@@ -137,7 +137,6 @@ public final class GameLogic {
 	}
 
 	public void returnFromAnimation() {
-		System.out.println("returned from animation");
 		if(isanimating)
 			checkForCombinations();
 	}
@@ -170,7 +169,7 @@ public final class GameLogic {
 		.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
 				+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
 				+ board.getSecondGem().getRow() + ") are swapped back.");
-		// switches the two switched gems back
+		// swap the two switched gems back
 		board.swap(board.getSelectedgem(), board.getSecondGem());
 		animationhandler.animate();
 		// play error sound
