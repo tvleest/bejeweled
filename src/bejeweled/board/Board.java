@@ -206,6 +206,76 @@ public final class Board {
 	}
 
 	/**
+	 * @return the gems that are part of a combination
+	 * checks for every gem if it's part of a combination
+	 * TODO: this together with the checkforcombinations(gem) can be way more efficient
+	 */
+	public ArrayList<Gem> checkForCombinations() {
+		ArrayList<Gem> combinations = new ArrayList<Gem>();
+		//check for each gem if its part of combinations;
+		for (Gem[] gemss : gems) {
+			for (Gem gem : gemss) {
+				if(checkForCombinations(gem)){
+					combinations.add(gem);
+				}
+			}
+		}
+		return combinations;
+	}
+
+	/**
+	 * @param gem the gem to be checked
+	 * @return true if this gem is part of a combination
+	 */
+	private boolean checkForCombinations(Gem gem) {
+		GemType type = gem.getType();
+		if (getUpper(gem) != null && getUpper(gem).getType() == type) {
+			if (getUpper(getUpper(gem)) != null && getUpper(getUpper(gem)).getType() == type) {
+				return true;
+			}
+			if (getBelow(gem) != null && getBelow(gem).getType() == type) {
+				return true;
+			}
+		}
+		if (getBelow(gem) != null && getBelow(gem).getType() == type) {
+			if (getBelow(getBelow(gem)) != null && getBelow(getBelow(gem)).getType() == type) {
+				return true;
+			}
+			if (getUpper(gem) != null && getUpper(gem).getType() == type) {
+				return true;
+			}
+		}
+		if (getRight(gem) != null && getRight(gem).getType() == type) {
+			if (getRight(getRight(gem)) != null && getRight(getRight(gem)).getType() == type) {
+				return true;
+			}
+			if (getLeft(gem) != null && getLeft(gem).getType() == type) {
+				return true;
+			}
+		}
+		if (getLeft(gem) != null && getLeft(gem).getType() == type) {
+			if (getLeft(getLeft(gem)) != null && getLeft(getLeft(gem)).getType() == type) {
+				return true;
+			}
+			if (getRight(gem) != null && getRight(gem).getType() == type) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	
+	/**
+	 * @param combinations the gems to be deleted
+	 * calls delete for all gems in an arraylist
+	 */
+	public void delete(ArrayList<Gem> combinations) {
+		for(Gem g : combinations){
+			delete(g);
+		}
+	}
+	
+	/**
 	 * @param row
 	 *            - row number integer
 	 * @param col
@@ -233,14 +303,6 @@ public final class Board {
 	}
 
 	/**
-	 * @param row1
-	 *            - row number of the first gem to be swapped.
-	 * @param col1
-	 *            - column number of the first gem to be swapped.
-	 * @param row2
-	 *            - row number of the second gem to be swapped.
-	 * @param col2
-	 *            - column number of the second gem to be swapped.
 	 * @return - boolean based on the possibility of the swap. Swaps two gems
 	 *         and returns a boolean whether the swap is possible or not.
 	 */
@@ -396,62 +458,4 @@ public final class Board {
 		}
 		return false;
 	}
-
-	public ArrayList<Gem> checkForCombinations() {
-		ArrayList<Gem> combinations = new ArrayList<Gem>();
-		//check for each gem if its part of combinations;
-		for (Gem[] gemss : gems) {
-			for (Gem gem : gemss) {
-				if(checkForCombinations(gem)){
-					combinations.add(gem);
-				}
-			}
-		}
-		return combinations;
-	}
-
-	//TODO: Fix this worst method ever
-	private boolean checkForCombinations(Gem gem) {
-		GemType type = gem.getType();
-		if (getUpper(gem) != null && getUpper(gem).getType() == type) {
-			if (getUpper(getUpper(gem)) != null && getUpper(getUpper(gem)).getType() == type) {
-				return true;
-			}
-			if (getBelow(gem) != null && getBelow(gem).getType() == type) {
-				return true;
-			}
-		}
-		if (getBelow(gem) != null && getBelow(gem).getType() == type) {
-			if (getBelow(getBelow(gem)) != null && getBelow(getBelow(gem)).getType() == type) {
-				return true;
-			}
-			if (getUpper(gem) != null && getUpper(gem).getType() == type) {
-				return true;
-			}
-		}
-		if (getRight(gem) != null && getRight(gem).getType() == type) {
-			if (getRight(getRight(gem)) != null && getRight(getRight(gem)).getType() == type) {
-				return true;
-			}
-			if (getLeft(gem) != null && getLeft(gem).getType() == type) {
-				return true;
-			}
-		}
-		if (getLeft(gem) != null && getLeft(gem).getType() == type) {
-			if (getLeft(getLeft(gem)) != null && getLeft(getLeft(gem)).getType() == type) {
-				return true;
-			}
-			if (getRight(gem) != null && getRight(gem).getType() == type) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public void delete(ArrayList<Gem> combinations) {
-		for(Gem g : combinations){
-			delete(g);
-		}
-	}
-
 }

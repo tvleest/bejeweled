@@ -49,16 +49,16 @@ public final class Gem {
 	 * 	this method draws a gem, should be called from the paintcomponent
 	 */
 	public void draw(final GraphicsContext gc) {
-		if(moving){
+		if (moving) {
 			gc.drawImage(GemType.getImage(type), animationx, animationy);
-		}
-		else{
-		gc.drawImage(GemType.getImage(type), offsetx + col * dimension, offsety + row * dimension);
-		if (selected) {
-			gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension);
-		} else if(hinted){
-			gc.drawImage(getHintedImage(), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
-		}
+		} else {
+			gc.drawImage(GemType.getImage(type), offsetx + col * dimension, offsety + row * dimension);
+			if (selected) {
+				gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension);
+			} else if (hinted) {
+				gc.drawImage(getHintedImage(), offsetx + col * dimension, offsety + row * dimension, dimension,
+						dimension);
+			}
 		}
 	}
 

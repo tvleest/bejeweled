@@ -15,38 +15,38 @@ import javafx.util.Duration;
  */
 public final class AnimationHandler{
 
-	private boolean running = false; //this should stay true, might need to stop this when a game ends;
 	private boolean isAnimating = false;
 	private GameLogic gamelogic;
 	private Board board;
-	private int period = 20;
 	private ArrayList<Gem> animatedgems;
 	private Timeline timeline;
-
 
 	public AnimationHandler(GameLogic gamelogic){
 		this.gamelogic = gamelogic;
 		this.board = gamelogic.getBoard();
 	}
 	
-	//this will do one animation move
+	/**
+	 * will do one move of the animation.
+	 */
 	public void runAnimation(){
 		for(Gem g : animatedgems){
 			if(g.isMoving()){
-				if (g.getAnimationx() < g.getCurrentx())
+				if (g.getAnimationx() < g.getCurrentx()) {
 					g.setAnimationx(g.getAnimationx()+1);
-				else if (g.getAnimationx() > g.getCurrentx())
+				} else if (g.getAnimationx() > g.getCurrentx()) {
 					g.setAnimationx(g.getAnimationx()-1);
-				else
-					if (g.getAnimationy() < g.getCurrenty())
+				} else
+					if (g.getAnimationy() < g.getCurrenty()) {
 						g.setAnimationy(g.getAnimationy()+1);
-					else if (g.getAnimationy() > g.getCurrenty())
+					} else if (g.getAnimationy() > g.getCurrenty()) {
 						g.setAnimationy(g.getAnimationy()-1);
-					else{
+					} else{
 						g.setMoving(false);
 					}
 			}
 		}
+		//will always do an extra loop before the size will be smaller, can be more efficient
 		if(animatedgems.size()<1){
 			isAnimating = false;
 			timeline.stop();
@@ -54,7 +54,9 @@ public final class AnimationHandler{
 		}
 	}
 	
-	//this will return the current animatedgems
+	/**
+	 * will set the animatedgems to all gems that need animation.
+	 */
 	private void getAnimatedGems() {
 		animatedgems = new ArrayList<Gem>();
 		for (Gem[] gemss : board.getGems()) {
@@ -66,6 +68,10 @@ public final class AnimationHandler{
 		}
 	}
 
+	/**
+	 * instantiates a new timeline for this animation and plays it.
+	 * call gameUpdate for every 10 ms
+	 */
 	public void animate(){
 		isAnimating=true;
 		timeline = new Timeline(new KeyFrame(Duration.millis(10), ae -> gameUpdate()));
@@ -73,6 +79,10 @@ public final class AnimationHandler{
 		timeline.play();
 	}
 	
+	/**
+	 * updates the game list.
+	 * runs an animation
+	 */
 	private void gameUpdate() {
 		if (isAnimating) {
 			getAnimatedGems();

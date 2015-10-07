@@ -62,29 +62,89 @@ public final class GameLogic {
 	 *            - the col index.
 	 */
 	public void handleMouseClicked(final int row, final int col) {
-		if(isanimating)
+		//we won't handle mouseclicks while an animation is running
+		if(isanimating) {
 			return;
+		}
 		if (board.getHintedgem() != null) {
 			board.getHintedgem().setHinted(false);
 		}
 		Logger.getInstance().writeLineToLogger("Mouse clicked on row " + row + " and col " + col);
 		Sounds.getInstance().playSelectSound();
+		//select if there is already a first selectedgem
 		if (board.getSelectedgem() == null) {
 			board.setSelectedgem(board.getGems()[row][col]);
 			board.getGems()[row][col].setSelected(true);
+		//apparently this is the second gem we select
+		//we should swap these two gems and handle animations and combinations
 		} else {
 			board.setSecondGem(board.getGems()[row][col]);
 			if (board.swap(board.getSelectedgem(), board.getSecondGem())) {
-				//swap animation
-				isanimating = true;
 				Logger.getInstance()
 				.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
 						+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
 						+ board.getSecondGem().getRow() + ") are swapped.");
-				animationhandler.animate();
 				//swap animation
+				isanimating = true;
+				animationhandler.animate();
 			}
 		}
+	}
+	
+	/**
+	 * this method gets called when an animation ends so the code can continue.
+	 */
+	public void returnFromAnimation() {
+		if(isanimating) {
+			checkForCombinations();
+		}
+	}
+	
+	/**
+	 * this method checks for combinations on the board.
+	 * handles animations
+	 * when animations end returnfromanimation will get called again
+	 * untill there are no more combinations then the animations will end
+	 */
+	private void checkForCombinations() {
+		ArrayList<Gem> combinations = board.checkForCombinations();
+		//combinations found
+		if(combinations.size()>0){
+			combinationsFormed = true;
+			Sounds.getInstance().playCombinationSound();
+			score.updateScore(combinations.size()); //update score
+			time.updateTime(combinations.size()); //update time
+			board.delete(combinations); //delete all the combinations we found
+			animationhandler.animate(); //animate the falling of gems
+		}
+		//no combinations found
+		else{
+			isanimating=false;
+			//if no combinations are formed we swap the gems back
+			if (!combinationsFormed){
+				swapBack();
+			}
+			//return board to normal state by resetting some variables
+			board.getSelectedgem().setSelected(false);
+			board.setSelectedgem(null);
+			board.setSecondGem(null);
+			combinationsFormed = false;
+		}
+	}
+	
+	/**
+	 * swaps two gems back.
+	 */
+	private void swapBack(){
+		Logger.getInstance()
+		.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
+				+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
+				+ board.getSecondGem().getRow() + ") are swapped back.");
+		// swap the two switched gems back
+		board.swap(board.getSelectedgem(), board.getSecondGem());
+		animationhandler.animate();
+		// play error sound
+		Sounds.getInstance().playErrorSound();
 	}
 
 	/**
@@ -95,17 +155,6 @@ public final class GameLogic {
 		String s = "Score: ";
 		s += score.getScore();
 		gc.fillText(s, 60, 190);
-	}
-
-	/**
-	 * @return - Time object in use.
-	 */
-	public Time getTime() {
-		return time;
-	}
-
-	public void setTime(Time t) {
-		time = t;
 	}
 
 	/**
@@ -132,50 +181,13 @@ public final class GameLogic {
 		score.setScore(s);
 	}
 
-	public AnimationHandler getAnimationhandler() {
-		return animationhandler;
+	public Time getTime() {
+		return time;
 	}
 
-	public void returnFromAnimation() {
-		if(isanimating)
-			checkForCombinations();
+	public void setTime(Time t) {
+		time = t;
 	}
-
-	private void checkForCombinations() {
-		ArrayList<Gem> combinations = board.checkForCombinations();
-		
-		if(combinations.size()>0){
-			combinationsFormed = true;
-			Sounds.getInstance().playCombinationSound();
-			score.updateScore(combinations.size());
-			time.updateTime(combinations.size());
-			board.delete(combinations);
-			animationhandler.animate();
-		}
-		else{
-			isanimating=false;
-			if (!combinationsFormed){
-				swapBack();
-			}
-			board.getSelectedgem().setSelected(false);
-			board.setSelectedgem(null);
-			board.setSecondGem(null);
-			combinationsFormed = false;
-		}
-	}
-	
-	private void swapBack(){
-		Logger.getInstance()
-		.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
-				+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
-				+ board.getSecondGem().getRow() + ") are swapped back.");
-		// swap the two switched gems back
-		board.swap(board.getSelectedgem(), board.getSecondGem());
-		animationhandler.animate();
-		// play error sound
-		Sounds.getInstance().playErrorSound();
-	}
-
 }
 	
 	
