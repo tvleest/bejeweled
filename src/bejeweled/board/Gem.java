@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
  */
 public final class Gem {
 
-	private int dimension = 40; //the dimension (width and height) of the gems on the board
+	private static int dimension = 40; //the dimension (width and height) of the gems on the board
 	private int row;
 	private int col;
 	private GemType type; //which type of six gems
@@ -142,6 +142,32 @@ public final class Gem {
 	public void setMoving(boolean moving) {
 		this.moving = moving;
 	}
+
+	public int getAnimationx() {
+		return animationx;
+	}
+
+	public void setAnimationx(int animationx) {
+		this.animationx = animationx;
+	}
+
+	public int getAnimationy() {
+		return animationy;
+	}
+
+	public void setAnimationy(int animationy) {
+		this.animationy = animationy;
+	}
+
+	public static int getDimension() {
+		return dimension;
+	}
 	
+	public int getCurrentx(){
+		return col*dimension+offsetx;
+	}
 	
+	public int getCurrenty(){
+		return row*dimension+offsety;
+	}
 }

@@ -32,8 +32,8 @@ public final class GameScene extends Scene {
 	// to use the sounds in this class
 	private static GraphicsContext gc;
 	private static GameLogic gamelogic;
-	private final static int offsetx = 235;
-	private final static int offsety = 115;
+	private static final int offsetx = 235;
+	private static final int offsety = 115;
 
 	/**
 	 * GameScene Constructor. Prepares the UI of the root and mouseclick
