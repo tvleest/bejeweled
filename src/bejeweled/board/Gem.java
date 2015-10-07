@@ -52,11 +52,13 @@ public final class Gem {
 		if(moving){
 			gc.drawImage(GemType.getImage(type), animationx, animationy);
 		}
+		else{
 		gc.drawImage(GemType.getImage(type), offsetx + col * dimension, offsety + row * dimension);
 		if (selected) {
 			gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension);
 		} else if(hinted){
 			gc.drawImage(getHintedImage(), offsetx + col * dimension, offsety + row * dimension);
+		}
 		}
 	}
 
@@ -169,5 +171,10 @@ public final class Gem {
 	
 	public int getCurrenty(){
 		return row*dimension+offsety;
+	}
+	
+	public void setCurrentPositionsAsAnimationPositions(){
+		setAnimationx(getCurrentx());
+		setAnimationy(getCurrenty());
 	}
 }

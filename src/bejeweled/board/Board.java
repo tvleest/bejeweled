@@ -244,7 +244,11 @@ public final class Board {
 			return false;
 		}
 		Gem tempgem = gems[row1][col1];
+		gems[row2][col2].setMoving(true);
+		gems[row2][col2].setCurrentPositionsAsAnimationPositions();
 		gems[row2][col2].setPosition(row1, col1);
+		gems[row1][col1].setMoving(true);
+		gems[row1][col1].setCurrentPositionsAsAnimationPositions();
 		gems[row1][col1] = gems[row2][col2];
 		tempgem.setPosition(row2, col2);
 		gems[row2][col2] = tempgem;

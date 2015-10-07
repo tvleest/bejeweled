@@ -61,57 +61,54 @@ public final class GameLogic {
 	 */
 	public void handleMouseClicked(final int row, final int col) {
 		
-		//some test code
-		if(!animating){
-		Gem g = board.getGems()[row][col];
-		g.setMoving(true);
-		g.setAnimationx(g.getCurrentx());
-		g.setAnimationy(g.getCurrenty());
-		g.setPosition(g.getRow(), g.getCol()+1);
-		animating = true;
-		animationhandler.setIsAnimating(false);
-		}
+		//no mouseclicks handled during animations
+		if(animating) 
+			return;
 		
-//		if (board.getHintedgem() != null) {
-//			board.getHintedgem().setHinted(false);
-//		}
-//		Logger.getInstance().writeLineToLogger("Mouse clicked on row " + row + " and col " + col);
-//		Sounds.getInstance().playSelectSound();
-//		if (board.getSelectedgem() == null) {
-//			board.setSelectedgem(board.getGems()[row][col]);
-//			board.getGems()[row][col].setSelected(true);
-//		} else {
-//			board.setSecondGem(board.getGems()[row][col]);
-//			int firstgemrow = board.getSelectedgem().getRow();
-//			int firstgemcol = board.getSelectedgem().getCol();
-//			if (board.swap(firstgemrow, firstgemcol, row, col)) {
-//				int first = board.deleteRows(board.getSelectedgem());
-//				int second = board.deleteRows(board.getSecondGem());
-//				score.updateScore(first+second);
-//				if (first + second > 0) {
-//					Logger.getInstance()
-//							.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
-//									+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
-//									+ board.getSecondGem().getRow() + ") are switched. This switch was succesfull.");
-//					for (int i = 0; i < first + second; i++) {
-//						time.updateTime();
-//						Sounds.getInstance().playCombinationSound();
-//					}
-//				} else { // if there are no combinations found after the move
-//					Logger.getInstance()
-//							.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
-//									+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
-//									+ board.getSecondGem().getRow() + ") are switched. This switch was unsuccesfull.");
-//					// switches the two switched gems back
-//					board.swap(firstgemrow, firstgemcol, row, col);
-//					// play error sound
-//					Sounds.getInstance().playErrorSound();
-//				}
-//			}
-//			board.getSelectedgem().setSelected(false);
-//			board.setSelectedgem(null);
-//			board.setSecondGem(null);
-//		}
+		if (board.getHintedgem() != null) {
+			board.getHintedgem().setHinted(false);
+		}
+		Logger.getInstance().writeLineToLogger("Mouse clicked on row " + row + " and col " + col);
+		Sounds.getInstance().playSelectSound();
+		if (board.getSelectedgem() == null) {
+			board.setSelectedgem(board.getGems()[row][col]);
+			board.getGems()[row][col].setSelected(true);
+		} else {
+			board.setSecondGem(board.getGems()[row][col]);
+			int firstgemrow = board.getSelectedgem().getRow();
+			int firstgemcol = board.getSelectedgem().getCol();
+			if (board.swap(firstgemrow, firstgemcol, row, col)) {
+				//swap animation
+				animating = true;
+				animationhandler.setIsAnimating(false);
+				//swap animation
+				int first = board.deleteRows(board.getSelectedgem());
+				int second = board.deleteRows(board.getSecondGem());
+				score.updateScore(first+second);
+				if (first + second > 0) {
+					Logger.getInstance()
+							.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
+									+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
+									+ board.getSecondGem().getRow() + ") are switched. This switch was succesfull.");
+					for (int i = 0; i < first + second; i++) {
+						time.updateTime();
+						Sounds.getInstance().playCombinationSound();
+					}
+				} else { // if there are no combinations found after the move
+					Logger.getInstance()
+							.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
+									+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
+									+ board.getSecondGem().getRow() + ") are switched. This switch was unsuccesfull.");
+					// switches the two switched gems back
+					board.swap(firstgemrow, firstgemcol, row, col);
+					// play error sound
+					Sounds.getInstance().playErrorSound();
+				}
+			}
+			board.getSelectedgem().setSelected(false);
+			board.setSelectedgem(null);
+			board.setSecondGem(null);
+		}
 	}
 
 	/**
