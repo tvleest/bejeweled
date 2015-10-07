@@ -24,7 +24,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testFillBoardIntInt() {
-		board = new Board(3, false);
+		board = new Board(3);
 		board.fillBoard(0, 0);
 		gems = board.getGems();
 		for (int row = 0; row < 3; row++) {
@@ -41,7 +41,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testRowCheck() {
-		board = new Board(3, false);
+		board = new Board(3);
 		gems = board.getGems();
 		gems[0][0].setType(GemType.RED);
 		gems[0][1].setType(GemType.RED);
@@ -56,7 +56,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testColCheck() {
-		board = new Board(3, false);
+		board = new Board(3);
 		gems = board.getGems();
 		gems[0][0].setType(GemType.RED);
 		gems[1][0].setType(GemType.RED);
@@ -72,7 +72,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testDelete() {
-		board = new Board(3, false);
+		board = new Board(3);
 		gems = board.getGems();
 		gems[0][0].setType(GemType.RED);
 		gems[1][0].setType(GemType.RED);
@@ -91,7 +91,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testSwap() {
-		board = new Board(2, false);
+		board = new Board(2);
 		assertFalse(board.swap(0, 1, 1, 0));
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
@@ -108,7 +108,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testGetUpper() {
-		board = new Board(2, false);
+		board = new Board(2);
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -123,7 +123,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testGetRight() {
-		board = new Board(2, false);
+		board = new Board(2);
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -138,7 +138,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testGetBelow() {
-		board = new Board(2, false);
+		board = new Board(2);
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -153,7 +153,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testGetLeft() {
-		board = new Board(2, false);
+		board = new Board(2);
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -168,7 +168,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testAreNeighbours() {
-		board = new Board(2, false);
+		board = new Board(2);
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -185,7 +185,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testDeleteRows() {
-		board = new Board(3, false);
+		board = new Board(3);
 		gems = board.getGems();
 		gems[0][0].setType(GemType.RED);
 		gems[0][1].setType(GemType.RED);
@@ -203,7 +203,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testDeleteAll() {
-		board = new Board(3, false);
+		board = new Board(3);
 		gems = board.getGems();
 		ArrayList<Gem> array = new ArrayList<Gem>();
 		Gem gem1 = gems[0][0];
@@ -226,7 +226,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testDeleteHorizontal() {
-		board = new Board(5, false);
+		board = new Board(5);
 		gems = board.getGems();
 		for (int row = 0; row < 5; row++) {
 			for (int col = 0; col < 5 - row; col++) {
@@ -265,7 +265,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testDeleteVertical() {
-		board = new Board(5, false);
+		board = new Board(5);
 		gems = board.getGems();
 		for (int col = 0; col < 5; col++) {
 			for (int row = 0; row < 5 - col; row++) {
@@ -304,7 +304,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void selectedGemTest() {
-		board = new Board(2, false);
+		board = new Board(2);
 		gems = board.getGems();
 		Gem gem = gems[0][0];
 		assertNull(board.getSelectedgem());
@@ -318,7 +318,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void secondGemTest() {
-		board = new Board(2, false);
+		board = new Board(2);
 		gems = board.getGems();
 		Gem gem = gems[0][0];
 		assertNull(board.getSecondGem());
@@ -333,7 +333,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void setGemTest() {
-		board = new Board(2, false);
+		board = new Board(2);
 		Gem[][] testgems = new Gem[2][2];
 		board.setGems(testgems);
 		assertArrayEquals(testgems, board.getGems());
@@ -345,9 +345,9 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testEquals() {
-		board = new Board(2, false);
-		Board board2 = new Board(2, false);
-		Board board3 = new Board(3, false);
+		board = new Board(2);
+		Board board2 = new Board(2);
+		Board board3 = new Board(3);
 		assertEquals(board, board2);
 		assertFalse(board.equals(board3));
 	}

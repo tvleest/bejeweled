@@ -24,7 +24,7 @@ public class GameLogicTest {
 	 */
 	@Before
 	public final void setUp() {
-		gl = new GameLogic(false);
+		gl = new GameLogic();
 	}
 	
 	/**
@@ -32,7 +32,7 @@ public class GameLogicTest {
 	 */
 	@Test
 	public final void testGetBoard() {
-		Board b = new Board(8, false);
+		Board b = new Board(8);
 		assertEquals(b, gl.getBoard());
 	}
 	
