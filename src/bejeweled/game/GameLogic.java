@@ -1,5 +1,8 @@
 package bejeweled.game;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import javafx.scene.canvas.GraphicsContext;
 import bejeweled.Sounds;
 import bejeweled.board.Board;
@@ -12,7 +15,7 @@ import bejeweled.state.Time;
  * @author Timo
  *
  */
-public final class GameLogic {
+public final class GameLogic implements Observer {
 
 	private Board board;
 	private static Time time;
@@ -141,5 +144,9 @@ public final class GameLogic {
 	
 	public void setScore(int s) {
 		score.setScore(s);
+	}
+	
+	public void update(Observable obs, Object arg) {
+		score = (Score) obs;
 	}
 }
