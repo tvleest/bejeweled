@@ -23,10 +23,6 @@ public final class GameLogic {
 	private static Score score;
 	private HighScores highscores;
 	private AnimationHandler animationhandler;
-	private int firstgemrow;
-	private int firstgemcol;
-	private int secondgemrow;
-	private int secondgemcol;
 	private boolean combinationsFormed = false;
 	/**
 	 * @param offsetx
@@ -68,8 +64,6 @@ public final class GameLogic {
 	public void handleMouseClicked(final int row, final int col) {
 		if(isanimating)
 			return;
-		secondgemrow = row;
-		secondgemcol = col;
 		if (board.getHintedgem() != null) {
 			board.getHintedgem().setHinted(false);
 		}
@@ -80,11 +74,13 @@ public final class GameLogic {
 			board.getGems()[row][col].setSelected(true);
 		} else {
 			board.setSecondGem(board.getGems()[row][col]);
-			firstgemrow = board.getSelectedgem().getRow();
-			firstgemcol = board.getSelectedgem().getCol();
 			if (board.swap(board.getSelectedgem(), board.getSecondGem())) {
 				//swap animation
 				isanimating = true;
+				Logger.getInstance()
+				.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
+						+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
+						+ board.getSecondGem().getRow() + ") are swapped.");
 				animationhandler.animate();
 				//swap animation
 			}
@@ -173,7 +169,7 @@ public final class GameLogic {
 		Logger.getInstance()
 		.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
 				+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
-				+ board.getSecondGem().getRow() + ") are switched. This switch was unsuccesfull.");
+				+ board.getSecondGem().getRow() + ") are swapped back.");
 		// switches the two switched gems back
 		board.swap(board.getSelectedgem(), board.getSecondGem());
 		animationhandler.animate();

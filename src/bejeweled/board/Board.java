@@ -219,12 +219,14 @@ public final class Board {
 		for (int r = row; r >= 0; r--) {
 			if (r >= 1) {
 				gems[r-1][col].setCurrentPositionsAsAnimationPositions();
+				gems[r-1][col].setMoving(true);
 				gems[r - 1][col].setPosition(r, col);
 				gems[r][col] = gems[r - 1][col];
 			} else {
 				GemType type = GemType.getRandomGemType();
 				Gem gem = new Gem(0, col, type);
-				gem.setAnimationy(0);
+				gem.setCurrentPositionsAsAnimationPositions();
+				gem.setMoving(true);
 				gems[0][col] = gem;
 			}
 		}
