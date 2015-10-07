@@ -15,7 +15,6 @@ import javafx.util.Duration;
  */
 public final class AnimationHandler{
 
-	private boolean isAnimating = false;
 	private GameLogic gamelogic;
 	private Board board;
 	private ArrayList<Gem> animatedgems;
@@ -48,7 +47,6 @@ public final class AnimationHandler{
 		}
 		//will always do an extra loop before the size will be smaller, can be more efficient
 		if(animatedgems.size()<1){
-			isAnimating = false;
 			timeline.stop();
 			gamelogic.returnFromAnimation();
 		}
@@ -73,7 +71,6 @@ public final class AnimationHandler{
 	 * call gameUpdate for every 10 ms
 	 */
 	public void animate(){
-		isAnimating=true;
 		timeline = new Timeline(new KeyFrame(Duration.millis(10), ae -> gameUpdate()));
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.play();
@@ -84,9 +81,7 @@ public final class AnimationHandler{
 	 * runs an animation
 	 */
 	private void gameUpdate() {
-		if (isAnimating) {
 			getAnimatedGems();
 			runAnimation();
-		}
 	}
 }
