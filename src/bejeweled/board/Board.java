@@ -125,13 +125,13 @@ public final class Board {
 	public void hintCheck(int row, int col) {
 		GemType type = gems[row][col].getType();
 		if (doubleRow(row, col, type)) {
-			checkSurroundRow(col, row, type);
+			checkSurroundRow(row, col, type);
 		} else if (doubleCol(row, col, type)) {
-			checkSurroundCol(col, row, type);
+			checkSurroundCol(row, col, type);
 		} else if (col < dimension - 1) {
-			hintCheck(col + 1, row);
+			hintCheck(row, col + 1);
 		} else if (row < dimension - 1) {
-			hintCheck(0, row + 1);
+			hintCheck(row + 1, 0);
 		} 
 	}
 
@@ -157,10 +157,10 @@ public final class Board {
 		} else if (upperRight(row, col + 1, type)) {
 			gems[row - 1][col + 2].setHinted(true);
 		} else if (col < dimension - 1) {
-			hintCheck(col + 1, row);
+			hintCheck(row, col + 1);
 		} else if (row < dimension - 1) {
-			hintCheck(0, row + 1);
-		}
+			hintCheck(row + 1, 0);
+		} 
 	}
 	
 	/**
@@ -185,12 +185,82 @@ public final class Board {
 		} else if (downLeft(row + 1, col, type)) {
 			gems[row + 2][col - 1].setHinted(true);
 		} else if (col < dimension - 1) {
-			hintCheck(col + 1, row);
+			hintCheck(row, col + 1);
 		} else if (row < dimension - 1) {
-			hintCheck(0, row + 1);
-		}
+			hintCheck(row + 1, 0);
+		} 
 	}
 
+	/**
+	 * @return the gems that are part of a combination
+	 * checks for every gem if it's part of a combination
+	 * TODO: this together with the checkforcombinations(gem) can be way more efficient
+	 */
+	public ArrayList<Gem> checkForCombinations() {
+		ArrayList<Gem> combinations = new ArrayList<Gem>();
+		//check for each gem if its part of combinations;
+		for (Gem[] gemss : gems) {
+			for (Gem gem : gemss) {
+				if(checkForCombinations(gem)){
+					combinations.add(gem);
+				}
+			}
+		}
+		return combinations;
+	}
+
+	/**
+	 * @param gem the gem to be checked
+	 * @return true if this gem is part of a combination
+	 */
+	private boolean checkForCombinations(Gem gem) {
+		GemType type = gem.getType();
+		if (getUpper(gem) != null && getUpper(gem).getType() == type) {
+			if (getUpper(getUpper(gem)) != null && getUpper(getUpper(gem)).getType() == type) {
+				return true;
+			}
+			if (getBelow(gem) != null && getBelow(gem).getType() == type) {
+				return true;
+			}
+		}
+		if (getBelow(gem) != null && getBelow(gem).getType() == type) {
+			if (getBelow(getBelow(gem)) != null && getBelow(getBelow(gem)).getType() == type) {
+				return true;
+			}
+			if (getUpper(gem) != null && getUpper(gem).getType() == type) {
+				return true;
+			}
+		}
+		if (getRight(gem) != null && getRight(gem).getType() == type) {
+			if (getRight(getRight(gem)) != null && getRight(getRight(gem)).getType() == type) {
+				return true;
+			}
+			if (getLeft(gem) != null && getLeft(gem).getType() == type) {
+				return true;
+			}
+		}
+		if (getLeft(gem) != null && getLeft(gem).getType() == type) {
+			if (getLeft(getLeft(gem)) != null && getLeft(getLeft(gem)).getType() == type) {
+				return true;
+			}
+			if (getRight(gem) != null && getRight(gem).getType() == type) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	
+	/**
+	 * @param combinations the gems to be deleted
+	 * calls delete for all gems in an arraylist
+	 */
+	public void delete(ArrayList<Gem> combinations) {
+		for(Gem g : combinations){
+			delete(g);
+		}
+	}
+	
 	/**
 	 * @param row
 	 *            - row number integer
@@ -198,39 +268,46 @@ public final class Board {
 	 *            - column number integer Deletes a gem based on column and row,
 	 *            moves all the gems above this gem a place down
 	 */
-	public void delete(int row, int col) {
+	public void delete(Gem g) {
+		int row = g.getRow();
+		int col = g.getCol();
 		// move all blocks above the deleted block down
 		for (int r = row; r >= 0; r--) {
 			if (r >= 1) {
+				gems[r-1][col].setCurrentPositionsAsAnimationPositions();
+				gems[r-1][col].setMoving(true);
 				gems[r - 1][col].setPosition(r, col);
 				gems[r][col] = gems[r - 1][col];
 			} else {
 				GemType type = GemType.getRandomGemType();
 				Gem gem = new Gem(0, col, type);
+				gem.setCurrentPositionsAsAnimationPositions();
+				gem.setMoving(true);
 				gems[0][col] = gem;
 			}
 		}
 	}
 
 	/**
-	 * @param row1
-	 *            - row number of the first gem to be swapped.
-	 * @param col1
-	 *            - column number of the first gem to be swapped.
-	 * @param row2
-	 *            - row number of the second gem to be swapped.
-	 * @param col2
-	 *            - column number of the second gem to be swapped.
 	 * @return - boolean based on the possibility of the swap. Swaps two gems
 	 *         and returns a boolean whether the swap is possible or not.
 	 */
-	public boolean swap(int row1, int col1, int row2, int col2) {
+	public boolean swap(Gem gem1, Gem gem2) {
+		int row1 = gem1.getRow();
+		int col1 = gem1.getCol();
+		int row2 = gem2.getRow();
+		int col2 = gem2.getCol();
+		
 		if (!areNeighbours(gems[row1][col1], gems[row2][col2])) {
 			Sounds.getInstance().playErrorSound();
 			return false;
 		}
 		Gem tempgem = gems[row1][col1];
+		gems[row2][col2].setMoving(true);
+		gems[row2][col2].setCurrentPositionsAsAnimationPositions();
 		gems[row2][col2].setPosition(row1, col1);
+		gems[row1][col1].setMoving(true);
+		gems[row1][col1].setCurrentPositionsAsAnimationPositions();
 		gems[row1][col1] = gems[row2][col2];
 		tempgem.setPosition(row2, col2);
 		gems[row2][col2] = tempgem;
@@ -302,133 +379,6 @@ public final class Board {
 	 */
 	public boolean areNeighbours(Gem gem1, Gem gem2) {
 		return (getUpper(gem1) == gem2 || getBelow(gem1) == gem2 || getLeft(gem1) == gem2 || getRight(gem1) == gem2);
-	}
-
-	/**
-	 * Will delete all combinations of Gems, by first finding them with
-	 * deleteHorizontal and deleteVertical and then deleting them with
-	 * deleteAll.
-	 * 
-	 * @param g
-	 *            - Gem as starting point
-	 * @return true, iff there are rows to be deleted
-	 */
-	public int deleteRows(Gem g) {
-		ArrayList<Gem> array1 = deleteHorizontal(g);
-		ArrayList<Gem> array2 = deleteVertical(g);
-		if (!array1.isEmpty()) {
-			if (!array2.isEmpty()) {
-				array1.addAll(array2);
-			}
-		} else if (array2.isEmpty()) {
-			return 0;
-		} else {
-			array1 = array2;
-		}
-		array1.add(g);
-		deleteAll(array1);
-		return array1.size();
-	}
-
-	/**
-	 * First sorts the arrayList array, then deletes all the Gems from the list.
-	 * 
-	 * @param array
-	 *            - Array of gems involved in the deletion.
-	 */
-	public void deleteAll(ArrayList<Gem> array) {
-		ArrayList<Gem> array2 = new ArrayList<Gem>();
-		for (int i = 0; i < dimension; i++) { // sorts the array on the row of
-												// the gem, up to down
-			for (int j = 0; j < array.size(); j++) {
-				Gem temp = array.get(j);
-				if (temp.getRow() == i) {
-					array2.add(array.get(j));
-				}
-			}
-		}
-		for (int k = 0; k < array2.size(); k++) {
-			delete(array2.get(k).getRow(), array2.get(k).getCol()); // deletes
-																	// all gems
-																	// from the
-																	// board,
-																	// from up
-																	// to down
-		}
-		for (int j = 0; j < dimension; j++) { // makes sure that no new
-												// combinations form on the
-												// board with new gems
-			for (int k = 0; k < dimension; k++) {
-				Gem temp = gems[j][k];
-				deleteRows(temp);
-			}
-		}
-	}
-
-	/**
-	 * Finds all horizontal combinations of Gems with Gem g, places the gems in
-	 * these combinations in the ArrayList array.
-	 * 
-	 * @param g
-	 *            - Gem to be checked for a combination.
-	 * @return array - array of a combination. Empty if there is none.
-	 */
-	public ArrayList<Gem> deleteHorizontal(Gem g) {
-		GemType type = g.getType();
-		Gem leftgem = getLeft(g);
-		Gem rightgem = getRight(g);
-		ArrayList<Gem> array = new ArrayList<Gem>();
-
-		while (leftgem != null && leftgem.getType() == type) {
-			array.add(leftgem);
-			leftgem = getLeft(leftgem);
-		}
-
-		while (rightgem != null && rightgem.getType() == type) {
-			array.add(rightgem);
-			rightgem = getRight(rightgem);
-		}
-
-		if (array.size() >= 2) {
-			Logger.getInstance().writeLineToLogger("A horizontal combination of " + array.size() + " gems of type "
-					+ type + " was formed and deleted.");
-			return array;
-		} else {
-			return new ArrayList<Gem>();
-		}
-	}
-
-	/**
-	 * Finds all vertical combinations of Gems with Gem g, places the gems in
-	 * these combinations in the ArrayList array.
-	 * 
-	 * @param g
-	 *            - Gem to be checked for a combination.
-	 * @return array - array of a combination. Empty if there is none.
-	 */
-	public ArrayList<Gem> deleteVertical(Gem g) {
-		GemType type = g.getType();
-		Gem upgem = getUpper(g);
-		Gem downgem = getBelow(g);
-		ArrayList<Gem> array = new ArrayList<Gem>();
-
-		while (upgem != null && upgem.getType() == type) {
-			array.add(upgem);
-			upgem = getUpper(upgem);
-		}
-
-		while (downgem != null && downgem.getType() == type) {
-			array.add(downgem);
-			downgem = getBelow(downgem);
-		}
-
-		if (array.size() >= 2) {
-			Logger.getInstance().writeLineToLogger(
-					"A vertical combination of " + array.size() + " gems of type " + type + " was formed and deleted.");
-			return array;
-		} else {
-			return new ArrayList<Gem>();
-		}
 	}
 
 	/**
@@ -652,5 +602,4 @@ public final class Board {
 		}
 		return false;
 	}
-
 }

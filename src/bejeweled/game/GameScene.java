@@ -32,8 +32,8 @@ public final class GameScene extends Scene {
 	// to use the sounds in this class
 	private static GraphicsContext gc;
 	private static GameLogic gamelogic;
-	private final static int offsetx = 235;
-	private final static int offsety = 115;
+	private static final int offsetx = 235;
+	private static final int offsety = 115;
 
 	/**
 	 * GameScene Constructor. Prepares the UI of the root and mouseclick
@@ -134,7 +134,7 @@ public final class GameScene extends Scene {
 	/**
 	 * requests the game logic to draw the UI.
 	 */
-	public void draw() {
+	public static void draw() {
 		gamelogic.draw(gc);
 		gamelogic.getTime().drawTime(gc);
 	}

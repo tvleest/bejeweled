@@ -51,10 +51,5 @@ public class GameLogicTest {
 		g[1][1].setType(GemType.ORANGE);
 		gl.handleMouseClicked(0, 0);
 		assertEquals(b.getSelectedgem(), b.getGems()[0][0]);
-		gl.handleMouseClicked(0, 1);
-		assertNull(b.getSelectedgem());
-		gl.handleMouseClicked(0, 0);
-		gl.handleMouseClicked(1, 0);
-		assertEquals(gl.getTime().getTime(), 63);
 	}
 }

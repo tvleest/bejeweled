@@ -25,7 +25,7 @@ public class TimeTest {
 	@Test
 	public final void testUpdateTime() {
 		assertEquals(90, time.getTime());
-		time.updateTime();
+		time.updateTime(1);
 		assertEquals(91, time.getTime());
 	}
 	
