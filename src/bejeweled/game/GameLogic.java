@@ -87,7 +87,6 @@ public final class GameLogic {
 				//swap animation
 				isanimating = true;
 				animationhandler.animate();
-				getBoard().hintCheck(0, 0, false);
 			}
 		}
 	}
@@ -125,6 +124,8 @@ public final class GameLogic {
 			if (!combinationsFormed){
 				swapBack();
 			}
+			//Check if there are any moves left after the move
+			getBoard().hintCheck(0, 0, false);
 			//return board to normal state by resetting some variables
 			board.getSelectedgem().setSelected(false);
 			board.setSelectedgem(null);
