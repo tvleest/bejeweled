@@ -410,16 +410,38 @@ public final class Board {
 		return combinations;
 	}
 
-	//true if this gems forms a combinations
+	//TODO: Fix this worst method ever
 	private boolean checkForCombinations(Gem gem) {
 		GemType type = gem.getType();
 		if (getUpper(gem) != null && getUpper(gem).getType() == type) {
+			if (getUpper(getUpper(gem)) != null && getUpper(getUpper(gem)).getType() == type) {
+				return true;
+			}
 			if (getBelow(gem) != null && getBelow(gem).getType() == type) {
 				return true;
 			}
 		}
+		if (getBelow(gem) != null && getBelow(gem).getType() == type) {
+			if (getBelow(getBelow(gem)) != null && getBelow(getBelow(gem)).getType() == type) {
+				return true;
+			}
+			if (getUpper(gem) != null && getUpper(gem).getType() == type) {
+				return true;
+			}
+		}
 		if (getRight(gem) != null && getRight(gem).getType() == type) {
+			if (getRight(getRight(gem)) != null && getRight(getRight(gem)).getType() == type) {
+				return true;
+			}
 			if (getLeft(gem) != null && getLeft(gem).getType() == type) {
+				return true;
+			}
+		}
+		if (getLeft(gem) != null && getLeft(gem).getType() == type) {
+			if (getLeft(getLeft(gem)) != null && getLeft(getLeft(gem)).getType() == type) {
+				return true;
+			}
+			if (getRight(gem) != null && getRight(gem).getType() == type) {
 				return true;
 			}
 		}
