@@ -178,11 +178,11 @@ public final class Board {
 			gems[row - 1][col + 1].setHinted(true);
 		} else if (doubleUpper(row, col, type)) {
 			gems[row - 2][col].setHinted(true);
-		} else if (downRight(row, col, type)) {
+		} else if (downRight(row + 1, col, type)) {
 			gems[row + 2][col + 1].setHinted(true);
-		} else if (doubleDown(row, col, type)) {
+		} else if (doubleDown(row + 1, col, type)) {
 			gems[row + 3][col].setHinted(true);
-		} else if (downLeft(row, col, type)) {
+		} else if (downLeft(row + 1, col, type)) {
 			gems[row + 2][col - 1].setHinted(true);
 		} else if (col < dimension - 1) {
 			hintCheck(col + 1, row);
