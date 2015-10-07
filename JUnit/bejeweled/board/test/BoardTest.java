@@ -67,19 +67,17 @@ public class BoardTest {
 
 	/**
 	 * Tests the delete method, by deleting a gem and 
-	 * checking if it has disappeared and if the other 
-	 * gems are on the right place.
+	 * checking if the gem above it has shoved
 	 */
 	@Test
 	public final void testDelete() {
 		board = new Board(3);
 		gems = board.getGems();
-		gems[0][0].setType(GemType.RED);
-		gems[1][0].setType(GemType.RED);
+		gems[0][0] = new Gem(0, 0, GemType.RED);
+		gems[1][0] = new Gem(1, 0, GemType.RED);
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[1][0];
-		board.delete(2, 0);
-		assertEquals(gems[2][0], gem2);
+		board.delete(gem2);
 		assertEquals(gems[1][0], gem1);
 	}
 
@@ -92,14 +90,15 @@ public class BoardTest {
 	@Test
 	public final void testSwap() {
 		board = new Board(2);
-		assertFalse(board.swap(0, 1, 1, 0));
 		gems = board.getGems();
+		Gem gemnoswap = gems[1][1];
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
-		assertTrue(board.swap(0, 0, 0, 1));
+		assertFalse(board.swap(gem1, gemnoswap));
+		assertTrue(board.swap(gem1, gem2));
 		assertEquals(gems[0][0], gem2);
 		assertEquals(gems[0][1], gem1);
-		assertTrue(board.swap(0, 0, 1, 0));
+		assertTrue(board.swap(gem1, gem2));
 	}
 
 	/**
@@ -177,124 +176,6 @@ public class BoardTest {
 		assertTrue(board.areNeighbours(gem1, gem2));
 		assertTrue(board.areNeighbours(gem1, gem3));
 		assertFalse(board.areNeighbours(gem1, gem4));
-	}
-
-	/**
-	 * Tests the deleteRows method by setting up some combinations and testing
-	 * whether the method finds them.
-	 */
-	@Test
-	public final void testDeleteRows() {
-		board = new Board(3);
-		gems = board.getGems();
-		gems[0][0].setType(GemType.RED);
-		gems[0][1].setType(GemType.RED);
-		gems[0][2].setType(GemType.RED);
-		assertTrue(board.deleteRows(gems[0][0]) > 0);
-		gems[0][1].setType(GemType.BLUE);
-		gems[1][0].setType(GemType.BLUE);
-		gems[0][0].setType(GemType.RED);
-		assertTrue(board.deleteRows(gems[0][0]) == 0);
-	}
-
-	/**
-	 * Tests the deleteAll method, by filling an ArrayList with gems and
-	 * checking if those gems have been deleted.
-	 */
-	@Test
-	public final void testDeleteAll() {
-		board = new Board(3);
-		gems = board.getGems();
-		ArrayList<Gem> array = new ArrayList<Gem>();
-		Gem gem1 = gems[0][0];
-		Gem gem2 = gems[1][0];
-		Gem gem3 = gems[2][0];
-		array.add(gem3);
-		array.add(gem1);
-		array.add(gem2);
-		board.deleteAll(array);
-		assertFalse(gem1 == gems[0][0]);
-		assertFalse(gem2 == gems[1][0]);
-		assertFalse(gem3 == gems[2][0]);
-		assertFalse(gem2 == gems[2][0]);
-	}
-
-	/**
-	 * Tests the deleteHorizontal method, by making a nice board 
-	 * with horizontal combinations of 5,4 and 3 Gems and checking if 
-	 * the method finds those combinations.
-	 */
-	@Test
-	public final void testDeleteHorizontal() {
-		board = new Board(5);
-		gems = board.getGems();
-		for (int row = 0; row < 5; row++) {
-			for (int col = 0; col < 5 - row; col++) {
-				gems[row][col].setType(GemType.RED);
-			}
-		}
-		gems[1][4].setType(GemType.BLUE);
-		gems[2][3].setType(GemType.BLUE);
-		gems[2][4].setType(GemType.BLUE);
-		ArrayList<Gem> array1 = new ArrayList<Gem>();
-		array1.add(gems[0][1]);
-		array1.add(gems[0][2]);
-		array1.add(gems[0][3]);
-		array1.add(gems[0][4]);
-		ArrayList<Gem> array2 = board.deleteHorizontal(gems[0][0]);
-		assertEquals(array1, array2);
-		
-		ArrayList<Gem> array3 = new ArrayList<Gem>();
-		array3.add(gems[1][1]);
-		array3.add(gems[1][0]);
-		array3.add(gems[1][3]);
-		ArrayList<Gem> array4 = board.deleteHorizontal(gems[1][2]);
-		assertEquals(array3, array4);
-		
-		ArrayList<Gem> array5 = new ArrayList<Gem>();
-		array5.add(gems[2][0]);
-		array5.add(gems[2][2]);
-		ArrayList<Gem> array6 = board.deleteHorizontal(gems[2][1]);
-		assertEquals(array5, array6);
-	}
-
-	/**
-	 * Tests the deleteVertical method, by making a nice board with 
-	 * vertical combinations of 5,4 and 3 Gems and checking if 
-	 * the method finds those combinations.
-	 */
-	@Test
-	public final void testDeleteVertical() {
-		board = new Board(5);
-		gems = board.getGems();
-		for (int col = 0; col < 5; col++) {
-			for (int row = 0; row < 5 - col; row++) {
-				gems[row][col].setType(GemType.RED);
-			}
-		}
-		gems[4][1].setType(GemType.BLUE);
-		gems[3][2].setType(GemType.BLUE);
-		gems[4][2].setType(GemType.BLUE);
-		ArrayList<Gem> array1 = new ArrayList<Gem>();
-		array1.add(gems[1][0]);
-		array1.add(gems[2][0]);
-		array1.add(gems[3][0]);
-		array1.add(gems[4][0]);
-		ArrayList<Gem> array2 = board.deleteVertical(gems[0][0]);
-		assertEquals(array1, array2);
-		
-		ArrayList<Gem> array3 = new ArrayList<Gem>();
-		array3.add(gems[1][1]);
-		array3.add(gems[0][1]);
-		array3.add(gems[3][1]);
-		ArrayList<Gem> array4 = board.deleteVertical(gems[2][1]);
-		assertEquals(array3, array4);
-		
-		ArrayList<Gem> array5 = new ArrayList<Gem>();
-		array5.add(gems[0][2]);
-		array5.add(gems[2][2]);
-		ArrayList<Gem> array6 = board.deleteVertical(gems[1][2]);
-		assertEquals(array5, array6);
 	}
 
 	/**
