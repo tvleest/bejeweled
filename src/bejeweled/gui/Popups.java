@@ -146,7 +146,7 @@ public class Popups {
 			public void handle(ActionEvent e) {
 				Time time = gamelogic.getTime();
 				String stime = time.toString().substring(11, time.toString().length());
-				int score = gamelogic.getScore().getScore();
+				int score = gamelogic.getScore();
 				Gem[][] board = gamelogic.getBoard().getGems();
 				String save = stime + "\n" + score + "\n";
 				System.out.println(board.length);

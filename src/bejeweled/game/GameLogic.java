@@ -3,6 +3,8 @@ package bejeweled.game;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import bejeweled.Sounds;
 import bejeweled.board.Board;
@@ -16,10 +18,11 @@ import bejeweled.state.Time;
  * @author Timo
  *
  */
-public final class GameLogic {
+public final class GameLogic implements Observer{
 	private boolean isanimating = false;
 	private Board board;
 	private static Time time;
+	private static int intscore;
 	private static Score score;
 	private HighScores highscores;
 	private AnimationHandler animationhandler;
@@ -32,6 +35,7 @@ public final class GameLogic {
 	 */
 	public GameLogic() {
 		time = new Time(60);
+		intscore = 0;
 		score = new Score(0);
 		board = new Board(8);
 		highscores = new HighScores();
@@ -157,7 +161,7 @@ public final class GameLogic {
 	 */
 	public void drawScore(final GraphicsContext gc) {
 		String s = "Score: ";
-		s += score.getScore();
+		s += intscore;
 		gc.fillText(s, 60, 190);
 	}
 
@@ -177,12 +181,16 @@ public final class GameLogic {
 		return highscores;
 	}
 	
-	public Score getScore() {
+	public int getScore() {
+		return intscore;
+	}
+	
+	public Score getScoreObject() {
 		return score;
 	}
 	
 	public void setScore(int s) {
-		score.setScore(s);
+		intscore = s;
 	}
 
 	public Time getTime() {
@@ -191,6 +199,14 @@ public final class GameLogic {
 
 	public void setTime(Time t) {
 		time = t;
+	}
+	
+	/**
+	 * Updates Score Object by using Observer/Observable.
+	 */
+	public void update(Observable obs, Object arg) {
+		score = (Score) obs;
+		intscore = score.getScore();
 	}
 }
 	
