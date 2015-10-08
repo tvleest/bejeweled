@@ -1,6 +1,9 @@
 package bejeweled.board;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 import bejeweled.Sounds;
 import bejeweled.state.Logger;
 import bejeweled.Main;
@@ -10,7 +13,7 @@ import javafx.scene.canvas.GraphicsContext;
  * @author Group 30 Holds the double dimension array with gems and the board
  *         methods. 
  */
-public final class Board {
+public final class Board implements Observer{
 	private Gem[][] gems;
 	private int dimension;
 	private Gem selectedgem = null;
@@ -604,5 +607,14 @@ public final class Board {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Checks the board for possible moves everytime the score changes
+	 * (and therefore the board changes)
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		hintCheck(0, 0, false);
 	}
 }
