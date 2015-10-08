@@ -12,9 +12,18 @@ import bejeweled.game.GameScene;
 import bejeweled.state.Time;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -40,29 +49,27 @@ public class Popups {
 	public static Popup pausePopup(Group root, GameLogic gamelogic) {
 		Popup popup = new Popup();
 		popup.setWidth(330);
-		popup.setHeight(460);
-		Rectangle rect = new Rectangle(330, 460, Color.MAROON);
-		rect.setArcHeight(30);
-		rect.setArcWidth(30);
-		Label bejeweled = new Label("BEJEWELED");
-		bejeweled.setFont(new Font("Comic Sans MS", 45));
-		bejeweled.setTextFill(Color.WHITE);
-		bejeweled.setLayoutX(30);
-		bejeweled.setLayoutY(20);
-
-		Label paused = new Label("-GAME PAUSED-");
-		paused.setFont(new Font("Comic Sans MS", 20));
-		paused.setTextFill(Color.WHITESMOKE);
-		paused.setLayoutX(82);
-		paused.setLayoutY(75);
+		popup.setHeight(450);
+		Image pausebackground = new Image("Images/pausemenu.png");
+		ImageView imgView = new ImageView(pausebackground);
+		
+		BorderPane border = new BorderPane();
+		border.setPadding(new Insets(20, 0, 20, 20));
 
 		Label saved = new Label("Game saved!");
-		saved.setFont(new Font("Comic Sans MS", 18));
-		saved.setTextFill(Color.WHITE);
+		saved.setFont(new Font("Helvetica", 20));
+		saved.setTextFill(Color.BROWN);
 		saved.setLayoutX(115);
 		saved.setLayoutY(420);
+		
+		CornerRadii corners = new CornerRadii(0);
+		Insets insets = new Insets(0);
+		Background buttonBack1 = new Background(new BackgroundFill(Color.GAINSBORO, corners, insets));
+		Background buttonBack2 = new Background(new BackgroundFill(Color.ROSYBROWN, corners, insets));
 
-		Button resume = Buttons.pauseMenuButton("RESUME", 107, 110);
+		Button resume = Buttons.pauseMenuButton("RESUME", 115, 180);
+		resume.setTextFill(Color.BLACK);
+		resume.setBackground(buttonBack1);
 
 		/*
 		 * Pressing resume will continue the timer and reenable the bejeweled
@@ -76,9 +83,27 @@ public class Popups {
 				Main.getTimeline().play();
 			}
 		});
+		
+		//Darker color when hovering over button
+		resume.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent m) {
+				resume.setBackground(buttonBack2);
+			}
+		});
+		
+		//Restore original color when mouse exits
+		resume.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent m) {
+				resume.setBackground(buttonBack1);
+			}
+		});
 
-		Button quit = Buttons.pauseMenuButton("QUIT", 123, 165);
-
+		Button quit = Buttons.pauseMenuButton("QUIT", 115, 260);
+		quit.setTextFill(Color.BLACK);
+		quit.setBackground(buttonBack1);
+		
 		/*
 		 * Pressing quit will remove the pause menu and bring the player back to
 		 * the main menu.
@@ -91,8 +116,26 @@ public class Popups {
 				popup.hide();
 			}
 		});
+		
+		//Darker color when hovering over button
+		quit.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent m) {
+				quit.setBackground(buttonBack2);
+			}
+		});
+				
+		//Restore original color when mouse exits
+		quit.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent m) {
+				quit.setBackground(buttonBack1);
+			}
+		});
 
-		Button save = Buttons.pauseMenuButton("SAVE", 123, 220);
+		Button save = Buttons.pauseMenuButton("SAVE", 115, 300);
+		save.setTextFill(Color.BLACK);
+		save.setBackground(buttonBack1);
 
 		/*
 		 * Pressing the save button will save the current state of the game to a
@@ -103,7 +146,7 @@ public class Popups {
 			public void handle(ActionEvent e) {
 				Time time = gamelogic.getTime();
 				String stime = time.toString().substring(11, time.toString().length());
-				int score = gamelogic.getScore().getScore();
+				int score = gamelogic.getScore();
 				Gem[][] board = gamelogic.getBoard().getGems();
 				String save = stime + "\n" + score + "\n";
 				System.out.println(board.length);
@@ -122,8 +165,35 @@ public class Popups {
 				popup.getContent().add(saved);
 			}
 		});
+		
+		//Darker color when hovering over button
+		save.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent m) {
+				save.setBackground(buttonBack2);
+			}
+		});
+				
+		//Restore original color when mouse exits
+		save.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent m) {
+				save.setBackground(buttonBack1);
+			}
+		});		
+		
+		resume.setMaxWidth(Double.MAX_VALUE);
+		quit.setMaxWidth(Double.MAX_VALUE);
+		save.setMaxWidth(Double.MAX_VALUE);
 
-		popup.getContent().addAll(rect, bejeweled, paused, resume, quit, save);
+		VBox vbButtons = new VBox();
+		vbButtons.setSpacing(15);
+		vbButtons.setPadding(new Insets(20,20,20,20)); 
+		vbButtons.getChildren().addAll(resume, save, quit);
+		vbButtons.setLayoutX(90);
+		vbButtons.setLayoutY(180);
+		
+		popup.getContent().addAll(imgView, vbButtons);
 		return popup;
 	}
 

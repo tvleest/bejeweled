@@ -283,7 +283,8 @@ public final class Board {
 			} else {
 				GemType type = GemType.getRandomGemType();
 				Gem gem = new Gem(0, col, type);
-				gem.setCurrentPositionsAsAnimationPositions();
+				gem.setAnimationx(gem.getCurrentx());
+				gem.setAnimationy(gem.getCurrenty()-Gem.getDimension());
 				gem.setMoving(true);
 				gems[0][col] = gem;
 			}
