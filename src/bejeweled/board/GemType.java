@@ -9,13 +9,15 @@ import javafx.scene.image.Image;
  * @author Timo This class defines the different types of gems.
  */
 public enum GemType {
-	BLUE, GREEN, ORANGE, PINK, RED, YELLOW;
+	BLUE, BLUE1, GREEN, GREEN1, ORANGE, ORANGE1, PINK, PINK1, RED, RED1, YELLOW, YELLOW1;
 
-	private static GemType[] allgems = values();
+	private static GemType[] allgems = {BLUE, GREEN, ORANGE, PINK, RED, YELLOW};
 	private static Random random = new Random();
 	private static EnumMap<GemType, Image> typeToImage;
+	private static int special;
 	
-	public static Image getImage(GemType gt) {
+	public static Image getImage(GemType gt, int s) {
+		special = s;
         if (typeToImage == null)
             initMapping();
         return typeToImage.get(gt);
@@ -24,11 +26,17 @@ public enum GemType {
     private static void initMapping() {
     	typeToImage = new EnumMap<>(GemType.class);
     	typeToImage.put(GemType.BLUE, new Image("Images/blue.png"));
+    	typeToImage.put(GemType.BLUE1, new Image("Images/blue.png"));
     	typeToImage.put(GemType.GREEN, new Image("Images/green.png"));
+    	typeToImage.put(GemType.GREEN1, new Image("Images/green.png"));
     	typeToImage.put(GemType.ORANGE, new Image("Images/orange.png"));
+    	typeToImage.put(GemType.ORANGE1, new Image("Images/orange.png"));
     	typeToImage.put(GemType.PINK, new Image("Images/pink.png"));
+    	typeToImage.put(GemType.PINK1, new Image("Images/pink.png"));
     	typeToImage.put(GemType.RED, new Image("Images/red.png"));
+    	typeToImage.put(GemType.RED1, new Image("Images/red.png"));
     	typeToImage.put(GemType.YELLOW, new Image("Images/yellow.png"));
+    	typeToImage.put(GemType.YELLOW1, new Image("Images/yellow.png"));
     }
 	
 	public static GemType getRandomGemType() {
@@ -42,7 +50,12 @@ public enum GemType {
 	 */
 	public static GemType typeFromString(String s) {
 		if (s.equals("BLUE")) {
-			return BLUE;
+			if(special == 0) {
+				return BLUE;
+			}
+			else {
+				return BLUE1;
+			}
 		} else if (s.equals("GREEN")) {
 			return GREEN;
 		} else if (s.equals("ORANGE")) {

@@ -270,8 +270,23 @@ public final class Board {
 	 * calls delete for all gems in an arraylist
 	 */
 	public void delete(ArrayList<Gem> combinations) {
-		for(Gem g : combinations){
-			delete(g);
+		if(combinations.size() > 3) {
+			for(Gem g : combinations){
+				if(g != selectedgem && g != secondGem) {
+					delete(g, false);
+				}
+				else if(g == selectedgem) {
+					delete(g, true);
+				}
+				else if(g == secondGem) {
+					delete(g, true);
+				}
+			}
+		}
+		else{
+			for(Gem g : combinations){
+				delete(g, false);
+			}
 		}
 	}
 	
@@ -282,24 +297,30 @@ public final class Board {
 	 *            - column number integer Deletes a gem based on column and row,
 	 *            moves all the gems above this gem a place down
 	 */
-	public void delete(Gem g) {
+	public void delete(Gem g, boolean newGem) {
 		int row = g.getRow();
 		int col = g.getCol();
 		// move all blocks above the deleted block down
-		for (int r = row; r >= 0; r--) {
-			if (r >= 1) {
-				gems[r-1][col].setCurrentPositionsAsAnimationPositions();
-				gems[r-1][col].setMoving(true);
-				gems[r - 1][col].setPosition(r, col);
-				gems[r][col] = gems[r - 1][col];
-			} else {
-				GemType type = GemType.getRandomGemType();
-				Gem gem = new Gem(0, col, type);
-				gem.setAnimationx(gem.getCurrentx());
-				gem.setAnimationy(gem.getCurrenty()-Gem.getDimension());
-				gem.setMoving(true);
-				gems[0][col] = gem;
+		if(!newGem) {
+			for (int r = row; r >= 0; r--) {
+				if (r >= 1) {
+					gems[r-1][col].setCurrentPositionsAsAnimationPositions();
+					gems[r-1][col].setMoving(true);
+					gems[r - 1][col].setPosition(r, col);
+					gems[r][col] = gems[r - 1][col];
+				} else {
+					GemType type = GemType.getRandomGemType();
+					Gem gem = new Gem(0, col, type);
+					gem.setAnimationx(gem.getCurrentx());
+					gem.setAnimationy(gem.getCurrenty()-Gem.getDimension());
+					gem.setMoving(true);
+					gems[0][col] = gem;
+				}
 			}
+		}
+		else {
+			DoublePointsGem gem = new DoublePointsGem(g.row, g.col, g.type);
+			gems[g.row][g.col] = gem;
 		}
 	}
 
