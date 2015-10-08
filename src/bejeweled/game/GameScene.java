@@ -9,6 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -99,19 +101,29 @@ public final class GameScene extends Scene {
 
 		Image musicIcon = new Image("Images/music2.png");
 		Button musicButton = Buttons.subMenuButton(null, musicIcon, 565, 565);
+		
+		Line mute = new Line();
+		mute.setStartX(575);
+		mute.setStartY(587);
+		mute.setEndX(603);
+		mute.setEndY(575);
+		mute.setStrokeWidth(1.0);
+		mute.setVisible(false);
 
 		musicButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				if (Sounds.getInstance().backgroundSoundPlaying()) {
 					Sounds.getInstance().stopBackgroundSound();
+					mute.setVisible(true);
 				} else {
 					Sounds.getInstance().playBackgroundSound();
+					mute.setVisible(false);
 				}
 			}
 		});
 
-		root.getChildren().addAll(hintButton, saveButton, pauseButton, musicButton);
+		root.getChildren().addAll(hintButton, saveButton, pauseButton, musicButton, mute);
 		gc = canvas.getGraphicsContext2D();
 		gc.setFont(new Font("Helvetica", 15));
 		gamelogic = new GameLogic();
