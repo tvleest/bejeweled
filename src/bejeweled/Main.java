@@ -206,7 +206,7 @@ public final class Main extends Application {
 			bejeweled.state.Time time2 = new bejeweled.state.Time(t);
 
 			gamelogic.setTime(time2);
-			gamelogic.setScore(score2);
+			gamelogic.getScoreObject().setScore(score2);
 			boardinstance.setGems(board);
 
 		} catch (FileNotFoundException e) {
