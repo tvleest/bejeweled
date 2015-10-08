@@ -1,5 +1,7 @@
 package bejeweled.state;
 
+import java.util.Observable;
+
 import bejeweled.Main;
 
 /**
@@ -7,7 +9,7 @@ import bejeweled.Main;
  * @author Job
  *
  */
-public final class Score {
+public final class Score extends Observable {
 	
 	private int score;
 	private int scorePerGem;
@@ -27,7 +29,8 @@ public final class Score {
 		if (gems*scorePerGem > goodscore) {
 			Main.shoutOut();
 		}
-
+		setChanged();
+		notifyObservers();
 	}
 	
 	public int getScore() {
@@ -36,6 +39,8 @@ public final class Score {
 	
 	public void setScore(int s) {
 		score = s;
+		setChanged();
+		notifyObservers();
 	}
 	
 }

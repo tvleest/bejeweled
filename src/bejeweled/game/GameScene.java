@@ -12,14 +12,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+
 import java.io.FileWriter;
 import java.io.IOException;
+
 import bejeweled.Main;
 import bejeweled.Sounds;
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
 import bejeweled.gui.Buttons;
 import bejeweled.gui.Popups;
+import bejeweled.state.Score;
 import bejeweled.state.Time;
 
 /**
@@ -52,7 +55,7 @@ public final class GameScene extends Scene {
 			public void handle(ActionEvent e) {
 				Time time = gamelogic.getTime();
 				String stime = time.toString().substring(11, time.toString().length());
-				int score = gamelogic.getScore().getScore();
+				int score = gamelogic.getScore();
 				Gem[][] board = gamelogic.getBoard().getGems();
 				String save = stime + "\n" + score + "\n";
 				System.out.println(board.length);
@@ -112,6 +115,7 @@ public final class GameScene extends Scene {
 		gc = canvas.getGraphicsContext2D();
 		gc.setFont(new Font("Helvetica", 15));
 		gamelogic = new GameLogic();
+		gamelogic.getScore2().addObserver(gamelogic);
 
 		// this will handle mouse clicks
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {

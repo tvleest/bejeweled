@@ -222,7 +222,7 @@ public final class Main extends Application {
 	 * Show a GameOver popup.
 	 */
 	public static void gameOver() {
-		int score = scene.getGameLogic().getScore().getScore(); // get score
+		int score = scene.getGameLogic().getScore(); // get score
 		Sounds.getInstance().stopBackgroundSound();// Stop background sound
 		Sounds.getInstance().playGameOverSound();
 
