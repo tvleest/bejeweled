@@ -115,7 +115,7 @@ public final class GameScene extends Scene {
 		gc = canvas.getGraphicsContext2D();
 		gc.setFont(new Font("Helvetica", 15));
 		gamelogic = new GameLogic();
-		gamelogic.getScore2().addObserver(gamelogic);
+		gamelogic.getScoreObject().addObserver(gamelogic);
 
 		// this will handle mouse clicks
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {

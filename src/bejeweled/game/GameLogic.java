@@ -185,7 +185,7 @@ public final class GameLogic implements Observer{
 		return intscore;
 	}
 	
-	public Score getScore2() {
+	public Score getScoreObject() {
 		return score;
 	}
 	
@@ -201,6 +201,9 @@ public final class GameLogic implements Observer{
 		time = t;
 	}
 	
+	/**
+	 * Updates Score Object by using Observer/Observable.
+	 */
 	public void update(Observable obs, Object arg) {
 		score = (Score) obs;
 		intscore = score.getScore();

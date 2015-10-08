@@ -21,6 +21,7 @@ public final class Score extends Observable {
 	
 	/**
 	 * Updates the score with number of gems * score per gem
+	 * Notifies Observers
 	 * @param gems
 	 */
 	public void updateScore(int gems) {
@@ -37,6 +38,10 @@ public final class Score extends Observable {
 		return score;
 	}
 	
+	/**
+	 * Notifies Observers.
+	 * @param s
+	 */
 	public void setScore(int s) {
 		score = s;
 		setChanged();
