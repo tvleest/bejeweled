@@ -261,8 +261,37 @@ public final class Board implements Observer{
 	 * calls delete for all gems in an arraylist
 	 */
 	public void delete(ArrayList<Gem> combinations) {
-		for(Gem g : combinations){
-			delete(g);
+		int size = combinations.size();
+		boolean makeNewSpecial = true;
+		for(Gem g : combinations) {
+			if(g instanceof DeleteRowGem) {
+				makeNewSpecial = false;
+			}
+		}
+		if(!makeNewSpecial) {
+			for(Gem g : combinations){
+				delete(g, 0);
+			}
+		}
+		else if(size > 3) {
+			for(Gem g : combinations){
+				if(g != selectedgem && g != secondGem) {
+					delete(g, 0);
+				}
+				else {
+					if(size > 4) {
+						delete(g, 2);
+					}
+					else {
+						delete(g, 2);
+					}
+				}
+			}
+		}
+		else{
+			for(Gem g : combinations){
+				delete(g, 0);
+			}
 		}
 	}
 	
@@ -273,24 +302,34 @@ public final class Board implements Observer{
 	 *            - column number integer Deletes a gem based on column and row,
 	 *            moves all the gems above this gem a place down
 	 */
-	public void delete(Gem g) {
+	public void delete(Gem g, int newGem) {
 		int row = g.getRow();
 		int col = g.getCol();
 		// move all blocks above the deleted block down
-		for (int r = row; r >= 0; r--) {
-			if (r >= 1) {
-				gems[r-1][col].setCurrentPositionsAsAnimationPositions();
-				gems[r-1][col].setMoving(true);
-				gems[r - 1][col].setPosition(r, col);
-				gems[r][col] = gems[r - 1][col];
-			} else {
-				GemType type = GemType.getRandomGemType();
-				Gem gem = new Gem(0, col, type);
-				gem.setAnimationx(gem.getCurrentx());
-				gem.setAnimationy(gem.getCurrenty()-Gem.getDimension());
-				gem.setMoving(true);
-				gems[0][col] = gem;
+		if(newGem == 0) {
+			for (int r = row; r >= 0; r--) {
+				if (r >= 1) {
+					gems[r-1][col].setCurrentPositionsAsAnimationPositions();
+					gems[r-1][col].setMoving(true);
+					gems[r - 1][col].setPosition(r, col);
+					gems[r][col] = gems[r - 1][col];
+				} else {
+					GemType type = GemType.getRandomGemType();
+					Gem gem = new Gem(0, col, type);
+					gem.setAnimationx(gem.getCurrentx());
+					gem.setAnimationy(gem.getCurrenty()-Gem.getDimension());
+					gem.setMoving(true);
+					gems[0][col] = gem;
+				}
 			}
+		}
+		else if(newGem == 1){
+			DoublePointsGem gem = new DoublePointsGem(g.row, g.col, g.type);
+			gems[g.row][g.col] = gem;
+		}
+		else {
+			DeleteRowGem gem = new DeleteRowGem(g.row, g.col, g.type);
+			gems[g.row][g.col] = gem;
 		}
 	}
 
@@ -318,6 +357,21 @@ public final class Board implements Observer{
 		tempgem.setPosition(row2, col2);
 		gems[row2][col2] = tempgem;
 		return true;
+	}
+	
+	public ArrayList<Gem> deleteRowAndCol(Gem g, ArrayList<Gem> combinations) {
+		for(int col = 0; col < 8; col++) {
+			if(!combinations.contains(gems[g.row][col])) {
+				combinations.add(gems[g.row][col]);
+			}
+		}
+		for(int row = 0; row < 8; row++) {
+			if(!combinations.contains(gems[row][g.col])) {
+				combinations.add(gems[row][g.col]);
+			}
+		}
+		
+		return combinations;
 	}
 
 	/**

@@ -8,6 +8,8 @@ import java.util.Observer;
 
 import bejeweled.Sounds;
 import bejeweled.board.Board;
+import bejeweled.board.DeleteRowGem;
+import bejeweled.board.DoublePointsGem;
 import bejeweled.board.Gem;
 import bejeweled.state.HighScores;
 import bejeweled.state.Logger;
@@ -116,11 +118,22 @@ public final class GameLogic implements Observer{
 	 */
 	private void checkForCombinations() {
 		ArrayList<Gem> combinations = board.checkForCombinations();
+		for(Gem g : combinations) {
+			if(g instanceof DeleteRowGem) {
+				combinations = board.deleteRowAndCol(g, combinations);
+				break;
+			}
+		}
 		//combinations found
 		if(combinations.size()>0){
 			combinationsFormed = true;
 			Sounds.getInstance().playCombinationSound();
 			score.updateScore(combinations.size()); //update score
+			for(int i = 0; i < combinations.size(); i++) {
+				if(combinations.get(i) instanceof DoublePointsGem) {
+					score.updateScore(combinations.size());
+				}
+			}
 			time.updateTime(combinations.size()); //update time
 			board.delete(combinations); //delete all the combinations we found
 			animationhandler.animate(); //animate the falling of gems

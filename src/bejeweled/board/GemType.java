@@ -11,24 +11,51 @@ import javafx.scene.image.Image;
 public enum GemType {
 	BLUE, GREEN, ORANGE, PINK, RED, YELLOW;
 
-	private static GemType[] allgems = values();
+	private static GemType[] allgems = {BLUE, GREEN, ORANGE, PINK, RED, YELLOW};
 	private static Random random = new Random();
 	private static EnumMap<GemType, Image> typeToImage;
+	private static EnumMap<GemType, Image> specialTypeToImage1;
+	private static EnumMap<GemType, Image> specialTypeToImage2;
 	
-	public static Image getImage(GemType gt) {
+	public static Image getImage(GemType gt, int s) {
         if (typeToImage == null)
             initMapping();
-        return typeToImage.get(gt);
+        if(s == 0) {
+        	return typeToImage.get(gt);
+        }
+        else if(s == 1) {
+        	return specialTypeToImage1.get(gt);
+        }
+        else {
+        	return specialTypeToImage2.get(gt);
+        }
     }
  
     private static void initMapping() {
     	typeToImage = new EnumMap<>(GemType.class);
+    	specialTypeToImage1 = new EnumMap<>(GemType.class);
+    	specialTypeToImage2 = new EnumMap<>(GemType.class);
+    	
     	typeToImage.put(GemType.BLUE, new Image("Images/blue.png"));
     	typeToImage.put(GemType.GREEN, new Image("Images/green.png"));
     	typeToImage.put(GemType.ORANGE, new Image("Images/orange.png"));
     	typeToImage.put(GemType.PINK, new Image("Images/pink.png"));
     	typeToImage.put(GemType.RED, new Image("Images/red.png"));
     	typeToImage.put(GemType.YELLOW, new Image("Images/yellow.png"));
+    	
+    	specialTypeToImage1.put(GemType.BLUE, new Image("Images/blue_2x.png"));
+    	specialTypeToImage1.put(GemType.GREEN, new Image("Images/green_2x.png"));
+    	specialTypeToImage1.put(GemType.ORANGE, new Image("Images/orange_2x.png"));
+    	specialTypeToImage1.put(GemType.PINK, new Image("Images/pink_2x.png"));
+    	specialTypeToImage1.put(GemType.RED, new Image("Images/red_2x.png"));
+    	specialTypeToImage1.put(GemType.YELLOW, new Image("Images/yellow_2x.png"));
+    	
+    	specialTypeToImage2.put(GemType.BLUE, new Image("Images/blue_rk.png"));
+    	specialTypeToImage2.put(GemType.GREEN, new Image("Images/green_rk.png"));
+    	specialTypeToImage2.put(GemType.ORANGE, new Image("Images/orange_rk.png"));
+    	specialTypeToImage2.put(GemType.PINK, new Image("Images/pink_rk.png"));
+    	specialTypeToImage2.put(GemType.RED, new Image("Images/red_rk.png"));
+    	specialTypeToImage2.put(GemType.YELLOW, new Image("Images/yellow_rk.png"));
     }
 	
 	public static GemType getRandomGemType() {

@@ -7,21 +7,21 @@ import javafx.scene.image.Image;
  * @author Timo
  * Gem class
  */
-public final class Gem {
+public class Gem {
 
-	private static int dimension = 40; //the dimension (width and height) of the gems on the board
-	private int row;
-	private int col;
-	private GemType type; //which type of six gems
+	protected static int dimension = 40; //the dimension (width and height) of the gems on the board
+	protected int row;
+	protected int col;
+	protected GemType type; //which type of six gems
 	private static Image overlay; //The overlay image
 	private static Image hintedoverlay;
-	private boolean selected = false;
-	private boolean hinted = false;
-	private boolean moving = false;
-	private int offsetx;
-	private int offsety;
-	private int animationx = 0;
-	private int animationy = 0;
+	protected boolean selected = false;
+	protected boolean hinted = false;
+	protected boolean moving = false;
+	protected int offsetx;
+	protected int offsety;
+	protected int animationx = 0;
+	protected int animationy = 0;
 	
 	/**
 	 * @param row - Row index of the gem.
@@ -50,9 +50,9 @@ public final class Gem {
 	 */
 	public void draw(final GraphicsContext gc) {
 		if (moving) {
-			gc.drawImage(GemType.getImage(type), animationx, animationy);
+			gc.drawImage(GemType.getImage(type, 0), animationx, animationy);
 		} else {
-			gc.drawImage(GemType.getImage(type), offsetx + col * dimension, offsety + row * dimension);
+			gc.drawImage(GemType.getImage(type, 0), offsetx + col * dimension, offsety + row * dimension);
 			if (selected) {
 				gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension);
 			} else if (hinted) {
@@ -62,14 +62,14 @@ public final class Gem {
 		}
 	}
 
-	private static Image getOverlayImage(){
+	protected static Image getOverlayImage(){
 		if(overlay == null){
 			initImages();
 		}
 		return overlay;
 	}
 	
-	private static Image getHintedImage(){
+	protected static Image getHintedImage(){
 		if(hintedoverlay == null){
 			initImages();
 		}
