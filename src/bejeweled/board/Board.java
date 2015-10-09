@@ -270,22 +270,25 @@ public final class Board {
 	 * calls delete for all gems in an arraylist
 	 */
 	public void delete(ArrayList<Gem> combinations) {
-		if(combinations.size() > 3) {
+		int size = combinations.size();
+		if(size > 3) {
 			for(Gem g : combinations){
 				if(g != selectedgem && g != secondGem) {
-					delete(g, false);
+					delete(g, 0);
 				}
-				else if(g == selectedgem) {
-					delete(g, true);
-				}
-				else if(g == secondGem) {
-					delete(g, true);
+				else {
+					if(size > 4) {
+						delete(g, 2);
+					}
+					else {
+						delete(g, 1);
+					}
 				}
 			}
 		}
 		else{
 			for(Gem g : combinations){
-				delete(g, false);
+				delete(g, 0);
 			}
 		}
 	}
@@ -297,11 +300,11 @@ public final class Board {
 	 *            - column number integer Deletes a gem based on column and row,
 	 *            moves all the gems above this gem a place down
 	 */
-	public void delete(Gem g, boolean newGem) {
+	public void delete(Gem g, int newGem) {
 		int row = g.getRow();
 		int col = g.getCol();
 		// move all blocks above the deleted block down
-		if(!newGem) {
+		if(newGem == 0) {
 			for (int r = row; r >= 0; r--) {
 				if (r >= 1) {
 					gems[r-1][col].setCurrentPositionsAsAnimationPositions();
@@ -318,8 +321,12 @@ public final class Board {
 				}
 			}
 		}
-		else {
+		else if(newGem == 1){
 			DoublePointsGem gem = new DoublePointsGem(g.row, g.col, g.type);
+			gems[g.row][g.col] = gem;
+		}
+		else {
+			DeleteRowGem gem = new DeleteRowGem(g.row, g.col, g.type);
 			gems[g.row][g.col] = gem;
 		}
 	}
@@ -348,6 +355,21 @@ public final class Board {
 		tempgem.setPosition(row2, col2);
 		gems[row2][col2] = tempgem;
 		return true;
+	}
+	
+	public ArrayList<Gem> deleteRowAndCol(Gem g, ArrayList<Gem> combinations) {
+		for(int col = 0; col < 8; col++) {
+			if(!combinations.contains(gems[g.row][col])) {
+				combinations.add(gems[g.row][col]);
+			}
+		}
+		for(int row = 0; row < 8; row++) {
+			if(!combinations.contains(gems[row][g.col])) {
+				combinations.add(gems[row][g.col]);
+			}
+		}
+		
+		return combinations;
 	}
 
 	/**

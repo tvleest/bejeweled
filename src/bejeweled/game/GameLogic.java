@@ -8,6 +8,7 @@ import java.util.Observer;
 
 import bejeweled.Sounds;
 import bejeweled.board.Board;
+import bejeweled.board.DeleteRowGem;
 import bejeweled.board.DoublePointsGem;
 import bejeweled.board.Gem;
 import bejeweled.state.HighScores;
@@ -117,6 +118,12 @@ public final class GameLogic implements Observer{
 	 */
 	private void checkForCombinations() {
 		ArrayList<Gem> combinations = board.checkForCombinations();
+		for(Gem g : combinations) {
+			if(g instanceof DeleteRowGem) {
+				combinations = board.deleteRowAndCol(g, combinations);
+				break;
+			}
+		}
 		//combinations found
 		if(combinations.size()>0){
 			combinationsFormed = true;
