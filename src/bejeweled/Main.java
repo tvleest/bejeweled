@@ -191,7 +191,7 @@ public final class Main extends Application {
 					if (sc.hasNext()) {
 						String type = sc.nextLine();
 						System.out.println(type);
-						GemType gtype = GemType.typeFromString(type);
+						GemType gtype = GemType.valueOf(type);
 						board[row][col] = new Gem(row, col, gtype);
 					}
 				}

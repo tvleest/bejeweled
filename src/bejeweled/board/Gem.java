@@ -50,9 +50,9 @@ public class Gem {
 	 */
 	public void draw(final GraphicsContext gc) {
 		if (moving) {
-			gc.drawImage(GemType.getImage(type, 0), animationx, animationy);
+			gc.drawImage(GemType.getImage(type), animationx, animationy);
 		} else {
-			gc.drawImage(GemType.getImage(type, 0), offsetx + col * dimension, offsety + row * dimension);
+			gc.drawImage(GemType.getImage(type), offsetx + col * dimension, offsety + row * dimension);
 			if (selected) {
 				gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension);
 			} else if (hinted) {

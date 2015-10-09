@@ -8,11 +8,12 @@ public class DoublePointsGem extends Gem {
 		super(row,col,type);
 	}
 	
+	@Override
 	public void draw(final GraphicsContext gc) {
 		if (moving) {
-			gc.drawImage(GemType.getImage(type, 1), animationx, animationy);
+			gc.drawImage(GemType.getDoublePointsGemImage(type), animationx, animationy);
 		} else {
-			gc.drawImage(GemType.getImage(type, 1), offsetx + col * dimension, offsety + row * dimension);
+			gc.drawImage(GemType.getDoublePointsGemImage(type), offsetx + col * dimension, offsety + row * dimension);
 			if (selected) {
 				gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension);
 			} else if (hinted) {
