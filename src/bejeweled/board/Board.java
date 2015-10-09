@@ -283,7 +283,7 @@ public final class Board implements Observer{
 						delete(g, 2);
 					}
 					else {
-						delete(g, 2);
+						delete(g, 1);
 					}
 				}
 			}
