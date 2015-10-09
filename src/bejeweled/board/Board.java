@@ -271,7 +271,18 @@ public final class Board {
 	 */
 	public void delete(ArrayList<Gem> combinations) {
 		int size = combinations.size();
-		if(size > 3) {
+		boolean makeNewSpecial = true;
+		for(Gem g : combinations) {
+			if(g instanceof DeleteRowGem) {
+				makeNewSpecial = false;
+			}
+		}
+		if(!makeNewSpecial) {
+			for(Gem g : combinations){
+				delete(g, 0);
+			}
+		}
+		else if(size > 3) {
 			for(Gem g : combinations){
 				if(g != selectedgem && g != secondGem) {
 					delete(g, 0);
@@ -281,7 +292,7 @@ public final class Board {
 						delete(g, 2);
 					}
 					else {
-						delete(g, 1);
+						delete(g, 2);
 					}
 				}
 			}

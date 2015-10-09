@@ -43,19 +43,19 @@ public enum GemType {
     	typeToImage.put(GemType.RED, new Image("Images/red.png"));
     	typeToImage.put(GemType.YELLOW, new Image("Images/yellow.png"));
     	
-    	specialTypeToImage1.put(GemType.BLUE, new Image("Images/blue.png"));
-    	specialTypeToImage1.put(GemType.GREEN, new Image("Images/green.png"));
-    	specialTypeToImage1.put(GemType.ORANGE, new Image("Images/orange.png"));
-    	specialTypeToImage1.put(GemType.PINK, new Image("Images/pink.png"));
-    	specialTypeToImage1.put(GemType.RED, new Image("Images/red.png"));
-    	specialTypeToImage1.put(GemType.YELLOW, new Image("Images/yellow.png"));
+    	specialTypeToImage1.put(GemType.BLUE, new Image("Images/blue_2x.png"));
+    	specialTypeToImage1.put(GemType.GREEN, new Image("Images/green_2x.png"));
+    	specialTypeToImage1.put(GemType.ORANGE, new Image("Images/orange_2x.png"));
+    	specialTypeToImage1.put(GemType.PINK, new Image("Images/pink_2x.png"));
+    	specialTypeToImage1.put(GemType.RED, new Image("Images/red_2x.png"));
+    	specialTypeToImage1.put(GemType.YELLOW, new Image("Images/yellow_2x.png"));
     	
-    	specialTypeToImage2.put(GemType.BLUE, new Image("Images/blue.png"));
-    	specialTypeToImage2.put(GemType.GREEN, new Image("Images/green.png"));
-    	specialTypeToImage2.put(GemType.ORANGE, new Image("Images/orange.png"));
-    	specialTypeToImage2.put(GemType.PINK, new Image("Images/pink.png"));
-    	specialTypeToImage2.put(GemType.RED, new Image("Images/red.png"));
-    	specialTypeToImage2.put(GemType.YELLOW, new Image("Images/yellow.png"));
+    	specialTypeToImage2.put(GemType.BLUE, new Image("Images/blue_rk.png"));
+    	specialTypeToImage2.put(GemType.GREEN, new Image("Images/green_rk.png"));
+    	specialTypeToImage2.put(GemType.ORANGE, new Image("Images/orange_rk.png"));
+    	specialTypeToImage2.put(GemType.PINK, new Image("Images/pink_rk.png"));
+    	specialTypeToImage2.put(GemType.RED, new Image("Images/red_rk.png"));
+    	specialTypeToImage2.put(GemType.YELLOW, new Image("Images/yellow_rk.png"));
     }
 	
 	public static GemType getRandomGemType() {
