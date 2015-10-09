@@ -326,11 +326,11 @@ public final class Board implements Observer{
 			}
 		}
 		else if(newGem == 1){
-			DoublePointsGem gem = (DoublePointsGem) gf.createGem(g.row, g.col, g.type, SpecialType.DOUBLE);
+			Gem gem = gf.createGem(g.row, g.col, g.type, SpecialType.DOUBLE);
 			gems[g.row][g.col] = gem;
 		}
 		else {
-			DeleteRowGem gem = (DeleteRowGem) gf.createGem(g.row, g.col, g.type, SpecialType.CROSS);
+			Gem gem = gf.createGem(g.row, g.col, g.type, SpecialType.CROSS);
 			gems[g.row][g.col] = gem;
 		}
 	}
