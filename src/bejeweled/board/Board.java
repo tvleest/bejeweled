@@ -1,6 +1,9 @@
 package bejeweled.board;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 import bejeweled.Sounds;
 import bejeweled.state.Logger;
 import bejeweled.Main;
@@ -10,7 +13,7 @@ import javafx.scene.canvas.GraphicsContext;
  * @author Group 30 Holds the double dimension array with gems and the board
  *         methods. 
  */
-public final class Board {
+public final class Board implements Observer{
 	private Gem[][] gems;
 	private int dimension;
 	private Gem selectedgem = null;
@@ -122,16 +125,18 @@ public final class Board {
 	 * @param row
 	 */
 
-	public void hintCheck(int col, int row) {
+	public void hintCheck(int row, int col, boolean hint) {
 		GemType type = gems[row][col].getType();
-		if (getRight(gems[row][col]) != null && getRight(gems[row][col]).getType() == type) {
-			checkSurround(col, row, type, 1);
-		} else if (getBelow(gems[row][col]) != null && getBelow(gems[row][col]).getType() == type) {
-			checkSurround(col, row, type, -1);
+		if (doubleRow(row, col, type)) {
+			checkSurroundRow(row, col, type, hint);
+		} else if (doubleCol(row, col, type)) {
+			checkSurroundCol(row, col, type, hint);
 		} else if (col < dimension - 1) {
-			hintCheck(col + 1, row);
+			hintCheck(row, col + 1, hint);
 		} else if (row < dimension - 1) {
-			hintCheck(0, row + 1);
+			hintCheck(row + 1, 0, hint);
+		} else {
+			Main.gameOver();
 		}
 	}
 
@@ -143,66 +148,52 @@ public final class Board {
 	 * @param type
 	 * @param site
 	 */
-	public void checkSurround(int col, int row, GemType type, int site) {
-		if (site == 1) {
-			if (getLeft(getLeft(gems[row][col])) != null && getLeft(getLeft(gems[row][col])).getType() == type) {
-				gems[row][col - 2].setHinted(true);
-				setSelectedgem(gems[row][col - 2]);
-			} else
-				if (getBelow(getLeft(gems[row][col])) != null && getBelow(getLeft(gems[row][col])).getType() == type) {
-				gems[row + 1][col - 1].setHinted(true);
-				setSelectedgem(gems[row + 1][col - 1]);
-			} else if (getUpper(getLeft(gems[row][col])) != null
-					&& getUpper(getLeft(gems[row][col])).getType() == type) {
-				gems[row - 1][col - 1].setHinted(true);
-				setSelectedgem(gems[row - 1][col - 1]);
-			} else if (getRight(getRight(gems[row][col + 1])) != null
-					&& getRight(getRight(gems[row][col + 1])).getType() == type) {
-				gems[row][col + 3].setHinted(true);
-				setSelectedgem(gems[row][col + 3]);
-			} else if (getBelow(getRight(gems[row][col + 1])) != null
-					&& getBelow(getRight(gems[row][col + 1])).getType() == type) {
-				gems[row + 1][col + 2].setHinted(true);
-				setSelectedgem(gems[row + 1][col + 2]);
-			} else if (getUpper(getRight(gems[row][col + 1])) != null
-					&& getUpper(getRight(gems[row][col + 1])).getType() == type) {
-				gems[row - 1][col + 2].setHinted(true);
-				setSelectedgem(gems[row - 1][col + 2]);
-			} else if (col < dimension - 1) {
-				hintCheck(col + 1, row);
-			} else if (row < dimension - 1) {
-				hintCheck(0, row + 1);
-			}
-		} else {
-			if (getLeft(getUpper(gems[row][col])) != null && getLeft(getUpper(gems[row][col])).getType() == type) {
-				gems[row - 1][col - 1].setHinted(true);
-				setSelectedgem(gems[row - 1][col - 1]);
-			} else if (getRight(getUpper(gems[row][col])) != null
-					&& getRight(getUpper(gems[row][col])).getType() == type) {
-				gems[row - 1][col + 1].setHinted(true);
-				setSelectedgem(gems[row - 1][col + 1]);
-			} else if (getUpper(getUpper(gems[row][col])) != null
-					&& getUpper(getUpper(gems[row][col])).getType() == type) {
-				gems[row - 2][col].setHinted(true);
-				setSelectedgem(gems[row - 2][col]);
-			} else if (getRight(getBelow(gems[row + 1][col])) != null
-					&& getRight(getBelow(gems[row + 1][col])).getType() == type) {
-				gems[row + 2][col + 1].setHinted(true);
-				setSelectedgem(gems[row + 2][col + 1]);
-			} else if (getBelow(getBelow(gems[row + 1][col])) != null
-					&& getBelow(getBelow(gems[row + 1][col])).getType() == type) {
-				gems[row + 3][col].setHinted(true);
-				setSelectedgem(gems[row + 3][col]);
-			} else if (getLeft(getBelow(gems[row + 1][col])) != null
-					&& getLeft(getBelow(gems[row + 1][col])).getType() == type) {
-				gems[row + 2][col - 1].setHinted(true);
-				setSelectedgem(gems[row + 2][col - 1]);
-			} else if (col < dimension - 1) {
-				hintCheck(col + 1, row);
-			} else if (row < dimension - 1) {
-				hintCheck(0, row + 1);
-			}
-		}
+	public void checkSurroundRow(int row, int col, GemType type, boolean hint) {
+		if (doubleLeft(row, col, type)) {
+			gems[row][col - 2].setHinted(hint);
+		} else if (downLeft(row, col, type)) {
+			gems[row + 1][col - 1].setHinted(hint);
+		} else if (upperLeft(row, col, type)) {
+			gems[row - 1][col - 1].setHinted(hint);
+		} else if (doubleRight(row, col + 1, type)) {
+			gems[row][col + 3].setHinted(hint);
+		} else if (downRight(row, col + 1, type)) {
+			gems[row + 1][col + 2].setHinted(hint);
+		} else if (upperRight(row, col + 1, type)) {
+			gems[row - 1][col + 2].setHinted(hint);
+		} else if (col < dimension - 1) {
+			hintCheck(row, col + 1, hint);
+		} else if (row < dimension - 1) {
+			hintCheck(row + 1, 0, hint);
+		} 
+	}
+	
+	/**
+	 * Checks if there can be made combinations and illustrates the hint.
+	 * 
+	 * @param col
+	 * @param row
+	 * @param type
+	 * @param site
+	 */
+	public void checkSurroundCol(int row, int col, GemType type, boolean hint) {
+		if (upperLeft(row, col, type)) {
+			gems[row - 1][col - 1].setHinted(hint);
+		} else if (upperRight(row, col, type)) {
+			gems[row - 1][col + 1].setHinted(hint);
+		} else if (doubleUpper(row, col, type)) {
+			gems[row - 2][col].setHinted(hint);
+		} else if (downRight(row + 1, col, type)) {
+			gems[row + 2][col + 1].setHinted(hint);
+		} else if (doubleDown(row + 1, col, type)) {
+			gems[row + 3][col].setHinted(hint);
+		} else if (downLeft(row + 1, col, type)) {
+			gems[row + 2][col - 1].setHinted(hint);
+		} else if (col < dimension - 1) {
+			hintCheck(row, col + 1, hint);
+		} else if (row < dimension - 1) {
+			hintCheck(row + 1, 0, hint);
+		} 
 	}
 
 	/**
@@ -458,5 +449,172 @@ public final class Board {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Checks if the gem at row, col has a gem of the same type
+	 * 2 columns to the left of it.
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
+	public boolean doubleLeft(int row, int col, GemType type) {
+		if (getLeft(getLeft(gems[row][col])) != null 
+				&& getLeft(getLeft(gems[row][col])).getType() == type) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the gem at row, col has a gem of the same type
+	 * 1 column to the left and 1 up from it.
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
+	public boolean upperLeft(int row, int col, GemType type) {
+		if (getUpper(getLeft(gems[row][col])) != null 
+				&& getUpper(getLeft(gems[row][col])).getType() == type) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the gem at row, col has a gem of the same type
+	 * 1 column to the left and 1 down from it.
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
+	public boolean downLeft(int row, int col, GemType type) {
+		if (getBelow(getLeft(gems[row][col])) != null 
+				&& getBelow(getLeft(gems[row][col])).getType() == type) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the gem at row, col has a gem of the same type
+	 * 2 columns to the right of it.
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
+	public boolean doubleRight(int row, int col, GemType type) {
+		if (getRight(getRight(gems[row][col])) != null 
+				&& getRight(getRight(gems[row][col])).getType() == type) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the gem at row, col has a gem of the same type
+	 * 1 column to the right and 1 down from it.
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
+	public boolean upperRight(int row, int col, GemType type) {
+		if (getUpper(getRight(gems[row][col])) != null 
+				&& getUpper(getRight(gems[row][col])).getType() == type) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the gem at row, col has a gem of the same type
+	 * 1 column to the right and 1 down from it.
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
+	public boolean downRight(int row, int col, GemType type) {
+		if (getBelow(getRight(gems[row][col])) != null 
+				&& getBelow(getRight(gems[row][col])).getType() == type) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the gem at row, col has a gem of the same type
+	 * 2 rows on top of it.
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
+	public boolean doubleUpper(int row, int col, GemType type) {
+		if (getUpper(getUpper(gems[row][col])) != null 
+				&& getUpper(getUpper(gems[row][col])).getType() == type) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the gem at row, col has a gem of the same type
+	 * 2 rows below it.
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
+	public boolean doubleDown(int row, int col, GemType type) {
+		if (getBelow(getBelow(gems[row][col])) != null 
+				&& getBelow(getBelow(gems[row][col])).getType() == type) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the gem at that row and column has a gem of the same type
+	 * to the right of it.
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
+	public boolean doubleRow(int row, int col, GemType type) {
+		if(getRight(gems[row][col]) != null && getRight(gems[row][col]).getType() == type) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the gem at that row and column has a gem of the same type
+	 * below it.
+	 * @param row
+	 * @param col
+	 * @param type
+	 * @return
+	 */
+	public boolean doubleCol(int row, int col, GemType type) {
+		if (getBelow(gems[row][col]) != null && getBelow(gems[row][col]).getType() == type) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks the board for possible moves everytime the score changes
+	 * (and therefore the board changes)
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+		hintCheck(0, 0, false);
 	}
 }

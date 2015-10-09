@@ -82,7 +82,7 @@ public final class GameScene extends Scene {
 		hintButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				gamelogic.getBoard().hintCheck(0, 0);
+				gamelogic.getBoard().hintCheck(0, 0, true);
 			}
 		});
 
@@ -128,6 +128,7 @@ public final class GameScene extends Scene {
 		gc.setFont(new Font("Helvetica", 15));
 		gamelogic = new GameLogic();
 		gamelogic.getScoreObject().addObserver(gamelogic);
+		gamelogic.getScoreObject().addObserver(gamelogic.getBoard());
 
 		// this will handle mouse clicks
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {
