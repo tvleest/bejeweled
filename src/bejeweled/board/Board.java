@@ -18,7 +18,8 @@ public final class Board implements Observer{
 	private int dimension;
 	private Gem selectedgem = null;
 	private Gem hintedgem = null;
-	private Gem secondGem = null;;
+	private Gem secondGem = null;
+	private GemFactory gf = null;
 
 	/**
 	 * @param dimension
@@ -29,6 +30,7 @@ public final class Board implements Observer{
 	 *            - standard offset in y, used for drawing and clicking.
 	 */
 	public Board(int dimension) {
+		gf = new GemFactory();
 		this.dimension = dimension;
 		gems = new Gem[dimension][dimension];
 		fillBoard(0, 0);
@@ -43,7 +45,7 @@ public final class Board implements Observer{
 	public void fillBoard(int col, int row) {
 		GemType type = GemType.getRandomGemType();
 		if (rowCheck(row, col, type) && colCheck(row, col, type)) {
-			Gem gem = new Gem(row, col, type);
+			Gem gem = gf.createGem(row, col, type, SpecialType.NORMAL);
 			gems[row][col] = gem;
 			if (col < dimension - 1) {
 				fillBoard(col + 1, row);
@@ -315,7 +317,7 @@ public final class Board implements Observer{
 					gems[r][col] = gems[r - 1][col];
 				} else {
 					GemType type = GemType.getRandomGemType();
-					Gem gem = new Gem(0, col, type);
+					Gem gem = gf.createGem(0,  col, type, SpecialType.NORMAL);
 					gem.setAnimationx(gem.getCurrentx());
 					gem.setAnimationy(gem.getCurrenty()-Gem.getDimension());
 					gem.setMoving(true);
@@ -324,11 +326,11 @@ public final class Board implements Observer{
 			}
 		}
 		else if(newGem == 1){
-			DoublePointsGem gem = new DoublePointsGem(g.row, g.col, g.type);
+			DoublePointsGem gem = (DoublePointsGem) gf.createGem(g.row, g.col, g.type, SpecialType.DOUBLE);
 			gems[g.row][g.col] = gem;
 		}
 		else {
-			DeleteRowGem gem = new DeleteRowGem(g.row, g.col, g.type);
+			DeleteRowGem gem = (DeleteRowGem) gf.createGem(g.row, g.col, g.type, SpecialType.CROSS);
 			gems[g.row][g.col] = gem;
 		}
 	}
