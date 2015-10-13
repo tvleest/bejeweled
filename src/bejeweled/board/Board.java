@@ -272,27 +272,27 @@ public final class Board implements Observer{
 		}
 		if(!makeNewSpecial) {
 			for(Gem g : combinations){
-				delete(g, 0);
+				delete(g, null);
 			}
 		}
 		else if(size > 3) {
 			for(Gem g : combinations){
 				if(g != selectedgem && g != secondGem) {
-					delete(g, 0);
+					delete(g, null);
 				}
 				else {
 					if(size > 4) {
-						delete(g, 2);
+						delete(g, SpecialType.CROSS);
 					}
 					else {
-						delete(g, 1);
+						delete(g, SpecialType.DOUBLE);
 					}
 				}
 			}
 		}
 		else{
 			for(Gem g : combinations){
-				delete(g, 0);
+				delete(g, null);
 			}
 		}
 	}
@@ -304,34 +304,40 @@ public final class Board implements Observer{
 	 *            - column number integer Deletes a gem based on column and row,
 	 *            moves all the gems above this gem a place down
 	 */
-	public void delete(Gem g, int newGem) {
+	public void delete(Gem g, SpecialType specialtype) {
 		int row = g.getRow();
 		int col = g.getCol();
+		if (specialtype != null) {
+			Gem gem = gf.createGem(g.row, g.col, g.type, specialtype);
+			gems[g.row][g.col] = gem;
+		} 
 		// move all blocks above the deleted block down
-		if(newGem == 0) {
+		else {
 			for (int r = row; r >= 0; r--) {
 				if (r >= 1) {
-					gems[r-1][col].setCurrentPositionsAsAnimationPositions();
-					gems[r-1][col].setMoving(true);
+					if (!gems[r - 1][col].isMoving()) {
+						gems[r - 1][col].setCurrentPositionsAsAnimationPositions();
+					}
+					else{
+						gems[r-1][col].setAnimationy(gems[r-1][col].getAnimationy()-Gem.getDimension());
+					}
+					gems[r - 1][col].setMoving(true);
 					gems[r - 1][col].setPosition(r, col);
 					gems[r][col] = gems[r - 1][col];
 				} else {
 					GemType type = GemType.getRandomGemType();
-					Gem gem = gf.createGem(0,  col, type, SpecialType.NORMAL);
-					gem.setAnimationx(gem.getCurrentx());
-					gem.setAnimationy(gem.getCurrenty()-Gem.getDimension());
+					Gem gem = gf.createGem(0, col, type, SpecialType.NORMAL);
+					if (!gem.isMoving()) {
+						gem.setAnimationx(gem.getCurrentx());
+						gem.setAnimationy(gem.getCurrenty() - Gem.getDimension());
+					}
+					else{
+						gem.setAnimationy(gem.getAnimationy()-Gem.getDimension());
+					}
 					gem.setMoving(true);
 					gems[0][col] = gem;
 				}
 			}
-		}
-		else if(newGem == 1){
-			Gem gem = gf.createGem(g.row, g.col, g.type, SpecialType.DOUBLE);
-			gems[g.row][g.col] = gem;
-		}
-		else {
-			Gem gem = gf.createGem(g.row, g.col, g.type, SpecialType.CROSS);
-			gems[g.row][g.col] = gem;
 		}
 	}
 
