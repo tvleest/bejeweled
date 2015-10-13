@@ -35,6 +35,7 @@ public class Gem {
 		offsetx = GameScene.getOffsetx();
 		offsety = GameScene.getOffsety();
 		this.type = type;
+		animationy=offsety-dimension+1;
 	}	
 
 	/**

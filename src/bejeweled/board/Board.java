@@ -322,6 +322,9 @@ public final class Board implements Observer{
 					if (!gem.isMoving()) {
 						gem.setAnimationx(gem.getCurrentx());
 						gem.setAnimationy(gem.getCurrenty() - Gem.getDimension());
+						for(int i = dimension-1; i>0; i--)
+							if(gems[i][col].getAnimationy()<=(gem.getCurrenty() - Gem.getDimension()))
+								gem.setAnimationy(gem.getAnimationy() - Gem.getDimension());
 					}
 					gem.setMoving(true);
 					gems[0][col] = gem;
