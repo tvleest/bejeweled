@@ -270,12 +270,7 @@ public final class Board implements Observer{
 				makeNewSpecial = false;
 			}
 		}
-		if(!makeNewSpecial) {
-			for(Gem g : combinations){
-				delete(g, null);
-			}
-		}
-		else if(size > 3) {
+		if(makeNewSpecial && size > 3) {
 			for(Gem g : combinations){
 				if(g != selectedgem && g != secondGem) {
 					delete(g, null);
@@ -318,9 +313,6 @@ public final class Board implements Observer{
 					if (!gems[r - 1][col].isMoving()) {
 						gems[r - 1][col].setCurrentPositionsAsAnimationPositions();
 					}
-					else{
-						gems[r-1][col].setAnimationy(gems[r-1][col].getAnimationy()-Gem.getDimension());
-					}
 					gems[r - 1][col].setMoving(true);
 					gems[r - 1][col].setPosition(r, col);
 					gems[r][col] = gems[r - 1][col];
@@ -330,9 +322,6 @@ public final class Board implements Observer{
 					if (!gem.isMoving()) {
 						gem.setAnimationx(gem.getCurrentx());
 						gem.setAnimationy(gem.getCurrenty() - Gem.getDimension());
-					}
-					else{
-						gem.setAnimationy(gem.getAnimationy()-Gem.getDimension());
 					}
 					gem.setMoving(true);
 					gems[0][col] = gem;
