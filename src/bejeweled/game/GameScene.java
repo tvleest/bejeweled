@@ -50,33 +50,6 @@ public final class GameScene extends Scene {
 		Canvas canvas = new Canvas(800, 600);
 		root.getChildren().add(canvas);
 
-		Image saveIcon = new Image("Images/save.png");
-		Button saveButton = Buttons.subMenuButton(null, saveIcon, 700, 565);
-
-		saveButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				Time time = gamelogic.getTime();
-				String stime = time.toString().substring(11, time.toString().length());
-				int score = gamelogic.getScore();
-				Gem[][] board = gamelogic.getBoard().getGems();
-				String save = stime + "\n" + score + "\n";
-				System.out.println(board.length);
-				for (int row = 0; row < board.length; row++) {
-					for (int col = 0; col < board.length; col++) {
-						save += board[row][col].getType() + "\n";
-					}
-				}
-				try {
-					FileWriter fw = new FileWriter("savefile.txt");
-					fw.write(save);
-					fw.close();
-				} catch (IOException e1) {
-					System.out.println("Something went wrong with the FileWriter in GameScene");
-				}
-			}
-		});
-
 		Image hintIcon = new Image("Images/hintbutton.png");
 		Button hintButton = Buttons.subMenuButton(null, hintIcon, 655, 565);
 
@@ -124,7 +97,7 @@ public final class GameScene extends Scene {
 			}
 		});
 
-		root.getChildren().addAll(hintButton, saveButton, pauseButton, musicButton, mute);
+		root.getChildren().addAll(hintButton, pauseButton, musicButton, mute);
 		gc = canvas.getGraphicsContext2D();
 		gc.setFont(new Font("Helvetica", 15));
 		gamelogic = new GameLogic();

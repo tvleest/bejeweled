@@ -57,19 +57,10 @@ public class Popups {
 		border.setPadding(new Insets(20, 0, 20, 20));
 
 		Label saved = new Label("Game saved!");
-		saved.setFont(new Font("Helvetica", 20));
-		saved.setTextFill(Color.BROWN);
 		saved.setLayoutX(115);
 		saved.setLayoutY(420);
 		
-		CornerRadii corners = new CornerRadii(0);
-		Insets insets = new Insets(0);
-		Background buttonBack1 = new Background(new BackgroundFill(Color.GAINSBORO, corners, insets));
-		Background buttonBack2 = new Background(new BackgroundFill(Color.ROSYBROWN, corners, insets));
-
-		Button resume = Buttons.pauseMenuButton("RESUME", 115, 180);
-		resume.setTextFill(Color.BLACK);
-		resume.setBackground(buttonBack1);
+		Button resume = Buttons.pauseMenuButton("Continue");
 
 		/*
 		 * Pressing resume will continue the timer and reenable the bejeweled
@@ -83,26 +74,8 @@ public class Popups {
 				Main.getTimeline().play();
 			}
 		});
-		
-		//Darker color when hovering over button
-		resume.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				resume.setBackground(buttonBack2);
-			}
-		});
-		
-		//Restore original color when mouse exits
-		resume.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				resume.setBackground(buttonBack1);
-			}
-		});
 
-		Button quit = Buttons.pauseMenuButton("QUIT", 115, 260);
-		quit.setTextFill(Color.BLACK);
-		quit.setBackground(buttonBack1);
+		Button quit = Buttons.pauseMenuButton("Main Menu");
 		
 		/*
 		 * Pressing quit will remove the pause menu and bring the player back to
@@ -116,26 +89,8 @@ public class Popups {
 				popup.hide();
 			}
 		});
-		
-		//Darker color when hovering over button
-		quit.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				quit.setBackground(buttonBack2);
-			}
-		});
-				
-		//Restore original color when mouse exits
-		quit.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				quit.setBackground(buttonBack1);
-			}
-		});
 
-		Button save = Buttons.pauseMenuButton("SAVE", 115, 300);
-		save.setTextFill(Color.BLACK);
-		save.setBackground(buttonBack1);
+		Button save = Buttons.pauseMenuButton("Save");
 
 		/*
 		 * Pressing the save button will save the current state of the game to a
@@ -166,22 +121,6 @@ public class Popups {
 			}
 		});
 		
-		//Darker color when hovering over button
-		save.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				save.setBackground(buttonBack2);
-			}
-		});
-				
-		//Restore original color when mouse exits
-		save.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				save.setBackground(buttonBack1);
-			}
-		});		
-		
 		resume.setMaxWidth(Double.MAX_VALUE);
 		quit.setMaxWidth(Double.MAX_VALUE);
 		save.setMaxWidth(Double.MAX_VALUE);
@@ -189,7 +128,7 @@ public class Popups {
 		VBox vbButtons = new VBox();
 		vbButtons.setSpacing(15);
 		vbButtons.setPadding(new Insets(20,20,20,20)); 
-		vbButtons.getChildren().addAll(resume, save, quit);
+		vbButtons.getChildren().addAll(save, quit, resume);
 		vbButtons.setLayoutX(90);
 		vbButtons.setLayoutY(180);
 		

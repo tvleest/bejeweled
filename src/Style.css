@@ -12,3 +12,9 @@
     -fx-text-fill: linear-gradient(white, #d0d0d0);
     -fx-font-size: 12px;
 }
+
+.label{
+    -fx-font-family: "Arial";
+    -fx-text-fill: red;
+    -fx-font-size: 12px;
+}

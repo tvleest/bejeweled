@@ -49,6 +49,7 @@ public class Buttons {
 		Button button = new Button(label, imgView);
 		button.setLayoutX(x);
 		button.setLayoutY(y);
+		button.setPrefSize(25, 25);
 		return button;
 	}
 	
@@ -59,10 +60,9 @@ public class Buttons {
 	 * @param y - y-coordinate to put the button on.
 	 * @return - The pause menu button.
 	 */
-	public static Button pauseMenuButton(String label, int x, int y) {
+	public static Button pauseMenuButton(String label) {
 		Button button = new Button(label);
-		button.setLayoutX(x);
-		button.setLayoutY(y);
+		button.setPrefSize(100, 50);
 		return button;
 	}
 }
