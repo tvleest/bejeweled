@@ -46,6 +46,7 @@ public final class GameScene extends Scene {
 	 */
 	public GameScene(Group root, Stage stage) {
 		super(root);
+		this.getStylesheets().add("Style.css");
 		Canvas canvas = new Canvas(800, 600);
 		root.getChildren().add(canvas);
 

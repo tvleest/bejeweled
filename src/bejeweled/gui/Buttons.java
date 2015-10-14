@@ -27,33 +27,10 @@ public class Buttons {
 	 * @return - The main menu button.
 	 */
 	public static Button menuButton(String label, int x, int y) {
-		Font font = new Font(72);
 		Button button = new Button(label);
-		button.setFont(font);
+		button.setPrefSize(250, 75);
 		button.setLayoutX(x);
 		button.setLayoutY(y);
-		CornerRadii corners = new CornerRadii(10);
-		Insets insets = new Insets(10);
-		Background buttonBack1 = new Background(new BackgroundFill(Color.GOLD, corners, insets));
-		Background buttonBack2 = new Background(new BackgroundFill(Color.GOLDENROD, corners, insets));
-		button.setBackground(buttonBack1);
-		
-		//Darker color when hovering over button
-		button.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				button.setBackground(buttonBack2);
-			}
-		});
-		
-		//Restore original color when mouse exits
-		button.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				button.setBackground(buttonBack1);
-			}
-		});
-		
 		return button;
 	}
 	
@@ -67,32 +44,11 @@ public class Buttons {
 	 */
 	public static Button subMenuButton(String label, Image image, int x, int y) {
 		ImageView imgView = new ImageView(image);
-		
    		imgView.setFitHeight(25);
 		imgView.setFitWidth(25);
 		Button button = new Button(label, imgView);
-		Background buttonBack1 = new Background(new BackgroundFill(Color.CHOCOLATE, null, null));
-		Background buttonBack2 = new Background(new BackgroundFill(Color.BROWN, null, null));
-		button.setBackground(buttonBack1);
 		button.setLayoutX(x);
 		button.setLayoutY(y);
-		
-		//Darker color when hovering over button
-		button.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				button.setBackground(buttonBack2);
-			}
-			
-		});
-		
-		//Restore original color when mouse exits
-		button.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				button.setBackground(buttonBack1);
-			}
-		});
 		return button;
 	}
 	
@@ -104,29 +60,9 @@ public class Buttons {
 	 * @return - The pause menu button.
 	 */
 	public static Button pauseMenuButton(String label, int x, int y) {
-		Font font = new Font("Helvetica", 22);
 		Button button = new Button(label);
-		button.setFont(font);
 		button.setLayoutX(x);
 		button.setLayoutY(y);
-		Background buttonBack = new Background(new BackgroundFill(Color.ALICEBLUE, null, null));
-		button.setBackground(buttonBack);
-		
-		//Darker color when hovering over button
-		button.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-//				button.setBackground(buttonBack2);
-			}
-		});
-		
-		//Restore original color when mouse exits
-		button.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-//				button.setBackground(buttonBack1);
-			}
-		});
 		return button;
 	}
 }

@@ -64,11 +64,9 @@ public final class Main extends Application {
 		stage = primaryStage;
 		scene = new GameScene(new Group(), stage);
 		primaryStage.setTitle("Bejeweled group 30");
-		switchMenu();
-
+		switchMenu();		
 		timeline = new Timeline(new KeyFrame(Duration.millis(1000), ae -> scene.decrementTime()));
 		timeline.setCycleCount(Animation.INDEFINITE);
-
 		primaryStage.show();
 	}
 
@@ -86,7 +84,7 @@ public final class Main extends Application {
 		imgView.setFitWidth(800);
 
 		// make two buttons for the menu
-		Button newGameButton = Buttons.menuButton("NEW GAME", 170, 270);
+		Button newGameButton = Buttons.menuButton("new game", 275, 110);
 
 		newGameButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -98,17 +96,18 @@ public final class Main extends Application {
 			}
 		}); // start the game
 
-		Button exitButton = Buttons.menuButton("EXIT", 290, 430);
+		Button exitButton = Buttons.menuButton("Highscores", 275, 430);
 
 		exitButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent e) {
+				//TODO: show highscores
 				Platform.exit();
 			}
 		});
 
-		Button continueButton = Buttons.menuButton("CONTINUE", 183, 110);
+		Button continueButton = Buttons.menuButton("Continue game", 275, 270);
 		continueButton.setOpacity(0.35);
 		continueButton.setDisable(true);
 
@@ -126,9 +125,11 @@ public final class Main extends Application {
 			});
 		}
 		root.getChildren().addAll(imgView, newGameButton, exitButton, continueButton);
+		root.getStylesheets().add("Style.css");
 		if (stage.getScene() == null) {
 			Scene sc = new Scene(root);
 			stage.setScene(sc);
+			
 		} else {
 			stage.getScene().setRoot(root);
 		}
@@ -140,6 +141,7 @@ public final class Main extends Application {
 	public static void switchGame(boolean savedGame) {
 		timeline.playFromStart();
 		root = new Group();
+
 		Image background = new Image("Images/Background.png");
 		ImageView imgView = new ImageView(background);
 		imgView.setFitHeight(600);
@@ -153,6 +155,7 @@ public final class Main extends Application {
 		Sounds.getInstance().playBackgroundSound();
 
 		scene = new GameScene(root, stage);
+
 		if (savedGame) {
 			loadFile();
 		}
