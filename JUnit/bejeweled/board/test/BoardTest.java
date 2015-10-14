@@ -77,7 +77,7 @@ public class BoardTest {
 		gems[1][0] = new Gem(1, 0, GemType.RED);
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[1][0];
-		board.delete(gem2, 0);
+		board.delete(gem2, null);
 		assertEquals(gems[1][0], gem1);
 	}
 
