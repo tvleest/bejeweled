@@ -84,7 +84,8 @@ public final class Main extends Application {
 		imgView.setFitWidth(800);
 
 		// make two buttons for the menu
-		Button newGameButton = Buttons.menuButton("new game", 275, 110);
+		Button newGameButton = Buttons.menuButton("Start New Game", 275, 110);
+		newGameButton.setStyle("-fx-font-size: 20px");
 
 		newGameButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -96,7 +97,8 @@ public final class Main extends Application {
 			}
 		}); // start the game
 
-		Button exitButton = Buttons.menuButton("Highscores", 275, 430);
+		Button exitButton = Buttons.menuButton("View the Highscores", 275, 430);
+		exitButton.setStyle("-fx-font-size: 20px");
 
 		exitButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -107,7 +109,8 @@ public final class Main extends Application {
 			}
 		});
 
-		Button continueButton = Buttons.menuButton("Continue game", 275, 270);
+		Button continueButton = Buttons.menuButton("Continue Saved Game", 275, 270);
+		continueButton.setStyle("-fx-font-size: 20px");
 		continueButton.setOpacity(0.35);
 		continueButton.setDisable(true);
 
@@ -134,6 +137,45 @@ public final class Main extends Application {
 			stage.getScene().setRoot(root);
 		}
 	}
+	
+	public static void highScoreMenu() {
+		root = new Group();
+
+		// load background
+		Image background = new Image("Images/MenuBackground.png");
+		ImageView imgView = new ImageView(background);
+		imgView.setFitHeight(600);
+		imgView.setFitWidth(800);
+
+		Button quit = Buttons.menuButton("Return to main Menu", 275, 430);
+		quit.setStyle("-fx-font-size: 20px");
+		
+		/*
+		 * Pressing quit will remove the pause menu and bring the player back to
+		 * the main menu.
+		 */
+		quit.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				Main.switchMenu();
+				}
+		});
+		
+		// @TODO: add the draw highscores here
+		
+		
+		
+
+		root.getChildren().addAll(imgView, quit);
+		root.getStylesheets().add("Style.css");
+		if (stage.getScene() == null) {
+			Scene sc = new Scene(root);
+			stage.setScene(sc);
+			
+		} else {
+			stage.getScene().setRoot(root);
+		}
+	}
 
 	/**
 	 * Switch the current screen to the Bejeweled screen.
@@ -147,11 +189,7 @@ public final class Main extends Application {
 		imgView.setFitHeight(600);
 		imgView.setFitWidth(800);
 
-		Rectangle rect = new Rectangle(200, 35, Color.CHOCOLATE);
-		rect.setLayoutX(555);
-		rect.setLayoutY(565);
-
-		root.getChildren().addAll(imgView, rect);
+		root.getChildren().addAll(imgView);
 		Sounds.getInstance().playBackgroundSound();
 
 		scene = new GameScene(root, stage);

@@ -25,6 +25,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -59,6 +60,30 @@ public class Popups {
 		Label saved = new Label("Game saved!");
 		saved.setLayoutX(115);
 		saved.setLayoutY(420);
+		
+		Image musicIcon = new Image("Images/music2.png");
+		Button musicButton = Buttons.subMenuButton(null, musicIcon, 0, 0);
+		
+		Line mute = new Line();
+		mute.setStartX(150);
+		mute.setStartY(205);
+		mute.setEndX(170);
+		mute.setEndY(220);
+		mute.setStrokeWidth(1.0);
+		mute.setVisible(false);
+
+		musicButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				if (Sounds.getInstance().backgroundSoundPlaying()) {
+					Sounds.getInstance().stopBackgroundSound();
+					mute.setVisible(true);
+				} else {
+					Sounds.getInstance().playBackgroundSound();
+					mute.setVisible(false);
+				}
+			}
+		});
 		
 		Button resume = Buttons.pauseMenuButton("Continue");
 
@@ -124,15 +149,16 @@ public class Popups {
 		resume.setMaxWidth(Double.MAX_VALUE);
 		quit.setMaxWidth(Double.MAX_VALUE);
 		save.setMaxWidth(Double.MAX_VALUE);
+		musicButton.setMaxWidth(Double.MAX_VALUE);
 
 		VBox vbButtons = new VBox();
 		vbButtons.setSpacing(15);
 		vbButtons.setPadding(new Insets(20,20,20,20)); 
-		vbButtons.getChildren().addAll(save, quit, resume);
+		vbButtons.getChildren().addAll(musicButton, save, quit, resume);
 		vbButtons.setLayoutX(90);
 		vbButtons.setLayoutY(180);
 		
-		popup.getContent().addAll(imgView, vbButtons);
+		popup.getContent().addAll(imgView, vbButtons, mute);
 		return popup;
 	}
 
