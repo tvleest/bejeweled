@@ -24,12 +24,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -97,15 +98,14 @@ public final class Main extends Application {
 			}
 		}); // start the game
 
-		Button exitButton = Buttons.menuButton("View the Highscores", 275, 430);
-		exitButton.setStyle("-fx-font-size: 20px");
+		Button highScoresButton = Buttons.menuButton("View the Highscores", 275, 430);
+		highScoresButton.setStyle("-fx-font-size: 20px");
 
-		exitButton.setOnAction(new EventHandler<ActionEvent>() {
+		highScoresButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent e) {
-				//TODO: show highscores
-				Platform.exit();
+				highScoreMenu();
 			}
 		});
 
@@ -127,7 +127,7 @@ public final class Main extends Application {
 				}
 			});
 		}
-		root.getChildren().addAll(imgView, newGameButton, exitButton, continueButton);
+		root.getChildren().addAll(imgView, newGameButton, highScoresButton, continueButton);
 		root.getStylesheets().add("Style.css");
 		if (stage.getScene() == null) {
 			Scene sc = new Scene(root);
@@ -138,6 +138,10 @@ public final class Main extends Application {
 		}
 	}
 	
+	
+	/**
+	 * Switch to the HighScores menu. TODO: Add the actual highscores to the menu
+	 */
 	public static void highScoreMenu() {
 		root = new Group();
 
@@ -149,6 +153,9 @@ public final class Main extends Application {
 
 		Button quit = Buttons.menuButton("Return to main Menu", 275, 430);
 		quit.setStyle("-fx-font-size: 20px");
+		
+		Label HighScoreText = new Label ("Test");
+		
 		
 		/*
 		 * Pressing quit will remove the pause menu and bring the player back to
@@ -163,10 +170,7 @@ public final class Main extends Application {
 		
 		// @TODO: add the draw highscores here
 		
-		
-		
-
-		root.getChildren().addAll(imgView, quit);
+		root.getChildren().addAll(imgView, quit, HighScoreText);
 		root.getStylesheets().add("Style.css");
 		if (stage.getScene() == null) {
 			Scene sc = new Scene(root);
@@ -308,20 +312,12 @@ public final class Main extends Application {
 		int index = randomGenerator.nextInt(shouts.length);
 		String item = shouts[index];
 
-		// Include dropshadow
-		DropShadow ds = new DropShadow();
-		ds.setOffsetY(3.0f);
-		ds.setColor(Color.color(0.0f, 0.0f, 0.0f));
-
-		// Format the text
 		Text t = new Text();
-		t.setEffect(ds);
 		t.setCache(true);
 		t.setX(60);
 		t.setY(200);
-		t.setFill(Color.RED);
 		t.setText(item);
-		t.setFont(Font.font("Helvetica", FontWeight.BOLD, 60));
+		t.setId("shoutout");
 
 		// Put it all together in the pop up
 		popup.getContent().addAll(t);

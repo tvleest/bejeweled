@@ -26,7 +26,7 @@ public final class GameLogic implements Observer{
 	private static Time time;
 	private static int intscore;
 	private static Score score;
-	private HighScores highscores;
+	public HighScores highscores;
 	private AnimationHandler animationhandler;
 	private boolean combinationsFormed = false;
 	/**
@@ -58,7 +58,7 @@ public final class GameLogic implements Observer{
 	public void draw(final GraphicsContext gc) {
 		board.draw(gc);
 		drawScore(gc);
-		drawHighscores(gc);
+		//drawHighscores(gc);
 	}
 
 	/**
