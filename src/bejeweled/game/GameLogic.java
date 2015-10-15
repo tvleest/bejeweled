@@ -175,12 +175,13 @@ public final class GameLogic implements Observer{
 	 */
 	public void drawScore(final GraphicsContext gc) {
 		String s = ""+intscore;
-		gc.setFill(Color.YELLOW);
+		gc.setFill(Color.LIGHTGREY);
 		gc.fillOval(80, 40, 80, 80);
 		gc.setFill(Color.BLACK);
-		//TODO: we might wanna use labels for these kind of texts
-		gc.fillText("SCORE", 100, 60);
-		gc.fillText(s, 110, 80);
+		//TODO: we might wanna use labels for these kind of texts,
+			// Yup, can you change that?
+		//gc.fillText("SCORE", 100, 60);
+		gc.fillText(s, 110, 85);
 
 	}
 
