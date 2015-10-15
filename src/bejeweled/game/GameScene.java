@@ -37,8 +37,8 @@ public final class GameScene extends Scene {
 	// to use the sounds in this class
 	private static GraphicsContext gc;
 	private static GameLogic gamelogic;
-	private static final int offsetx = 235;
-	private static final int offsety = 115;
+	private static final int OFFSETX = 235;
+	private static final int OFFSETY = 115;
 
 	/**
 	 * GameScene Constructor. Prepares the UI of the root and mouseclick
@@ -51,7 +51,7 @@ public final class GameScene extends Scene {
 		root.getChildren().add(canvas);
 
 		Image hintIcon = new Image("Images/hintbutton.png");
-		Button hintButton = Buttons.subMenuButton(null, hintIcon, 655, 565);
+		Button hintButton = Buttons.subMenuButton(null, hintIcon, 80, 440);
 
 		hintButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -61,7 +61,7 @@ public final class GameScene extends Scene {
 		});
 
 		Image pauseIcon = new Image("Images/pause.png");
-		Button pauseButton = Buttons.subMenuButton(null, pauseIcon, 610, 565);
+		Button pauseButton = Buttons.subMenuButton(null, pauseIcon, 120, 440);
 		pauseButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -84,8 +84,8 @@ public final class GameScene extends Scene {
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				// get the coordinates of the mouse pressed event
-				int xvar = (int) (e.getX() - offsetx);
-				int yvar = (int) (e.getY() - offsety);
+				int xvar = (int) (e.getX() - OFFSETX);
+				int yvar = (int) (e.getY() - OFFSETY);
 				// calculate which column and row are clicked
 				int col = xvar / 40;
 				int row = yvar / 40;
@@ -103,7 +103,6 @@ public final class GameScene extends Scene {
 	 */
 	public static void draw() {
 		gamelogic.draw(gc);
-		gamelogic.getTime().drawTime(gc);
 	}
 
 	/**
@@ -122,11 +121,11 @@ public final class GameScene extends Scene {
 	}
 
 	public static int getOffsetx() {
-		return offsetx;
+		return OFFSETX;
 	}
 
 	public static int getOffsety() {
-		return offsety;
+		return OFFSETY;
 	}
 	
 	

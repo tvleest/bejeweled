@@ -1,6 +1,7 @@
 package bejeweled.state;
 import bejeweled.Main;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 
 /**
@@ -56,12 +57,15 @@ public final class Time {
 	 */
 	public void drawTime(final GraphicsContext gc) {
 		if (time < 5000) {
-			//gc.fillText(toString(), 240, 480);
-			gc.fillText("Time left:", 240, 480);
-			gc.fillRect(310, 465, time, 20);
-		} else {
-			gc.fillText("Time left: 0:00", 240, 480);
-		}
+			gc.setFill(Color.BLACK);
+			gc.strokeRect(100, 110, 40, 330);	
+			gc.setFill(Color.YELLOW);
+			if(time>330)
+				time=330;
+			gc.fillRect(100, 440-time, 40, time);
+			gc.fillText(time+"", 110, 440-time);
+			gc.setFill(Color.BLACK);
+			}
 	}
 	
 	public void timeCheck() {

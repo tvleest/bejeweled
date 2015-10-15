@@ -1,6 +1,7 @@
 package bejeweled.game;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -26,7 +27,7 @@ public final class GameLogic implements Observer{
 	private static Time time;
 	private static int intscore;
 	private static Score score;
-	public HighScores highscores;
+	private HighScores highscores;
 	private AnimationHandler animationhandler;
 	private boolean combinationsFormed = false;
 	/**
@@ -57,6 +58,7 @@ public final class GameLogic implements Observer{
 	 */
 	public void draw(final GraphicsContext gc) {
 		board.draw(gc);
+		time.drawTime(gc);
 		drawScore(gc);
 	}
 
@@ -172,9 +174,14 @@ public final class GameLogic implements Observer{
 	 *            GraphicsContext to draw to
 	 */
 	public void drawScore(final GraphicsContext gc) {
-		String s = "Score: ";
-		s += intscore;
-		gc.fillText(s, 60, 190);
+		String s = ""+intscore;
+		gc.setFill(Color.YELLOW);
+		gc.fillOval(80, 40, 80, 80);
+		gc.setFill(Color.BLACK);
+		//TODO: we might wanna use labels for these kind of texts
+		gc.fillText("SCORE", 100, 60);
+		gc.fillText(s, 110, 80);
+
 	}
 
 	public HighScores getHighScores() {
