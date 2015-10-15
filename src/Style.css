@@ -44,3 +44,17 @@
     -fx-font-size: 60px;
 
 }
+
+#gameoverhead {
+	-fx-text-fill: black;
+    -fx-font-family: "Helvetica";
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+	}
+	
+#gameover {
+	-fx-text-fill: black;
+    -fx-font-family: "Helvetica";
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+	}

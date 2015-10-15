@@ -172,20 +172,19 @@ public class Popups {
 	public static Popup gameOverPopup(int score) {
 		Popup popup = new Popup();
 		popup.centerOnScreen();
-		popup.setWidth(200);
-		popup.setHeight(500);
-		Rectangle rect = new Rectangle(500, 300, Color.GOLD);
-		rect.setArcHeight(30);
-		rect.setArcWidth(30);
+		popup.setWidth(180);
+		popup.setHeight(400);
+		Rectangle rect = new Rectangle(400, 300, Color.LIGHTGREY);
 		Text text = new Text("GAME OVER!");
+		text.getStyleClass().add("gameoverhead");
 		Text name = new Text("You've scored " + score + " points!");
-		text.setLayoutX(200);
+		name.getStyleClass().add("gameover");
+		text.setLayoutX(180);
 		text.setLayoutY(30);
 		name.setLayoutX(30);
 		name.setLayoutY(150);
-		text.setFill(Color.BLACK);
 		Button confirm = new Button("Continue");
-		confirm.setLayoutX(205);
+		confirm.setLayoutX(180);
 		confirm.setLayoutY(255);
 		popup.getContent().addAll(rect, text, confirm, name);
 		return popup;
