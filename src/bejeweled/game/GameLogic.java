@@ -72,33 +72,12 @@ public final class GameLogic implements Observer{
 		if(isanimating) {
 			return;
 		}
-		if (board.getHintedgem() != null) {
-			board.getHintedgem().setHinted(false);
+		if(board.handleMouseClickedBoard(row,col)){
+			isanimating = true;
+			animationhandler.animate();
 		}
-		Logger.getInstance().writeLineToLogger("Mouse clicked on row " + row + " and col " + col);
-		Sounds.getInstance().playSelectSound();
-		//select if there is already a first selectedgem
-		if (board.getSelectedgem() == null) {
-			board.setSelectedgem(board.getGems()[row][col]);
-			board.getGems()[row][col].setSelected(true);
-		//apparently this is the second gem we select
-		//we should swap these two gems and handle animations and combinations
-		} else {
-			board.setSecondGem(board.getGems()[row][col]);
-			if (board.swap(board.getSelectedgem(), board.getSecondGem())) {
-				Logger.getInstance()
-				.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
-						+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
-						+ board.getSecondGem().getRow() + ") are swapped.");
-				//swap animation
-				isanimating = true;
-				animationhandler.animate();
-			}
-			else{
-				board.getSelectedgem().setSelected(false);
-				board.setSelectedgem(null);
-			}
-		}
+			
+		
 	}
 	
 	/**

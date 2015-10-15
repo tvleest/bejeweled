@@ -373,6 +373,38 @@ public final class Board implements Observer{
 		
 		return combinations;
 	}
+	
+	public Boolean handleMouseClickedBoard(final int row, final int col) {
+		
+		if (getHintedgem() != null) {
+			getHintedgem().setHinted(false);
+		}
+		Logger.getInstance().writeLineToLogger("Mouse clicked on row " + row + " and col " + col);
+		Sounds.getInstance().playSelectSound();
+		//select if there is already a first selectedgem
+		if (getSelectedgem() == null) {
+			setSelectedgem(getGems()[row][col]);
+			getGems()[row][col].setSelected(true);
+			return false;
+		//apparently this is the second gem we select
+		//we should swap these two gems and handle animations and combinations
+		} else {
+			setSecondGem(getGems()[row][col]);
+			if (swap(getSelectedgem(), getSecondGem())) {
+				Logger.getInstance()
+				.writeLineToLogger("The Gems on (" + getSelectedgem().getCol() + ","
+						+ getSelectedgem().getRow() + ") and (" + getSecondGem().getCol() + ","
+						+ getSecondGem().getRow() + ") are swapped.");
+				//swap animation
+				return true;
+			}
+			else{
+				getSelectedgem().setSelected(false);
+				setSelectedgem(null);
+				return false;
+			}
+		}
+	}
 
 	/**
 	 * @param g
