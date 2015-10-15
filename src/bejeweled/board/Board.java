@@ -203,7 +203,7 @@ public final class Board implements Observer{
 	 * checks for every gem if it's part of a combination
 	 * TODO: this together with the checkforcombinations(gem) can be way more efficient
 	 */
-	public ArrayList<Gem> checkForCombinations() {
+	public ArrayList<Combination> checkForCombinations() {
 		ArrayList<Gem> combinations = new ArrayList<Gem>();
 		//check for each gem if its part of combinations;
 		for (Gem[] gemss : gems) {
@@ -213,7 +213,9 @@ public final class Board implements Observer{
 				}
 			}
 		}
-		return combinations;
+		ArrayList<Combination> res = new ArrayList<Combination>();
+		res = toCombinations(combinations);
+		return res;
 	}
 
 	/**
@@ -256,41 +258,90 @@ public final class Board implements Observer{
 		}
 		return false;
 	}
+	
+	public ArrayList<Combination> toCombinations(ArrayList<Gem> g) {
+		ArrayList<Combination> res = new ArrayList<Combination>();
+		ArrayList<Gem> blue = new ArrayList<Gem>();
+		ArrayList<Gem> red = new ArrayList<Gem>();
+		ArrayList<Gem> orange = new ArrayList<Gem>();
+		ArrayList<Gem> yellow = new ArrayList<Gem>();
+		ArrayList<Gem> pink = new ArrayList<Gem>();
+		ArrayList<Gem> green = new ArrayList<Gem>();
+		
+		for(int i = 0; i < g.size(); i++) {
+			if(g.get(i).type == GemType.BLUE) 
+				blue.add(g.get(i));
+			if(g.get(i).type == GemType.RED) 
+				red.add(g.get(i));
+			if(g.get(i).type == GemType.ORANGE) 
+				orange.add(g.get(i));
+			if(g.get(i).type == GemType.YELLOW) 
+				yellow.add(g.get(i));
+			if(g.get(i).type == GemType.PINK) 
+				pink.add(g.get(i));
+			if(g.get(i).type == GemType.GREEN) 
+				green.add(g.get(i));
+		}
+		
+		if(blue.size() > 2) {
+			Combination temp = new Combination(blue);
+			res.add(temp);
+		}
+		if(red.size() > 2) {
+			Combination temp = new Combination(red);
+			res.add(temp);
+		}
+		if(orange.size() > 2) {
+			Combination temp = new Combination(orange);
+			res.add(temp);
+		}
+		if(yellow.size() > 2) {
+			Combination temp = new Combination(yellow);
+			res.add(temp);
+		}
+		if(pink.size() > 2) {
+			Combination temp = new Combination(pink);
+			res.add(temp);
+		}
+		if(green.size() > 2) {
+			Combination temp = new Combination(green);
+			res.add(temp);
+		}
+		return res;
+	}
 
 	
 	/**
 	 * @param combinations the gems to be deleted
 	 * calls delete for all gems in an arraylist
 	 */
-	public void delete(ArrayList<Gem> combinations) {
-		int size = combinations.size();
-		boolean makeNewSpecial = true;
-		for(Gem g : combinations) {
-			if(g instanceof DeleteRowGem) {
-				makeNewSpecial = false;
-			}
-		}
-		if(makeNewSpecial && size > 3) {
-			for(Gem g : combinations){
-				if(g != selectedgem && g != secondGem) {
-					delete(g, null);
-				}
-				else {
-					if(size > 4) {
-						delete(g, SpecialType.CROSS);
+	public void delete(ArrayList<Combination> combinations) {
+		for(int i = 0; i < combinations.size(); i++) {
+			Combination c = combinations.get(i);
+			int size = combinations.get(i).getSize();
+			if(size > 3) {
+				for(Gem g : c.gems){
+					if(g != selectedgem && g != secondGem) {
+						delete(g, null);
 					}
 					else {
-						delete(g, SpecialType.DOUBLE);
+						if(size > 4) {
+							delete(g, SpecialType.CROSS);
+						}
+						else {
+							delete(g, SpecialType.DOUBLE);
+						}
 					}
 				}
 			}
-		}
-		else{
-			for(Gem g : combinations){
-				delete(g, null);
+			else{
+				for(Gem g : c.gems){
+					delete(g, null);
+				}
 			}
 		}
 	}
+
 	
 	/**
 	 * @param row
@@ -359,19 +410,23 @@ public final class Board implements Observer{
 		return true;
 	}
 	
-	public ArrayList<Gem> deleteRowAndCol(Gem g, ArrayList<Gem> combinations) {
-		for(int col = 0; col < 8; col++) {
-			if(!combinations.contains(gems[g.row][col])) {
-				combinations.add(gems[g.row][col]);
+	public Combination deleteRowAndCol(Gem g, ArrayList<Combination> c) {
+		ArrayList<Gem> check = new ArrayList<Gem>();
+		for(int i = 0; i < c.size(); i++) {
+			for(Gem gem : c.get(i).getGems()) {
+				check.add(gem);
 			}
+		}
+		ArrayList<Gem> combinations = new ArrayList<Gem>();
+		for(int col = 0; col < 8; col++) {
+			if(!check.contains(gems[g.row][col]))
+				combinations.add(gems[g.row][col]);
 		}
 		for(int row = 0; row < 8; row++) {
-			if(!combinations.contains(gems[row][g.col])) {
+			if(!check.contains(gems[row][g.col]))
 				combinations.add(gems[row][g.col]);
-			}
 		}
-		
-		return combinations;
+		return new Combination(combinations);
 	}
 
 	/**
