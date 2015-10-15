@@ -58,7 +58,6 @@ public final class GameLogic implements Observer{
 	public void draw(final GraphicsContext gc) {
 		board.draw(gc);
 		drawScore(gc);
-		//drawHighscores(gc);
 	}
 
 	/**
@@ -176,18 +175,6 @@ public final class GameLogic implements Observer{
 		String s = "Score: ";
 		s += intscore;
 		gc.fillText(s, 60, 190);
-	}
-
-	/**
-	 * @param gc
-	 *            GraphicsContext Draws the highscore next to the board
-	 */
-	public void drawHighscores(final GraphicsContext gc) {
-		String hs = "Highscores:\n";
-		for (int score : highscores.getAllScores()) {
-			hs += score + "\n";
-		}
-		gc.fillText(hs, 60, 210);
 	}
 
 	public HighScores getHighScores() {

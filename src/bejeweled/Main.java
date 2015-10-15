@@ -43,6 +43,7 @@ import javafx.util.Duration;
  * 
  * @author Group 30
  *
+ * TODO: put different screens in different classes.
  */
 public final class Main extends Application {
 	private static GameScene scene;
@@ -140,7 +141,8 @@ public final class Main extends Application {
 	
 	
 	/**
-	 * Switch to the HighScores menu. TODO: Add the actual highscores to the menu
+	 * Switch to the HighScores menu.
+	 * menu
 	 */
 	public static void highScoreMenu() {
 		root = new Group();
@@ -153,10 +155,16 @@ public final class Main extends Application {
 
 		Button quit = Buttons.menuButton("Return to main Menu", 275, 430);
 		quit.setStyle("-fx-font-size: 20px");
-		
-		Label HighScoreText = new Label ("Test");
-		
-		
+
+		HighScores highscores = new HighScores();
+		String hs = "Highscores:\n";
+		for (int score : highscores.getAllScores()) {
+			hs += score + "\n";
+		}
+		Label HighScoreText = new Label(hs);
+		HighScoreText.setLayoutX(300-HighScoreText.getWidth()/2);
+		HighScoreText.setLayoutY(100);
+
 		/*
 		 * Pressing quit will remove the pause menu and bring the player back to
 		 * the main menu.
@@ -165,17 +173,17 @@ public final class Main extends Application {
 			@Override
 			public void handle(ActionEvent e) {
 				Main.switchMenu();
-				}
+			}
 		});
-		
+
 		// @TODO: add the draw highscores here
-		
+
 		root.getChildren().addAll(imgView, quit, HighScoreText);
 		root.getStylesheets().add("Style.css");
 		if (stage.getScene() == null) {
 			Scene sc = new Scene(root);
 			stage.setScene(sc);
-			
+
 		} else {
 			stage.getScene().setRoot(root);
 		}
