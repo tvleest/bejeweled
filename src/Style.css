@@ -37,7 +37,7 @@
 }
 
 #shoutout{
-	-fx-text-fill: white;
+	-fx-fill: white;
 	-fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
     -fx-font-family: "Helvetica";
     -fx-font-weight: bold;
