@@ -213,9 +213,7 @@ public final class Board implements Observer{
 				}
 			}
 		}
-		ArrayList<Combination> res = new ArrayList<Combination>();
-		res = toCombinations(combinations);
-		return res;
+		return toCombinations(combinations);
 	}
 
 	/**
