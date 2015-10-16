@@ -45,6 +45,15 @@
 
 }
 
+#score{
+	-fx-text-fill: black;
+	-fx-effect: dropshadow( one-pass-box , rgba(0,0,0,0.9) , 1, 0.0 , 0 , 1 );
+    -fx-font-family: "Helvetica";
+    -fx-font-weight: bold;
+    -fx-font-size: 20px;
+    -fx-text-alignment: "center"
+}
+
 #gameoverhead {
 	-fx-text-fill: black;
     -fx-font-family: "Helvetica";

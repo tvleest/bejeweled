@@ -1,7 +1,11 @@
 package bejeweled.game;
 
+import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.stage.Popup;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -173,15 +177,32 @@ public final class GameLogic implements Observer{
 	 * @param gc
 	 *            GraphicsContext to draw to
 	 */
-	public void drawScore(final GraphicsContext gc) {
+	public void drawScore() {
+		Circle circleScore = new Circle();
+		circleScore.setFill(Color.LIGHTGREY);
+		circleScore.setStroke(Color.BLACK);
+		circleScore.setLayoutX(80);
+		circleScore.setLayoutY(40);
+		circleScore.setRadius(40);
+		
+		Text drawScore = new Text();
 		String s = ""+intscore;
-		gc.setFill(Color.LIGHTGREY);
-		gc.fillOval(80, 40, 80, 80);
-		gc.setFill(Color.BLACK);
+		drawScore.setText(s);
+		drawScore.getStyleClass().add("score");
+		
+		// HOW TO GET THIS ON SCREEN?
+		something.getContent().addAll(circleScore, drawScore);
+		popup.show(stage);
+		root.setDisable(true);
+		
+		
+		//gc.setFill(Color.LIGHTGREY);
+		//gc.fillOval(80, 40, 80, 80);
+		//gc.setFill(Color.BLACK);
 		//TODO: we might wanna use labels for these kind of texts,
 			// Yup, can you change that?
 		//gc.fillText("SCORE", 100, 60);
-		gc.fillText(s, 110, 85);
+		//gc.fillText(s, 110, 85);
 
 	}
 
