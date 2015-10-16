@@ -9,6 +9,7 @@ import java.util.Observer;
 
 import bejeweled.Sounds;
 import bejeweled.board.Board;
+import bejeweled.board.Combination;
 import bejeweled.board.DeleteRowGem;
 import bejeweled.board.DoublePointsGem;
 import bejeweled.board.Gem;
@@ -70,33 +71,12 @@ public final class GameLogic{
 		if(isanimating) {
 			return;
 		}
-		if (board.getHintedgem() != null) {
-			board.getHintedgem().setHinted(false);
+		if(board.handleMouseClickedBoard(row,col)){
+			isanimating = true;
+			animationhandler.animate();
 		}
-		Logger.getInstance().writeLineToLogger("Mouse clicked on row " + row + " and col " + col);
-		Sounds.getInstance().playSelectSound();
-		//select if there is already a first selectedgem
-		if (board.getSelectedgem() == null) {
-			board.setSelectedgem(board.getGems()[row][col]);
-			board.getGems()[row][col].setSelected(true);
-		//apparently this is the second gem we select
-		//we should swap these two gems and handle animations and combinations
-		} else {
-			board.setSecondGem(board.getGems()[row][col]);
-			if (board.swap(board.getSelectedgem(), board.getSecondGem())) {
-				Logger.getInstance()
-				.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
-						+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
-						+ board.getSecondGem().getRow() + ") are swapped.");
-				//swap animation
-				isanimating = true;
-				animationhandler.animate();
-			}
-			else{
-				board.getSelectedgem().setSelected(false);
-				board.setSelectedgem(null);
-			}
-		}
+			
+		
 	}
 	
 	/**
@@ -115,22 +95,54 @@ public final class GameLogic{
 	 * untill there are no more combinations then the animations will end
 	 */
 	private void checkForCombinations() {
-		ArrayList<Gem> combinations = board.checkForCombinations();
-		for(Gem g : combinations) {
-			if(g instanceof DeleteRowGem) {
-				combinations = board.deleteRowAndCol(g, combinations);
+		ArrayList<Combination> combinations = board.checkForCombinations();
+		boolean br = false;
+		for (Combination b : combinations) {
+			br = false;
+			for (Gem g : b.getGems()) {
+				if (g instanceof DeleteRowGem) {
+					Combination combi = board.deleteRowAndCol(g, combinations);
+					combinations.add(combi);
+					br = true;
+				}
+			}
+			if (br) {
 				break;
 			}
 		}
-		//combinations found
+		while(br) {
+			br = false;
+			for(Gem g : combinations.get(combinations.size()-1).getGems()) {
+				if (g instanceof DeleteRowGem) {
+					Combination combi = board.deleteRowAndCol(g, combinations);
+					combinations.add(combi);
+					br = true;
+				}
+				if(br) {
+					break;
+				}
+			}
+			
+		}
+		
+		// combinations found
 		if(combinations.size()>0){
+			int gems = 0;
+			for(int i = 0; i < combinations.size(); i++) {
+				gems += combinations.get(i).getSize();
+			}
 			combinationsFormed = true;
 			Sounds.getInstance().playCombinationSound();
-			score.updateScore(combinations.size()); //update score
+			int timesScore = 1;
 			for(int i = 0; i < combinations.size(); i++) {
-				if(combinations.get(i) instanceof DoublePointsGem) {
-					score.updateScore(combinations.size());
+				for(Gem gem : combinations.get(i).getGems()) {
+					if(gem instanceof DoublePointsGem) {
+						timesScore *= 2;
+					}
 				}
+			}
+			for(int i = 0; i < timesScore; i++) {
+				score.updateScore(gems);
 			}
 			time.updateTime(combinations.size()); //update time
 			board.delete(combinations); //delete all the combinations we found
