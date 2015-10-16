@@ -65,8 +65,12 @@ public final class Main extends Application {
 		scene = new GameScene(new Group(), stage);
 		primaryStage.setTitle("Bejeweled group 30");
 		switchMenu();
-
-		timeline = new Timeline(new KeyFrame(Duration.millis(1000), ae -> scene.decrementTime()));
+		timeline = new Timeline(new KeyFrame(Duration.seconds(1),
+                new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+            	scene.decrementTime();
+            }
+        }));
 		timeline.setCycleCount(Animation.INDEFINITE);
 
 		primaryStage.show();
