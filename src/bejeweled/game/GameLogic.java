@@ -8,6 +8,7 @@ import java.util.Observer;
 
 import bejeweled.Sounds;
 import bejeweled.board.Board;
+import bejeweled.board.Combination;
 import bejeweled.board.DeleteRowGem;
 import bejeweled.board.DoublePointsGem;
 import bejeweled.board.Gem;
@@ -117,22 +118,54 @@ public final class GameLogic implements Observer{
 	 * untill there are no more combinations then the animations will end
 	 */
 	private void checkForCombinations() {
-		ArrayList<Gem> combinations = board.checkForCombinations();
-		for(Gem g : combinations) {
-			if(g instanceof DeleteRowGem) {
-				combinations = board.deleteRowAndCol(g, combinations);
+		ArrayList<Combination> combinations = board.checkForCombinations();
+		boolean br = false;
+		for (Combination b : combinations) {
+			br = false;
+			for (Gem g : b.getGems()) {
+				if (g instanceof DeleteRowGem) {
+					Combination combi = board.deleteRowAndCol(g, combinations);
+					combinations.add(combi);
+					br = true;
+				}
+			}
+			if (br) {
 				break;
 			}
 		}
-		//combinations found
+		while(br) {
+			br = false;
+			for(Gem g : combinations.get(combinations.size()-1).getGems()) {
+				if (g instanceof DeleteRowGem) {
+					Combination combi = board.deleteRowAndCol(g, combinations);
+					combinations.add(combi);
+					br = true;
+				}
+				if(br) {
+					break;
+				}
+			}
+			
+		}
+		
+		// combinations found
 		if(combinations.size()>0){
+			int gems = 0;
+			for(int i = 0; i < combinations.size(); i++) {
+				gems += combinations.get(i).getSize();
+			}
 			combinationsFormed = true;
 			Sounds.getInstance().playCombinationSound();
-			score.updateScore(combinations.size()); //update score
+			int timesScore = 1;
 			for(int i = 0; i < combinations.size(); i++) {
-				if(combinations.get(i) instanceof DoublePointsGem) {
-					score.updateScore(combinations.size());
+				for(Gem gem : combinations.get(i).getGems()) {
+					if(gem instanceof DoublePointsGem) {
+						timesScore *= 2;
+					}
 				}
+			}
+			for(int i = 0; i < timesScore; i++) {
+				score.updateScore(gems);
 			}
 			time.updateTime(combinations.size()); //update time
 			board.delete(combinations); //delete all the combinations we found
