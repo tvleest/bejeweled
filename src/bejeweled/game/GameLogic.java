@@ -144,7 +144,7 @@ public final class GameLogic{
 			for(int i = 0; i < timesScore; i++) {
 				score.updateScore(gems);
 			}
-			time.updateTime(combinations.size()); //update time
+			time.updateTime(gems); //update time
 			board.delete(combinations); //delete all the combinations we found
 			animationhandler.animate(); //animate the falling of gems
 		}
