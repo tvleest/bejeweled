@@ -321,11 +321,11 @@ public final class Main extends Application {
 		String item = shouts[index];
 
 		Text t = new Text();
-		t.setId("shoutout");
 		t.setCache(true);
 		t.setX(60);
 		t.setY(200);
 		t.setText(item);
+		t.setId("shoutout");
 
 		// Put it all together in the pop up
 		popup.getContent().addAll(t);

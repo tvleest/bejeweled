@@ -2,6 +2,7 @@ package bejeweled.game;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -12,24 +13,15 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-
 import bejeweled.Main;
-import bejeweled.Sounds;
-import bejeweled.board.Board;
-import bejeweled.board.Gem;
 import bejeweled.gui.Buttons;
 import bejeweled.gui.Popups;
 import bejeweled.state.Score;
-import bejeweled.state.Time;
 
 /**
  * @author Timo This class is our Panel, handling mouse events and drawing the
@@ -108,9 +100,14 @@ public final class GameScene extends Scene implements Observer {
 		root.getChildren().add(circleScore);
 		
 		score = new Label(""+0);
-		score.setLayoutX(110);
+		score.setLayoutX(80);
 		score.setLayoutY(60);
 		score.setId("score");
+		score.setPrefWidth(80);
+		score.setMaxWidth(80);
+		score.setAlignment(Pos.CENTER);
+
+
 		root.getChildren().add(score);
 
 		
