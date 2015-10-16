@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -17,6 +18,8 @@ import javafx.stage.Stage;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
 
 import bejeweled.Main;
 import bejeweled.Sounds;
@@ -31,7 +34,7 @@ import bejeweled.state.Time;
  * @author Timo This class is our Panel, handling mouse events and drawing the
  *         game
  */
-public final class GameScene extends Scene {
+public final class GameScene extends Scene implements Observer {
 	// TODO: public static Sounds GameSounds = new Sounds();
 
 	// to use the sounds in this class
@@ -39,6 +42,7 @@ public final class GameScene extends Scene {
 	private static GameLogic gamelogic;
 	private static final int OFFSETX = 235;
 	private static final int OFFSETY = 115;
+	Label score;
 
 	/**
 	 * GameScene Constructor. Prepares the UI of the root and mouseclick
@@ -79,6 +83,8 @@ public final class GameScene extends Scene {
 		gamelogic = new GameLogic();
 		gamelogic.getScoreObject().addObserver(gamelogic);
 		gamelogic.getScoreObject().addObserver(gamelogic.getBoard());
+		gamelogic.getScoreObject().addObserver(this);
+		
 
 		// this will handle mouse clicks
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {
@@ -95,6 +101,13 @@ public final class GameScene extends Scene {
 				}
 			}
 		});
+		
+		score = new Label(""+0);
+		score.setLayoutX(110);
+		score.setLayoutY(85);
+		score.getStyleClass().add("score");
+		root.getChildren().add(score);
+		
 		draw();
 	}
 
@@ -126,6 +139,12 @@ public final class GameScene extends Scene {
 
 	public static int getOffsety() {
 		return OFFSETY;
+	}
+
+	@Override
+	public void update(Observable obs, Object arg) {
+		Score scoreObject = (Score) obs;
+		score.setText(scoreObject.getScore()+"");
 	}
 	
 	
