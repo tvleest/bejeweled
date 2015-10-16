@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Popup;
@@ -101,11 +102,17 @@ public final class GameScene extends Scene implements Observer {
 			}
 		});
 		
+		Circle circleScore = new Circle(120, 75, 40, Color.LIGHTGREY);
+		circleScore.setStrokeWidth(2);
+		circleScore.setStroke(Color.BLACK);
+		root.getChildren().add(circleScore);
+		
 		score = new Label(""+0);
 		score.setLayoutX(110);
-		score.setLayoutY(85);
+		score.setLayoutY(60);
 		score.setId("score");
 		root.getChildren().add(score);
+
 		
 		draw();
 	}
