@@ -66,4 +66,5 @@ public enum GemType {
 	public static GemType getRandomGemType() {
 		return allgems[random.nextInt(allgems.length)];
 	}
+
 }

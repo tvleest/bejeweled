@@ -1,6 +1,7 @@
 package bejeweled.game;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -8,6 +9,7 @@ import java.util.Observer;
 
 import bejeweled.Sounds;
 import bejeweled.board.Board;
+import bejeweled.board.Combination;
 import bejeweled.board.DeleteRowGem;
 import bejeweled.board.DoublePointsGem;
 import bejeweled.board.Gem;
@@ -20,11 +22,10 @@ import bejeweled.state.Time;
  * @author Timo
  *
  */
-public final class GameLogic implements Observer{
+public final class GameLogic{
 	private boolean isanimating = false;
 	private Board board;
 	private static Time time;
-	private static int intscore;
 	private static Score score;
 	private HighScores highscores;
 	private AnimationHandler animationhandler;
@@ -37,7 +38,6 @@ public final class GameLogic implements Observer{
 	 */
 	public GameLogic() {
 		time = new Time(60);
-		intscore = 0;
 		score = new Score(0);
 		board = new Board(8);
 		highscores = new HighScores();
@@ -57,8 +57,7 @@ public final class GameLogic implements Observer{
 	 */
 	public void draw(final GraphicsContext gc) {
 		board.draw(gc);
-		drawScore(gc);
-		drawHighscores(gc);
+		time.drawTime(gc);
 	}
 
 	/**
@@ -72,33 +71,12 @@ public final class GameLogic implements Observer{
 		if(isanimating) {
 			return;
 		}
-		if (board.getHintedgem() != null) {
-			board.getHintedgem().setHinted(false);
+		if(board.handleMouseClickedBoard(row,col)){
+			isanimating = true;
+			animationhandler.animate();
 		}
-		Logger.getInstance().writeLineToLogger("Mouse clicked on row " + row + " and col " + col);
-		Sounds.getInstance().playSelectSound();
-		//select if there is already a first selectedgem
-		if (board.getSelectedgem() == null) {
-			board.setSelectedgem(board.getGems()[row][col]);
-			board.getGems()[row][col].setSelected(true);
-		//apparently this is the second gem we select
-		//we should swap these two gems and handle animations and combinations
-		} else {
-			board.setSecondGem(board.getGems()[row][col]);
-			if (board.swap(board.getSelectedgem(), board.getSecondGem())) {
-				Logger.getInstance()
-				.writeLineToLogger("The Gems on (" + board.getSelectedgem().getCol() + ","
-						+ board.getSelectedgem().getRow() + ") and (" + board.getSecondGem().getCol() + ","
-						+ board.getSecondGem().getRow() + ") are swapped.");
-				//swap animation
-				isanimating = true;
-				animationhandler.animate();
-			}
-			else{
-				board.getSelectedgem().setSelected(false);
-				board.setSelectedgem(null);
-			}
-		}
+			
+		
 	}
 	
 	/**
@@ -117,22 +95,54 @@ public final class GameLogic implements Observer{
 	 * untill there are no more combinations then the animations will end
 	 */
 	private void checkForCombinations() {
-		ArrayList<Gem> combinations = board.checkForCombinations();
-		for(Gem g : combinations) {
-			if(g instanceof DeleteRowGem) {
-				combinations = board.deleteRowAndCol(g, combinations);
+		ArrayList<Combination> combinations = board.checkForCombinations();
+		boolean br = false;
+		for (Combination b : combinations) {
+			br = false;
+			for (Gem g : b.getGems()) {
+				if (g instanceof DeleteRowGem) {
+					Combination combi = board.deleteRowAndCol(g, combinations);
+					combinations.add(combi);
+					br = true;
+				}
+			}
+			if (br) {
 				break;
 			}
 		}
-		//combinations found
+		while(br) {
+			br = false;
+			for(Gem g : combinations.get(combinations.size()-1).getGems()) {
+				if (g instanceof DeleteRowGem) {
+					Combination combi = board.deleteRowAndCol(g, combinations);
+					combinations.add(combi);
+					br = true;
+				}
+				if(br) {
+					break;
+				}
+			}
+			
+		}
+		
+		// combinations found
 		if(combinations.size()>0){
+			int gems = 0;
+			for(int i = 0; i < combinations.size(); i++) {
+				gems += combinations.get(i).getSize();
+			}
 			combinationsFormed = true;
 			Sounds.getInstance().playCombinationSound();
-			score.updateScore(combinations.size()); //update score
+			int timesScore = 1;
 			for(int i = 0; i < combinations.size(); i++) {
-				if(combinations.get(i) instanceof DoublePointsGem) {
-					score.updateScore(combinations.size());
+				for(Gem gem : combinations.get(i).getGems()) {
+					if(gem instanceof DoublePointsGem) {
+						timesScore *= 2;
+					}
 				}
+			}
+			for(int i = 0; i < timesScore; i++) {
+				score.updateScore(gems);
 			}
 			time.updateTime(combinations.size()); //update time
 			board.delete(combinations); //delete all the combinations we found
@@ -168,42 +178,20 @@ public final class GameLogic implements Observer{
 		Sounds.getInstance().playErrorSound();
 	}
 
-	/**
-	 * @param gc
-	 *            GraphicsContext to draw to
-	 */
-	public void drawScore(final GraphicsContext gc) {
-		String s = "Score: ";
-		s += intscore;
-		gc.fillText(s, 60, 190);
-	}
-
-	/**
-	 * @param gc
-	 *            GraphicsContext Draws the highscore next to the board
-	 */
-	public void drawHighscores(final GraphicsContext gc) {
-		String hs = "Highscores:\n";
-		for (int score : highscores.getAllScores()) {
-			hs += score + "\n";
-		}
-		gc.fillText(hs, 60, 210);
-	}
-
 	public HighScores getHighScores() {
 		return highscores;
 	}
 	
 	public int getScore() {
-		return intscore;
-	}
+		return score.getScore();	
+				}
 	
 	public Score getScoreObject() {
 		return score;
 	}
 	
 	public void setScore(int s) {
-		intscore = s;
+		score.setScore(s);
 	}
 
 	public Time getTime() {
@@ -212,14 +200,6 @@ public final class GameLogic implements Observer{
 
 	public void setTime(Time t) {
 		time = t;
-	}
-	
-	/**
-	 * Updates Score Object by using Observer/Observable.
-	 */
-	public void update(Observable obs, Object arg) {
-		score = (Score) obs;
-		intscore = score.getScore();
 	}
 }
 	
