@@ -25,7 +25,6 @@ public final class GameLogic{
 	private boolean isanimating = false;
 	private Board board;
 	private static Time time;
-	private static int intscore;
 	private static Score score;
 	private HighScores highscores;
 	private AnimationHandler animationhandler;
@@ -38,7 +37,6 @@ public final class GameLogic{
 	 */
 	public GameLogic() {
 		time = new Time(60);
-		intscore = 0;
 		score = new Score(0);
 		board = new Board(8);
 		highscores = new HighScores();
@@ -173,15 +171,15 @@ public final class GameLogic{
 	}
 	
 	public int getScore() {
-		return intscore;
-	}
+		return score.getScore();	
+				}
 	
 	public Score getScoreObject() {
 		return score;
 	}
 	
 	public void setScore(int s) {
-		intscore = s;
+		score.setScore(s);
 	}
 
 	public Time getTime() {
