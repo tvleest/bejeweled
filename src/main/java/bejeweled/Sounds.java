@@ -22,15 +22,15 @@ public final class Sounds {
 	 * Assigns the sound to be played.
 	 */
 	private Sounds() {
-		selectSound = new AudioClip(new File("src/Sounds/select.wav").toURI().toString());
-		combinationSound = new AudioClip(new File("src/Sounds/combination.wav").toURI().toString());
+		selectSound = new AudioClip(new File("src/main/java/Sounds/select.wav").toURI().toString());
+		combinationSound = new AudioClip(new File("src/main/java/Sounds/combination.wav").toURI().toString());
 		combinationSound.setVolume(0.5);
-		backgroundSound = new AudioClip(new File("src/Sounds/bejeweled.wav").toURI().toString());
+		backgroundSound = new AudioClip(new File("src/main/java/Sounds/bejeweled.wav").toURI().toString());
 		backgroundSound.setVolume(0.5);
 		backgroundSound.setCycleCount(AudioClip.INDEFINITE);
-		errorSound = new AudioClip(new File("src/Sounds/error.wav").toURI().toString());
-		gameOverSound = new AudioClip(new File("src/Sounds/gameover.wav").toURI().toString());
-		shoutOutSound = new AudioClip(new File("src/Sounds/perfect.wav").toURI().toString());
+		errorSound = new AudioClip(new File("src/main/java/Sounds/error.wav").toURI().toString());
+		gameOverSound = new AudioClip(new File("src/main/java/Sounds/gameover.wav").toURI().toString());
+		shoutOutSound = new AudioClip(new File("src/main/java/Sounds/perfect.wav").toURI().toString());
 	}
 
 	// This method is part of the singleton pattern
