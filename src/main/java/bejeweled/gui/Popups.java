@@ -25,6 +25,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -57,19 +58,34 @@ public class Popups {
 		border.setPadding(new Insets(20, 0, 20, 20));
 
 		Label saved = new Label("Game saved!");
-		saved.setFont(new Font("Helvetica", 20));
-		saved.setTextFill(Color.BROWN);
 		saved.setLayoutX(115);
 		saved.setLayoutY(420);
 		
-		CornerRadii corners = new CornerRadii(0);
-		Insets insets = new Insets(0);
-		Background buttonBack1 = new Background(new BackgroundFill(Color.GAINSBORO, corners, insets));
-		Background buttonBack2 = new Background(new BackgroundFill(Color.ROSYBROWN, corners, insets));
+		Image musicIcon = new Image("Images/music2.png");
+		Button musicButton = Buttons.subMenuButton(null, musicIcon, 0, 0);
+		
+		Line mute = new Line();
+		mute.setStartX(150);
+		mute.setStartY(205);
+		mute.setEndX(170);
+		mute.setEndY(220);
+		mute.setStrokeWidth(1.0);
+		mute.setVisible(false);
 
-		Button resume = Buttons.pauseMenuButton("RESUME", 115, 180);
-		resume.setTextFill(Color.BLACK);
-		resume.setBackground(buttonBack1);
+		musicButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				if (Sounds.getInstance().backgroundSoundPlaying()) {
+					Sounds.getInstance().stopBackgroundSound();
+					mute.setVisible(true);
+				} else {
+					Sounds.getInstance().playBackgroundSound();
+					mute.setVisible(false);
+				}
+			}
+		});
+		
+		Button resume = Buttons.pauseMenuButton("Continue");
 
 		/*
 		 * Pressing resume will continue the timer and reenable the bejeweled
@@ -83,26 +99,8 @@ public class Popups {
 				Main.getTimeline().play();
 			}
 		});
-		
-		//Darker color when hovering over button
-		resume.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				resume.setBackground(buttonBack2);
-			}
-		});
-		
-		//Restore original color when mouse exits
-		resume.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				resume.setBackground(buttonBack1);
-			}
-		});
 
-		Button quit = Buttons.pauseMenuButton("QUIT", 115, 260);
-		quit.setTextFill(Color.BLACK);
-		quit.setBackground(buttonBack1);
+		Button quit = Buttons.pauseMenuButton("Main Menu");
 		
 		/*
 		 * Pressing quit will remove the pause menu and bring the player back to
@@ -116,26 +114,8 @@ public class Popups {
 				popup.hide();
 			}
 		});
-		
-		//Darker color when hovering over button
-		quit.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				quit.setBackground(buttonBack2);
-			}
-		});
-				
-		//Restore original color when mouse exits
-		quit.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				quit.setBackground(buttonBack1);
-			}
-		});
 
-		Button save = Buttons.pauseMenuButton("SAVE", 115, 300);
-		save.setTextFill(Color.BLACK);
-		save.setBackground(buttonBack1);
+		Button save = Buttons.pauseMenuButton("Save");
 
 		/*
 		 * Pressing the save button will save the current state of the game to a
@@ -166,34 +146,19 @@ public class Popups {
 			}
 		});
 		
-		//Darker color when hovering over button
-		save.setOnMouseEntered(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				save.setBackground(buttonBack2);
-			}
-		});
-				
-		//Restore original color when mouse exits
-		save.setOnMouseExited(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent m) {
-				save.setBackground(buttonBack1);
-			}
-		});		
-		
 		resume.setMaxWidth(Double.MAX_VALUE);
 		quit.setMaxWidth(Double.MAX_VALUE);
 		save.setMaxWidth(Double.MAX_VALUE);
+		musicButton.setMaxWidth(Double.MAX_VALUE);
 
 		VBox vbButtons = new VBox();
 		vbButtons.setSpacing(15);
 		vbButtons.setPadding(new Insets(20,20,20,20)); 
-		vbButtons.getChildren().addAll(resume, save, quit);
+		vbButtons.getChildren().addAll(musicButton, save, quit, resume);
 		vbButtons.setLayoutX(90);
 		vbButtons.setLayoutY(180);
 		
-		popup.getContent().addAll(imgView, vbButtons);
+		popup.getContent().addAll(imgView, vbButtons, mute);
 		return popup;
 	}
 
@@ -207,20 +172,19 @@ public class Popups {
 	public static Popup gameOverPopup(int score) {
 		Popup popup = new Popup();
 		popup.centerOnScreen();
-		popup.setWidth(200);
-		popup.setHeight(500);
-		Rectangle rect = new Rectangle(500, 300, Color.GOLD);
-		rect.setArcHeight(30);
-		rect.setArcWidth(30);
+		popup.setWidth(180);
+		popup.setHeight(400);
+		Rectangle rect = new Rectangle(400, 300, Color.LIGHTGREY);
 		Text text = new Text("GAME OVER!");
+		text.getStyleClass().add("gameoverhead");
 		Text name = new Text("You've scored " + score + " points!");
-		text.setLayoutX(200);
+		name.getStyleClass().add("gameover");
+		text.setLayoutX(180);
 		text.setLayoutY(30);
 		name.setLayoutX(30);
 		name.setLayoutY(150);
-		text.setFill(Color.BLACK);
 		Button confirm = new Button("Continue");
-		confirm.setLayoutX(205);
+		confirm.setLayoutX(180);
 		confirm.setLayoutY(255);
 		popup.getContent().addAll(rect, text, confirm, name);
 		return popup;

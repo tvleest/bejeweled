@@ -24,12 +24,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -42,6 +43,7 @@ import javafx.util.Duration;
  * 
  * @author Group 30
  *
+ * TODO: put different screens in different classes.
  */
 public final class Main extends Application {
 	private static GameScene scene;
@@ -71,8 +73,9 @@ public final class Main extends Application {
             	scene.decrementTime();
             }
         }));
+		switchMenu();		
+		timeline = new Timeline(new KeyFrame(Duration.millis(1000), ae -> scene.decrementTime()));
 		timeline.setCycleCount(Animation.INDEFINITE);
-
 		primaryStage.show();
 	}
 
@@ -90,7 +93,8 @@ public final class Main extends Application {
 		imgView.setFitWidth(800);
 
 		// make two buttons for the menu
-		Button newGameButton = Buttons.menuButton("NEW GAME", 170, 270);
+		Button newGameButton = Buttons.menuButton("Start New Game", 275, 110);
+		newGameButton.setStyle("-fx-font-size: 20px");
 
 		newGameButton.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -102,17 +106,19 @@ public final class Main extends Application {
 			}
 		}); // start the game
 
-		Button exitButton = Buttons.menuButton("EXIT", 290, 430);
+		Button highScoresButton = Buttons.menuButton("View the Highscores", 275, 430);
+		highScoresButton.setStyle("-fx-font-size: 20px");
 
-		exitButton.setOnAction(new EventHandler<ActionEvent>() {
+		highScoresButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent e) {
-				Platform.exit();
+				highScoreMenu();
 			}
 		});
 
-		Button continueButton = Buttons.menuButton("CONTINUE", 183, 110);
+		Button continueButton = Buttons.menuButton("Continue Saved Game", 275, 270);
+		continueButton.setStyle("-fx-font-size: 20px");
 		continueButton.setOpacity(0.35);
 		continueButton.setDisable(true);
 
@@ -129,10 +135,62 @@ public final class Main extends Application {
 				}
 			});
 		}
-		root.getChildren().addAll(imgView, newGameButton, exitButton, continueButton);
+		root.getChildren().addAll(imgView, newGameButton, highScoresButton, continueButton);
+		root.getStylesheets().add("Style.css");
 		if (stage.getScene() == null) {
 			Scene sc = new Scene(root);
 			stage.setScene(sc);
+			
+		} else {
+			stage.getScene().setRoot(root);
+		}
+	}
+	
+	
+	/**
+	 * Switch to the HighScores menu.
+	 * menu
+	 */
+	public static void highScoreMenu() {
+		root = new Group();
+
+		// load background
+		Image background = new Image("Images/MenuBackground.png");
+		ImageView imgView = new ImageView(background);
+		imgView.setFitHeight(600);
+		imgView.setFitWidth(800);
+
+		Button quit = Buttons.menuButton("Return to main Menu", 275, 430);
+		quit.setStyle("-fx-font-size: 20px");
+
+		HighScores highscores = new HighScores();
+		String hs = "Highscores:\n";
+		for (int score : highscores.getAllScores()) {
+			hs += score + "\n";
+		}
+		Label HighScoreText = new Label(hs);
+		HighScoreText.setLayoutX(300-HighScoreText.getWidth()/2);
+		HighScoreText.setLayoutY(100);
+
+		/*
+		 * Pressing quit will remove the pause menu and bring the player back to
+		 * the main menu.
+		 */
+		quit.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				Main.switchMenu();
+			}
+		});
+
+		// @TODO: add the draw highscores here
+
+		root.getChildren().addAll(imgView, quit, HighScoreText);
+		root.getStylesheets().add("Style.css");
+		if (stage.getScene() == null) {
+			Scene sc = new Scene(root);
+			stage.setScene(sc);
+
 		} else {
 			stage.getScene().setRoot(root);
 		}
@@ -144,19 +202,17 @@ public final class Main extends Application {
 	public static void switchGame(boolean savedGame) {
 		timeline.playFromStart();
 		root = new Group();
+
 		Image background = new Image("Images/Background.png");
 		ImageView imgView = new ImageView(background);
 		imgView.setFitHeight(600);
 		imgView.setFitWidth(800);
 
-		Rectangle rect = new Rectangle(200, 35, Color.CHOCOLATE);
-		rect.setLayoutX(555);
-		rect.setLayoutY(565);
-
-		root.getChildren().addAll(imgView, rect);
+		root.getChildren().addAll(imgView);
 		Sounds.getInstance().playBackgroundSound();
 
 		scene = new GameScene(root, stage);
+
 		if (savedGame) {
 			loadFile();
 		}
@@ -271,20 +327,12 @@ public final class Main extends Application {
 		int index = randomGenerator.nextInt(shouts.length);
 		String item = shouts[index];
 
-		// Include dropshadow
-		DropShadow ds = new DropShadow();
-		ds.setOffsetY(3.0f);
-		ds.setColor(Color.color(0.0f, 0.0f, 0.0f));
-
-		// Format the text
 		Text t = new Text();
-		t.setEffect(ds);
 		t.setCache(true);
 		t.setX(60);
 		t.setY(200);
-		t.setFill(Color.RED);
 		t.setText(item);
-		t.setFont(Font.font("Helvetica", FontWeight.BOLD, 60));
+		t.setId("shoutout");
 
 		// Put it all together in the pop up
 		popup.getContent().addAll(t);

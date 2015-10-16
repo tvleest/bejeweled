@@ -2,43 +2,40 @@ package bejeweled.game;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
-
-import java.io.FileWriter;
-import java.io.IOException;
-
+import java.util.Observable;
+import java.util.Observer;
 import bejeweled.Main;
-import bejeweled.Sounds;
-import bejeweled.board.Board;
-import bejeweled.board.Gem;
 import bejeweled.gui.Buttons;
 import bejeweled.gui.Popups;
 import bejeweled.state.Score;
-import bejeweled.state.Time;
 
 /**
  * @author Timo This class is our Panel, handling mouse events and drawing the
  *         game
  */
-public final class GameScene extends Scene {
+public final class GameScene extends Scene implements Observer {
 	// TODO: public static Sounds GameSounds = new Sounds();
 
 	// to use the sounds in this class
 	private static GraphicsContext gc;
 	private static GameLogic gamelogic;
-	private static final int offsetx = 235;
-	private static final int offsety = 115;
+	private static final int OFFSETX = 235;
+	private static final int OFFSETY = 115;
+	Label score;
 
 	/**
 	 * GameScene Constructor. Prepares the UI of the root and mouseclick
@@ -46,38 +43,12 @@ public final class GameScene extends Scene {
 	 */
 	public GameScene(Group root, Stage stage) {
 		super(root);
+		this.getStylesheets().add("Style.css");
 		Canvas canvas = new Canvas(800, 600);
 		root.getChildren().add(canvas);
 
-		Image saveIcon = new Image("Images/save.png");
-		Button saveButton = Buttons.subMenuButton(null, saveIcon, 700, 565);
-
-		saveButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				Time time = gamelogic.getTime();
-				String stime = time.toString().substring(11, time.toString().length());
-				int score = gamelogic.getScore();
-				Gem[][] board = gamelogic.getBoard().getGems();
-				String save = stime + "\n" + score + "\n";
-				System.out.println(board.length);
-				for (int row = 0; row < board.length; row++) {
-					for (int col = 0; col < board.length; col++) {
-						save += board[row][col].getType() + "\n";
-					}
-				}
-				try {
-					FileWriter fw = new FileWriter("savefile.txt");
-					fw.write(save);
-					fw.close();
-				} catch (IOException e1) {
-					System.out.println("Something went wrong with the FileWriter in GameScene");
-				}
-			}
-		});
-
 		Image hintIcon = new Image("Images/hintbutton.png");
-		Button hintButton = Buttons.subMenuButton(null, hintIcon, 655, 565);
+		Button hintButton = Buttons.subMenuButton(null, hintIcon, 80, 440);
 
 		hintButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -87,7 +58,7 @@ public final class GameScene extends Scene {
 		});
 
 		Image pauseIcon = new Image("Images/pause.png");
-		Button pauseButton = Buttons.subMenuButton(null, pauseIcon, 610, 565);
+		Button pauseButton = Buttons.subMenuButton(null, pauseIcon, 120, 440);
 		pauseButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -99,43 +70,20 @@ public final class GameScene extends Scene {
 			}
 		});
 
-		Image musicIcon = new Image("Images/music2.png");
-		Button musicButton = Buttons.subMenuButton(null, musicIcon, 565, 565);
-		
-		Line mute = new Line();
-		mute.setStartX(575);
-		mute.setStartY(587);
-		mute.setEndX(603);
-		mute.setEndY(575);
-		mute.setStrokeWidth(1.0);
-		mute.setVisible(false);
-
-		musicButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				if (Sounds.getInstance().backgroundSoundPlaying()) {
-					Sounds.getInstance().stopBackgroundSound();
-					mute.setVisible(true);
-				} else {
-					Sounds.getInstance().playBackgroundSound();
-					mute.setVisible(false);
-				}
-			}
-		});
-
-		root.getChildren().addAll(hintButton, saveButton, pauseButton, musicButton, mute);
+		root.getChildren().addAll(hintButton, pauseButton);
 		gc = canvas.getGraphicsContext2D();
 		gc.setFont(new Font("Helvetica", 15));
 		gamelogic = new GameLogic();
-		gamelogic.getScoreObject().addObserver(gamelogic);
 		gamelogic.getScoreObject().addObserver(gamelogic.getBoard());
+		gamelogic.getScoreObject().addObserver(this);
+		
 
 		// this will handle mouse clicks
 		this.setOnMousePressed(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent e) {
 				// get the coordinates of the mouse pressed event
-				int xvar = (int) (e.getX() - offsetx);
-				int yvar = (int) (e.getY() - offsety);
+				int xvar = (int) (e.getX() - OFFSETX);
+				int yvar = (int) (e.getY() - OFFSETY);
 				// calculate which column and row are clicked
 				int col = xvar / 40;
 				int row = yvar / 40;
@@ -145,6 +93,24 @@ public final class GameScene extends Scene {
 				}
 			}
 		});
+		
+		Circle circleScore = new Circle(120, 75, 40, Color.LIGHTGREY);
+		circleScore.setStrokeWidth(2);
+		circleScore.setStroke(Color.BLACK);
+		root.getChildren().add(circleScore);
+		
+		score = new Label(""+0);
+		score.setLayoutX(80);
+		score.setLayoutY(60);
+		score.setId("score");
+		score.setPrefWidth(80);
+		score.setMaxWidth(80);
+		score.setAlignment(Pos.CENTER);
+
+
+		root.getChildren().add(score);
+
+		
 		draw();
 	}
 
@@ -153,7 +119,6 @@ public final class GameScene extends Scene {
 	 */
 	public static void draw() {
 		gamelogic.draw(gc);
-		gamelogic.getTime().drawTime(gc);
 	}
 
 	/**
@@ -172,11 +137,17 @@ public final class GameScene extends Scene {
 	}
 
 	public static int getOffsetx() {
-		return offsetx;
+		return OFFSETX;
 	}
 
 	public static int getOffsety() {
-		return offsety;
+		return OFFSETY;
+	}
+
+	@Override
+	public void update(Observable obs, Object arg) {
+		Score scoreObject = (Score) obs;
+		score.setText(scoreObject.getScore()+"");
 	}
 	
 	
