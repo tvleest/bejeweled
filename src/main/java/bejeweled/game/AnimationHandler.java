@@ -7,6 +7,8 @@ import bejeweled.board.Gem;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.util.Duration;
 
 /**
@@ -71,7 +73,12 @@ public final class AnimationHandler{
 	 * call gameUpdate for every 10 ms
 	 */
 	public void animate(){
-		timeline = new Timeline(new KeyFrame(Duration.millis(10), ae -> gameUpdate()));
+		timeline = new Timeline(new KeyFrame(Duration.millis(10),
+                new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+            	gameUpdate();
+            }
+        }));
 		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.play();
 	}
