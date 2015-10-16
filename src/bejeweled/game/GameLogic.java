@@ -21,7 +21,7 @@ import bejeweled.state.Time;
  * @author Timo
  *
  */
-public final class GameLogic implements Observer{
+public final class GameLogic{
 	private boolean isanimating = false;
 	private Board board;
 	private static Time time;
@@ -59,7 +59,6 @@ public final class GameLogic implements Observer{
 	public void draw(final GraphicsContext gc) {
 		board.draw(gc);
 		time.drawTime(gc);
-		drawScore(gc);
 	}
 
 	/**
@@ -169,19 +168,6 @@ public final class GameLogic implements Observer{
 		Sounds.getInstance().playErrorSound();
 	}
 
-	/**
-	 * @param gc
-	 *            GraphicsContext to draw to
-	 */
-	public void drawScore(final GraphicsContext gc) {
-		String s = ""+intscore;
-		gc.setFill(Color.LIGHTGREY);
-		gc.fillOval(80, 40, 80, 80);
-		gc.setFill(Color.BLACK);
-		gc.fillText(s, 110, 85);
-
-	}
-
 	public HighScores getHighScores() {
 		return highscores;
 	}
@@ -204,14 +190,6 @@ public final class GameLogic implements Observer{
 
 	public void setTime(Time t) {
 		time = t;
-	}
-	
-	/**
-	 * Updates Score Object by using Observer/Observable.
-	 */
-	public void update(Observable obs, Object arg) {
-		score = (Score) obs;
-		intscore = score.getScore();
 	}
 }
 	

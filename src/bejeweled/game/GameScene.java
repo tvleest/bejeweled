@@ -81,7 +81,6 @@ public final class GameScene extends Scene implements Observer {
 		gc = canvas.getGraphicsContext2D();
 		gc.setFont(new Font("Helvetica", 15));
 		gamelogic = new GameLogic();
-		gamelogic.getScoreObject().addObserver(gamelogic);
 		gamelogic.getScoreObject().addObserver(gamelogic.getBoard());
 		gamelogic.getScoreObject().addObserver(this);
 		
@@ -105,7 +104,7 @@ public final class GameScene extends Scene implements Observer {
 		score = new Label(""+0);
 		score.setLayoutX(110);
 		score.setLayoutY(85);
-		score.getStyleClass().add("score");
+		score.setId("score");
 		root.getChildren().add(score);
 		
 		draw();
