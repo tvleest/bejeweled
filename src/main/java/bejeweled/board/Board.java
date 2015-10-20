@@ -30,7 +30,7 @@ public final class Board implements Observer{
 	 *            - standard offset in y, used for drawing and clicking.
 	 */
 	public Board(int dimension) {
-		gf = new GemFactory();
+		gf = new GemFactory(6);//2<amount<8
 		this.dimension = dimension;
 		gems = new Gem[dimension][dimension];
 		fillBoard(0, 0);

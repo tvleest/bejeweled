@@ -6,7 +6,11 @@ public class GemFactory {
 	
 	private Random random = new Random();
 	private GemType[] allgems = GemType.values();
-	private int amountOfGems = 6;//MAX 7
+	private int amountOfGems;
+		
+	public GemFactory(int amountOfGems){
+		this.amountOfGems = amountOfGems;
+	}
 	
 	public Gem createGem(int row, int col, GemType type, SpecialType special) {
 		if(type==null)
