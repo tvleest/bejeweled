@@ -1,7 +1,4 @@
 package bejeweled.board;
-
-import java.util.Random;
-
 import bejeweled.state.Score;
 
 /**
@@ -9,10 +6,7 @@ import bejeweled.state.Score;
  *
  */
 public abstract class GameFactory {
-	
-	private Random random = new Random();
-	private GemType[] allgems = GemType.values();
-		
+			
 	public final Gem createGem(int row, int col, GemType type, SpecialType special) {
 		if(type==null){
 			type=getRandomGemType();
@@ -27,12 +21,4 @@ public abstract class GameFactory {
 	abstract GemType getRandomGemType();
 	
 	public abstract Score getScoreObject();
-
-	public final Random getRandom() {
-		return random;
-	}
-
-	public final GemType[] getAllgems() {
-		return allgems;
-	}
 }

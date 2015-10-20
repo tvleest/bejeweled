@@ -11,6 +11,9 @@ import javafx.scene.image.Image;
 public enum GemType {
 	BLUE, GREEN, ORANGE, PINK, RED, YELLOW, PURPLE;
 
+	private static Random random = new Random();
+	private static GemType[] allgems = values();
+
 	private static EnumMap<GemType, Image> typeToImage;
 	private static EnumMap<GemType, Image> typeToDoublePointsGemImage;
 	private static EnumMap<GemType, Image> typeToDeleteRowGemImage;
@@ -65,4 +68,8 @@ public enum GemType {
     	typeToDeleteRowGemImage.put(GemType.YELLOW, new Image("Images/yellow_rk.png"));
     	typeToDeleteRowGemImage.put(GemType.PURPLE, new Image("Images/purple_rk.png"));
     }
+    
+	public static GemType getRandomGemType(int amountOfTypes) {
+		return allgems[random.nextInt(amountOfTypes)];
+	}
 }

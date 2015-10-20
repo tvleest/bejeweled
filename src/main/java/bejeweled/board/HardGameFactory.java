@@ -3,15 +3,16 @@ package bejeweled.board;
 import bejeweled.state.Score;
 
 public class HardGameFactory extends GameFactory {
-	private final int amountOfGems=7;
+	private final int AmountOfTypes=7;
+	private final int scorePerGem=15;
 	
 	@Override
 	GemType getRandomGemType() {
-		return getAllgems()[getRandom().nextInt(amountOfGems)];
+		return GemType.getRandomGemType(AmountOfTypes);
 	}
 	
 	@Override
 	public Score getScoreObject() {
-		return new Score(15);
+		return new Score(scorePerGem);
 	}
 }
