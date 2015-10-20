@@ -43,7 +43,7 @@ public final class Board implements Observer{
 	 *            - row index Backtrack method
 	 */
 	public void fillBoard(int col, int row) {
-		GemType type = GemType.getRandomGemType();
+		GemType type = gf.getRandomGemType();
 		if (rowCheck(row, col, type) && colCheck(row, col, type)) {
 			Gem gem = gf.createGem(row, col, type, SpecialType.NORMAL);
 			gems[row][col] = gem;
@@ -265,6 +265,8 @@ public final class Board implements Observer{
 		ArrayList<Gem> yellow = new ArrayList<Gem>();
 		ArrayList<Gem> pink = new ArrayList<Gem>();
 		ArrayList<Gem> green = new ArrayList<Gem>();
+		ArrayList<Gem> purple = new ArrayList<Gem>();
+
 		
 		for(int i = 0; i < g.size(); i++) {
 			if(g.get(i).type == GemType.BLUE) 
@@ -279,6 +281,8 @@ public final class Board implements Observer{
 				pink.add(g.get(i));
 			if(g.get(i).type == GemType.GREEN) 
 				green.add(g.get(i));
+			if(g.get(i).type == GemType.PURPLE) 
+				purple.add(g.get(i));
 		}
 		
 		if(blue.size() > 2) {
@@ -303,6 +307,10 @@ public final class Board implements Observer{
 		}
 		if(green.size() > 2) {
 			Combination temp = new Combination(green);
+			res.add(temp);
+		}
+		if(purple.size() > 2) {
+			Combination temp = new Combination(purple);
 			res.add(temp);
 		}
 		return res;
@@ -366,7 +374,7 @@ public final class Board implements Observer{
 					gems[r - 1][col].setPosition(r, col);
 					gems[r][col] = gems[r - 1][col];
 				} else {
-					GemType type = GemType.getRandomGemType();
+					GemType type = gf.getRandomGemType();
 					Gem gem = gf.createGem(0, col, type, SpecialType.NORMAL);
 					if (!gem.isMoving()) {
 						gem.setAnimationx(gem.getCurrentx());
