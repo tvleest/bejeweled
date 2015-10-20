@@ -4,10 +4,13 @@ import java.util.Random;
 
 public class GemFactory {
 	
-	private static Random random = new Random();
-	private static GemType[] allgems = GemType.values();
+	private Random random = new Random();
+	private GemType[] allgems = GemType.values();
+	private int amountOfGems = 6;//MAX 7
 	
 	public Gem createGem(int row, int col, GemType type, SpecialType special) {
+		if(type==null)
+			type=getRandomGemType();
 		switch(special) {
 			case DOUBLE: return new DoublePointsGem(row, col, type);
 			case CROSS: return new DeleteRowGem(row, col, type);
@@ -15,7 +18,7 @@ public class GemFactory {
 		}
 	}
 	
-	public GemType getRandomGemType(){
-			return allgems[random.nextInt(allgems.length)];
+	private GemType getRandomGemType(){
+			return allgems[random.nextInt(amountOfGems)];
 	}
 }

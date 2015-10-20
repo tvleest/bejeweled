@@ -43,9 +43,8 @@ public final class Board implements Observer{
 	 *            - row index Backtrack method
 	 */
 	public void fillBoard(int col, int row) {
-		GemType type = gf.getRandomGemType();
-		if (rowCheck(row, col, type) && colCheck(row, col, type)) {
-			Gem gem = gf.createGem(row, col, type, SpecialType.NORMAL);
+		Gem gem = gf.createGem(row, col, null, SpecialType.NORMAL);
+		if (rowCheck(row, col, gem.getType()) && colCheck(row, col, gem.getType())) {
 			gems[row][col] = gem;
 			if (col < dimension - 1) {
 				fillBoard(col + 1, row);
@@ -374,8 +373,7 @@ public final class Board implements Observer{
 					gems[r - 1][col].setPosition(r, col);
 					gems[r][col] = gems[r - 1][col];
 				} else {
-					GemType type = gf.getRandomGemType();
-					Gem gem = gf.createGem(0, col, type, SpecialType.NORMAL);
+					Gem gem = gf.createGem(0, col, null, SpecialType.NORMAL);
 					if (!gem.isMoving()) {
 						gem.setAnimationx(gem.getCurrentx());
 						gem.setAnimationy(gem.getCurrenty() - Gem.getDimension());
