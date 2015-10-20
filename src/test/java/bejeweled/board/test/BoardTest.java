@@ -8,6 +8,7 @@ import org.junit.Test;
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
 import bejeweled.board.GemType;
+import bejeweled.board.MediumGameFactory;
 
 /**
  * @author Timo
@@ -24,7 +25,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testFillBoardIntInt() {
-		board = new Board(3);
+		board = new Board(3, new MediumGameFactory());
 		board.fillBoard(0, 0);
 		gems = board.getGems();
 		for (int row = 0; row < 3; row++) {
@@ -41,7 +42,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testRowCheck() {
-		board = new Board(3);
+		board = new Board(3, new MediumGameFactory());
 		gems = board.getGems();
 		gems[0][0].setType(GemType.RED);
 		gems[0][1].setType(GemType.RED);
@@ -56,7 +57,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testColCheck() {
-		board = new Board(3);
+		board = new Board(3, new MediumGameFactory());
 		gems = board.getGems();
 		gems[0][0].setType(GemType.RED);
 		gems[1][0].setType(GemType.RED);
@@ -71,7 +72,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testDelete() {
-		board = new Board(3);
+		board = new Board(3, new MediumGameFactory());
 		gems = board.getGems();
 		gems[0][0] = new Gem(0, 0, GemType.RED);
 		gems[1][0] = new Gem(1, 0, GemType.RED);
@@ -89,7 +90,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testSwap() {
-		board = new Board(2);
+		board = new Board(2, new MediumGameFactory());
 		gems = board.getGems();
 		Gem gemnoswap = gems[1][1];
 		Gem gem1 = gems[0][0];
@@ -107,7 +108,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testGetUpper() {
-		board = new Board(2);
+		board = new Board(2, new MediumGameFactory());
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -122,7 +123,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testGetRight() {
-		board = new Board(2);
+		board = new Board(2, new MediumGameFactory());
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -137,7 +138,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testGetBelow() {
-		board = new Board(2);
+		board = new Board(2, new MediumGameFactory());
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -152,7 +153,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testGetLeft() {
-		board = new Board(2);
+		board = new Board(2, new MediumGameFactory());
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -167,7 +168,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testAreNeighbours() {
-		board = new Board(2);
+		board = new Board(2, new MediumGameFactory());
 		gems = board.getGems();
 		Gem gem1 = gems[0][0];
 		Gem gem2 = gems[0][1];
@@ -185,7 +186,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void selectedGemTest() {
-		board = new Board(2);
+		board = new Board(2, new MediumGameFactory());
 		gems = board.getGems();
 		Gem gem = gems[0][0];
 		assertNull(board.getSelectedgem());
@@ -199,7 +200,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void secondGemTest() {
-		board = new Board(2);
+		board = new Board(2, new MediumGameFactory());
 		gems = board.getGems();
 		Gem gem = gems[0][0];
 		assertNull(board.getSecondGem());
@@ -214,7 +215,7 @@ public class BoardTest {
 	 */
 	@Test
 	public final void setGemTest() {
-		board = new Board(2);
+		board = new Board(2, new MediumGameFactory());
 		Gem[][] testgems = new Gem[2][2];
 		board.setGems(testgems);
 		assertArrayEquals(testgems, board.getGems());
@@ -226,9 +227,9 @@ public class BoardTest {
 	 */
 	@Test
 	public final void testEquals() {
-		board = new Board(2);
-		Board board2 = new Board(2);
-		Board board3 = new Board(3);
+		board = new Board(2, new MediumGameFactory());
+		Board board2 = new Board(2, new MediumGameFactory());
+		Board board3 = new Board(3, new MediumGameFactory());
 		assertEquals(board, board2);
 		assertFalse(board.equals(board3));
 	}

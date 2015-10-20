@@ -2,11 +2,13 @@ package bejeweled.board;
 
 import java.util.Random;
 
+import bejeweled.state.Score;
+
 /**
  * @author Timo
  *
  */
-public abstract class GemFactory {
+public abstract class GameFactory {
 	
 	private Random random = new Random();
 	private GemType[] allgems = GemType.values();
@@ -23,6 +25,8 @@ public abstract class GemFactory {
 	}
 	
 	abstract GemType getRandomGemType();
+	
+	public abstract Score getScoreObject();
 
 	public final Random getRandom() {
 		return random;
