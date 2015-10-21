@@ -8,6 +8,7 @@ import bejeweled.Main;
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
 import bejeweled.board.GemType;
+import bejeweled.board.MediumGameFactory;
 import bejeweled.game.GameLogic;
 
 /**
@@ -32,7 +33,7 @@ public class GameLogicTest {
 	 */
 	@Test
 	public final void testGetBoard() {
-		Board b = new Board(8);
+		Board b = new Board(8, new MediumGameFactory());
 		assertEquals(b, gl.getBoard());
 	}
 	
