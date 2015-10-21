@@ -128,7 +128,8 @@ public class Popups {
 				String stime = time.toString().substring(11, time.toString().length());
 				int score = gamelogic.getScore();
 				Gem[][] board = gamelogic.getBoard().getGems();
-				String save = stime + "\n" + score + "\n";
+				String dif = gamelogic.getDif().toString();
+				String save = dif + "\n" + stime + "\n" + score + "\n";
 				System.out.println(board.length);
 				for (int row = 0; row < board.length; row++) {
 					for (int col = 0; col < board.length; col++) {

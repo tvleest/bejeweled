@@ -18,6 +18,8 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import java.util.Observable;
 import java.util.Observer;
+
+import bejeweled.Difficulties;
 import bejeweled.Main;
 import bejeweled.board.Gem;
 import bejeweled.gui.Buttons;
@@ -42,7 +44,7 @@ public final class GameScene extends Scene implements Observer {
 	 * GameScene Constructor. Prepares the UI of the root and mouseclick
 	 * handlers.
 	 */
-	public GameScene(Group root, Stage stage) {
+	public GameScene(Group root, Stage stage, Difficulties dif) {
 		super(root);
 		this.getStylesheets().add("Style.css");
 		Canvas canvas = new Canvas(800, 600);
@@ -74,7 +76,7 @@ public final class GameScene extends Scene implements Observer {
 		root.getChildren().addAll(hintButton, pauseButton);
 		gc = canvas.getGraphicsContext2D();
 		gc.setFont(new Font("Helvetica", 15));
-		gamelogic = new GameLogic();
+		gamelogic = new GameLogic(dif);
 		gamelogic.getScoreObject().addObserver(gamelogic.getBoard());
 		gamelogic.getScoreObject().addObserver(this);
 		
