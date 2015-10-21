@@ -19,7 +19,8 @@ public final class Board implements Observer{
 	private Gem selectedgem = null;
 	private Gem hintedgem = null;
 	private Gem secondGem = null;
-	private GameFactory gf;
+	private GameFactory gameFact;
+	private GemFactory gf;
 
 	/**
 	 * @param dimension
@@ -29,8 +30,9 @@ public final class Board implements Observer{
 	 * @param offsety
 	 *            - standard offset in y, used for drawing and clicking.
 	 */
-	public Board(int dimension, GameFactory gf) {
-		this.gf = gf;
+	public Board(int dimension, GameFactory gamef) {
+		gameFact = gamef;
+		gf = gameFact.getGemFactory();
 		this.dimension = dimension;
 		gems = new Gem[dimension][dimension];
 		fillBoard(0, 0);
