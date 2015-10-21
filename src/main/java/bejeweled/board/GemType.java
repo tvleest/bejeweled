@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
  * @author Timo This class defines the different types of gems.
  */
 public enum GemType {
-	BLUE, GREEN, ORANGE, PINK, RED, YELLOW, PURPLE;
+	BLUE, GREEN, ORANGE, PINK, RED, YELLOW, WHITE;
 
 	private static Random random = new Random();
 	private static GemType[] allgems = values();
@@ -50,7 +50,7 @@ public enum GemType {
     	typeToImage.put(GemType.PINK, new Image("Images/pink.png"));
     	typeToImage.put(GemType.RED, new Image("Images/red.png"));
     	typeToImage.put(GemType.YELLOW, new Image("Images/yellow.png"));
-    	typeToImage.put(GemType.PURPLE, new Image("Images/purple.png"));
+    	typeToImage.put(GemType.WHITE, new Image("Images/white.png"));
 
     	typeToDoublePointsGemImage.put(GemType.BLUE, new Image("Images/blue_2x.png"));
     	typeToDoublePointsGemImage.put(GemType.GREEN, new Image("Images/green_2x.png"));
@@ -58,7 +58,7 @@ public enum GemType {
     	typeToDoublePointsGemImage.put(GemType.PINK, new Image("Images/pink_2x.png"));
     	typeToDoublePointsGemImage.put(GemType.RED, new Image("Images/red_2x.png"));
     	typeToDoublePointsGemImage.put(GemType.YELLOW, new Image("Images/yellow_2x.png"));
-    	typeToDoublePointsGemImage.put(GemType.PURPLE, new Image("Images/purple_2x.png"));
+    	typeToDoublePointsGemImage.put(GemType.WHITE, new Image("Images/white_2x.png"));
 
     	typeToDeleteRowGemImage.put(GemType.BLUE, new Image("Images/blue_rk.png"));
     	typeToDeleteRowGemImage.put(GemType.GREEN, new Image("Images/green_rk.png"));
@@ -66,7 +66,7 @@ public enum GemType {
     	typeToDeleteRowGemImage.put(GemType.PINK, new Image("Images/pink_rk.png"));
     	typeToDeleteRowGemImage.put(GemType.RED, new Image("Images/red_rk.png"));
     	typeToDeleteRowGemImage.put(GemType.YELLOW, new Image("Images/yellow_rk.png"));
-    	typeToDeleteRowGemImage.put(GemType.PURPLE, new Image("Images/purple_rk.png"));
+    	typeToDeleteRowGemImage.put(GemType.WHITE, new Image("Images/white_rk.png"));
     }
     
 	public static GemType getRandomGemType(int amountOfTypes) {

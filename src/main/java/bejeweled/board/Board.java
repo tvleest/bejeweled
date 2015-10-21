@@ -266,7 +266,7 @@ public final class Board implements Observer{
 		ArrayList<Gem> yellow = new ArrayList<Gem>();
 		ArrayList<Gem> pink = new ArrayList<Gem>();
 		ArrayList<Gem> green = new ArrayList<Gem>();
-		ArrayList<Gem> purple = new ArrayList<Gem>();
+		ArrayList<Gem> white = new ArrayList<Gem>();
 
 		
 		for(int i = 0; i < g.size(); i++) {
@@ -282,8 +282,8 @@ public final class Board implements Observer{
 				pink.add(g.get(i));
 			if(g.get(i).type == GemType.GREEN) 
 				green.add(g.get(i));
-			if(g.get(i).type == GemType.PURPLE) 
-				purple.add(g.get(i));
+			if(g.get(i).type == GemType.WHITE) 
+				white.add(g.get(i));
 		}
 		
 		if(blue.size() > 2) {
@@ -310,8 +310,8 @@ public final class Board implements Observer{
 			Combination temp = new Combination(green);
 			res.add(temp);
 		}
-		if(purple.size() > 2) {
-			Combination temp = new Combination(purple);
+		if(white.size() > 2) {
+			Combination temp = new Combination(white);
 			res.add(temp);
 		}
 		return res;
