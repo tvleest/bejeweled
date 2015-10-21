@@ -100,8 +100,8 @@ public final class GameLogic{
 		for (Combination b : combinations) {
 			br = false;
 			for (Gem g : b.getGems()) {
-				if (g.makeCross()) {
-					Combination combi = board.deleteRowAndCol(g, combinations);
+				Combination combi = g.makeCross(board, combinations);
+				if(combi != null) {
 					combinations.add(combi);
 					br = true;
 				}
@@ -113,8 +113,8 @@ public final class GameLogic{
 		while(br) {
 			br = false;
 			for(Gem g : combinations.get(combinations.size()-1).getGems()) {
-				if (g.makeCross()) {
-					Combination combi = board.deleteRowAndCol(g, combinations);
+				Combination combi = g.makeCross(board, combinations);
+				if(combi != null) {
 					combinations.add(combi);
 					br = true;
 				}
@@ -124,7 +124,6 @@ public final class GameLogic{
 			}
 			
 		}
-		
 		// combinations found
 		if(combinations.size()>0){
 			int gems = 0;

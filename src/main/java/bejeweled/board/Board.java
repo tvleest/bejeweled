@@ -323,11 +323,14 @@ public final class Board implements Observer{
 						delete(g, null);
 					}
 					else {
-						if(size > 4) {
+						if(size > 4 && size < 8) {
 							delete(g, SpecialType.CROSS);
 						}
-						else {
+						else if(size == 4) {
 							delete(g, SpecialType.DOUBLE);
+						}
+						else {
+							delete(g, null);
 						}
 					}
 				}

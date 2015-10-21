@@ -1,4 +1,6 @@
 package bejeweled.board;
+import java.util.ArrayList;
+
 import bejeweled.game.GameScene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -49,8 +51,8 @@ public class Gem implements DoublePoints, Cross {
 		return 1;
 	}
 	
-	public boolean makeCross() {
-		return false;
+	public Combination makeCross(Board b, ArrayList<Combination> c) {
+		return null;
 	}
 	
 	/**

@@ -1,5 +1,7 @@
 package bejeweled.board;
 
+import java.util.ArrayList;
+
 import javafx.scene.canvas.GraphicsContext;
 
 public class DeleteRowGem extends Gem {
@@ -24,8 +26,8 @@ public class DeleteRowGem extends Gem {
 	}
 	
 	@Override
-	public boolean makeCross() {
-		return true;
+	public Combination makeCross(Board b, ArrayList<Combination> c) {
+		return b.deleteRowAndCol(this, c);
 	}
 
 }
