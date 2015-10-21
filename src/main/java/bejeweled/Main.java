@@ -64,7 +64,6 @@ public final class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		file = new File("saveFile.txt");
 		stage = primaryStage;
-		scene = new GameScene(new Group(), stage, Difficulties.MEDIUM);
 		primaryStage.setTitle("Bejeweled group 30");
 		switchMenu();
 		timeline = new Timeline(new KeyFrame(Duration.seconds(1),
@@ -73,7 +72,6 @@ public final class Main extends Application {
             	scene.decrementTime();
             }
         }));
-		switchMenu();		
 		timeline = new Timeline(new KeyFrame(Duration.millis(1000), ae -> scene.decrementTime()));
 		timeline.setCycleCount(Animation.INDEFINITE);
 		primaryStage.show();
@@ -261,19 +259,16 @@ public final class Main extends Application {
 			scene = new GameScene(root, stage, dif);
 			GameLogic gamelogic = scene.getGameLogic();
 			Board boardinstance = gamelogic.getBoard();
-
 			String time = sc.nextLine();
 			if (sc.hasNext()) {
 				String score = sc.nextLine();
 				score2 = Integer.parseInt(score);
-				System.out.println(score);
 			}
 			Gem[][] board = new Gem[8][8];
 			for (int row = 0; row < board.length; row++) {
 				for (int col = 0; col < board.length; col++) {
 					if (sc.hasNext()) {
 						String type = sc.nextLine();
-						System.out.println(type);
 						GemType gtype = GemType.valueOf(type);
 						board[row][col] = new Gem(row, col, gtype);
 					}
@@ -282,7 +277,6 @@ public final class Main extends Application {
 
 			String minutes = time.substring(0, time.indexOf(":"));
 			String seconds = time.substring(time.length() - 2, time.length());
-			System.out.println(minutes + " - " + seconds);
 			int m = Integer.parseInt(minutes);
 			int s = Integer.parseInt(seconds);
 			int t = m * 60 + s;
@@ -295,10 +289,6 @@ public final class Main extends Application {
 		} catch (FileNotFoundException e) {
 			System.out.println("Savefile was not found!");
 		}
-	}
-
-	public static void switchContinueGame() {
-
 	}
 
 	/**
