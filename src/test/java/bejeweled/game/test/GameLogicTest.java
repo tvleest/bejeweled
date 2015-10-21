@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import bejeweled.Difficulties;
 import bejeweled.Main;
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
@@ -25,7 +26,7 @@ public class GameLogicTest {
 	 */
 	@Before
 	public final void setUp() {
-		gl = new GameLogic();
+		gl = new GameLogic(Difficulties.MEDIUM);
 	}
 	
 	/**

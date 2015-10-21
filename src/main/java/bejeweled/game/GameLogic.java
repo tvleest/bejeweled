@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import bejeweled.Difficulties;
 import bejeweled.Sounds;
 import bejeweled.board.Board;
 import bejeweled.board.Combination;
@@ -35,6 +36,7 @@ public final class GameLogic{
 	private AnimationHandler animationhandler;
 	private boolean combinationsFormed = false;
 	private GameFactory gemFactory;
+	private Difficulties dif;
 
 	/**
 	 * @param offsetx
@@ -42,8 +44,9 @@ public final class GameLogic{
 	 * @param offsety
 	 *            the offset on the y-axis
 	 */
-	public GameLogic() {
-		gemFactory = new MediumGameFactory(); //TODO: switch this around
+	public GameLogic(Difficulties dif) {
+		this.dif = dif;
+		gemFactory = dif.getFactory(); //TODO: switch this around
 		time = new Time(60);
 		board = new Board(8, gemFactory);
 		score = gemFactory.getScoreObject();
@@ -204,6 +207,10 @@ public final class GameLogic{
 
 	public void setTime(Time t) {
 		time = t;
+	}
+
+	public Difficulties getDif() {
+		return dif;
 	}
 }
 	
