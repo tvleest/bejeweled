@@ -18,7 +18,10 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import java.util.Observable;
 import java.util.Observer;
+
+import bejeweled.Difficulties;
 import bejeweled.Main;
+import bejeweled.board.Gem;
 import bejeweled.gui.Buttons;
 import bejeweled.gui.Popups;
 import bejeweled.state.Score;
@@ -41,7 +44,7 @@ public final class GameScene extends Scene implements Observer {
 	 * GameScene Constructor. Prepares the UI of the root and mouseclick
 	 * handlers.
 	 */
-	public GameScene(Group root, Stage stage) {
+	public GameScene(Group root, Stage stage, Difficulties dif) {
 		super(root);
 		this.getStylesheets().add("Style.css");
 		Canvas canvas = new Canvas(800, 600);
@@ -73,7 +76,7 @@ public final class GameScene extends Scene implements Observer {
 		root.getChildren().addAll(hintButton, pauseButton);
 		gc = canvas.getGraphicsContext2D();
 		gc.setFont(new Font("Helvetica", 15));
-		gamelogic = new GameLogic();
+		gamelogic = new GameLogic(dif);
 		gamelogic.getScoreObject().addObserver(gamelogic.getBoard());
 		gamelogic.getScoreObject().addObserver(this);
 		
@@ -85,8 +88,8 @@ public final class GameScene extends Scene implements Observer {
 				int xvar = (int) (e.getX() - OFFSETX);
 				int yvar = (int) (e.getY() - OFFSETY);
 				// calculate which column and row are clicked
-				int col = xvar / 40;
-				int row = yvar / 40;
+				int col = xvar / Gem.getDimension();
+				int row = yvar / Gem.getDimension();
 				// check if the col and row are inside the board
 				if (col < 8 && row < 8 && col >= 0 && row >= 0) {
 					gamelogic.handleMouseClicked(row, col);
