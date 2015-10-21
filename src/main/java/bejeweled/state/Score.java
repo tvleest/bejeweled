@@ -14,9 +14,9 @@ public final class Score extends Observable {
 	private int score;
 	private int scorePerGem;
 	
-	public Score(int s) { 
-		score = s;
-		scorePerGem = 10;
+	public Score(int scorepergem) { 
+		this.score = score;
+		this.scorePerGem = scorepergem;
 	}
 	
 	/**

@@ -31,6 +31,15 @@ public class Buttons {
 		button.setPrefSize(250, 75);
 		button.setLayoutX(x);
 		button.setLayoutY(y);
+		button.setStyle("-fx-font-size: 20px"); //TODO: move this to css file with menubuttonID
+		return button;
+	}
+	
+	public static Button diffButton(String label, int x, int y) {
+		Button button = new Button(label);
+		button.setPrefSize(250/3, 75);
+		button.setLayoutX(x);
+		button.setLayoutY(y);
 		return button;
 	}
 	

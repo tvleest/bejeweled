@@ -64,7 +64,6 @@ public final class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		file = new File("saveFile.txt");
 		stage = primaryStage;
-		scene = new GameScene(new Group(), stage);
 		primaryStage.setTitle("Bejeweled group 30");
 		switchMenu();
 		timeline = new Timeline(new KeyFrame(Duration.seconds(1),
@@ -73,7 +72,6 @@ public final class Main extends Application {
             	scene.decrementTime();
             }
         }));
-		switchMenu();		
 		timeline = new Timeline(new KeyFrame(Duration.millis(1000), ae -> scene.decrementTime()));
 		timeline.setCycleCount(Animation.INDEFINITE);
 		primaryStage.show();
@@ -92,23 +90,45 @@ public final class Main extends Application {
 		imgView.setFitHeight(600);
 		imgView.setFitWidth(800);
 
+				Button easygamebutton = Buttons.diffButton("easy", 275, 110);
+				easygamebutton.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent e) {
+						Sounds.getInstance().playSelectSound();
+						switchGame(false, Difficulties.EASY);
+						Logger.getInstance().writeLineToLogger("The game has started.");
+					}
+				}); 
+				Button mediumgamebutton = Buttons.diffButton("medium", 358, 110);
+				mediumgamebutton.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent e) {
+						Sounds.getInstance().playSelectSound();
+						switchGame(false, Difficulties.MEDIUM);
+						Logger.getInstance().writeLineToLogger("The game has started.");
+					}
+				}); 
+				Button hardgamebutton = Buttons.diffButton("hard", 442, 110);
+				hardgamebutton.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent e) {
+						Sounds.getInstance().playSelectSound();
+						switchGame(false, Difficulties.HARD);
+						Logger.getInstance().writeLineToLogger("The game has started.");
+					}
+				}); 
+		
 		// make two buttons for the menu
 		Button newGameButton = Buttons.menuButton("Start New Game", 275, 110);
-		newGameButton.setStyle("-fx-font-size: 20px");
-
 		newGameButton.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent e) {
-				Sounds.getInstance().playSelectSound();
-				switchGame(false);
-				Logger.getInstance().writeLineToLogger("The game has started.");
+				newGameButton.setVisible(false);
+				root.getChildren().addAll(easygamebutton, mediumgamebutton, hardgamebutton);
 			}
-		}); // start the game
+		});
 
 		Button highScoresButton = Buttons.menuButton("View the Highscores", 275, 430);
-		highScoresButton.setStyle("-fx-font-size: 20px");
-
 		highScoresButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -118,7 +138,6 @@ public final class Main extends Application {
 		});
 
 		Button continueButton = Buttons.menuButton("Continue Saved Game", 275, 270);
-		continueButton.setStyle("-fx-font-size: 20px");
 		continueButton.setOpacity(0.35);
 		continueButton.setDisable(true);
 
@@ -130,7 +149,7 @@ public final class Main extends Application {
 				@Override
 				public void handle(ActionEvent e) {
 					Sounds.getInstance().playSelectSound();
-					switchGame(true);
+					switchGame(true, null);
 					Logger.getInstance().writeLineToLogger("The saved game has been loaded.");
 				}
 			});
@@ -199,7 +218,7 @@ public final class Main extends Application {
 	/**
 	 * Switch the current screen to the Bejeweled screen.
 	 */
-	public static void switchGame(boolean savedGame) {
+	public static void switchGame(boolean savedGame, Difficulties dif) {
 		timeline.playFromStart();
 		root = new Group();
 
@@ -210,11 +229,11 @@ public final class Main extends Application {
 
 		root.getChildren().addAll(imgView);
 		Sounds.getInstance().playBackgroundSound();
-
-		scene = new GameScene(root, stage);
-
 		if (savedGame) {
 			loadFile();
+		}
+		else{
+			scene = new GameScene(root, stage, dif);
 		}
 		new AnimationTimer() {
 			public void handle(long currentNanoTime) {
@@ -232,25 +251,24 @@ public final class Main extends Application {
 	 * different save class
 	 */
 	public static void loadFile() {
-		GameLogic gamelogic = scene.getGameLogic();
-		Board boardinstance = gamelogic.getBoard();
 		Scanner sc;
 		int score2 = 0;
 		try {
 			sc = new Scanner(new File("savefile.txt"));
+			Difficulties dif = Difficulties.valueOf(sc.nextLine());
+			scene = new GameScene(root, stage, dif);
+			GameLogic gamelogic = scene.getGameLogic();
+			Board boardinstance = gamelogic.getBoard();
 			String time = sc.nextLine();
-			System.out.println(time);
 			if (sc.hasNext()) {
 				String score = sc.nextLine();
 				score2 = Integer.parseInt(score);
-				System.out.println(score);
 			}
 			Gem[][] board = new Gem[8][8];
 			for (int row = 0; row < board.length; row++) {
 				for (int col = 0; col < board.length; col++) {
 					if (sc.hasNext()) {
 						String type = sc.nextLine();
-						System.out.println(type);
 						GemType gtype = GemType.valueOf(type);
 						board[row][col] = new Gem(row, col, gtype);
 					}
@@ -259,7 +277,6 @@ public final class Main extends Application {
 
 			String minutes = time.substring(0, time.indexOf(":"));
 			String seconds = time.substring(time.length() - 2, time.length());
-			System.out.println(minutes + " - " + seconds);
 			int m = Integer.parseInt(minutes);
 			int s = Integer.parseInt(seconds);
 			int t = m * 60 + s;
@@ -272,10 +289,6 @@ public final class Main extends Application {
 		} catch (FileNotFoundException e) {
 			System.out.println("Savefile was not found!");
 		}
-	}
-
-	public static void switchContinueGame() {
-
 	}
 
 	/**

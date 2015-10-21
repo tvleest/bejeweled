@@ -4,10 +4,12 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import bejeweled.Difficulties;
 import bejeweled.Main;
 import bejeweled.board.Board;
 import bejeweled.board.Gem;
 import bejeweled.board.GemType;
+import bejeweled.board.MediumGameFactory;
 import bejeweled.game.GameLogic;
 
 /**
@@ -24,7 +26,7 @@ public class GameLogicTest {
 	 */
 	@Before
 	public final void setUp() {
-		gl = new GameLogic();
+		gl = new GameLogic(Difficulties.MEDIUM);
 	}
 	
 	/**
@@ -32,7 +34,7 @@ public class GameLogicTest {
 	 */
 	@Test
 	public final void testGetBoard() {
-		Board b = new Board(8);
+		Board b = new Board(8, new MediumGameFactory());
 		assertEquals(b, gl.getBoard());
 	}
 	

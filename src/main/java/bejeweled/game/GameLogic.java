@@ -7,12 +7,17 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import bejeweled.Difficulties;
 import bejeweled.Sounds;
 import bejeweled.board.Board;
 import bejeweled.board.Combination;
 import bejeweled.board.DeleteRowGem;
 import bejeweled.board.DoublePointsGem;
+import bejeweled.board.EasyGameFactory;
 import bejeweled.board.Gem;
+import bejeweled.board.HardGameFactory;
+import bejeweled.board.GameFactory;
+import bejeweled.board.MediumGameFactory;
 import bejeweled.state.HighScores;
 import bejeweled.state.Logger;
 import bejeweled.state.Score;
@@ -30,16 +35,21 @@ public final class GameLogic{
 	private HighScores highscores;
 	private AnimationHandler animationhandler;
 	private boolean combinationsFormed = false;
+	private GameFactory gemFactory;
+	private Difficulties dif;
+
 	/**
 	 * @param offsetx
 	 *            the offset on the x-axis
 	 * @param offsety
 	 *            the offset on the y-axis
 	 */
-	public GameLogic() {
+	public GameLogic(Difficulties dif) {
+		this.dif = dif;
+		gemFactory = dif.getFactory(); //TODO: switch this around
 		time = new Time(60);
-		score = new Score(0);
-		board = new Board(8);
+		board = new Board(8, gemFactory);
+		score = gemFactory.getScoreObject();
 		highscores = new HighScores();
 		animationhandler = new AnimationHandler(this);
 	}
@@ -197,6 +207,10 @@ public final class GameLogic{
 
 	public void setTime(Time t) {
 		time = t;
+	}
+
+	public Difficulties getDif() {
+		return dif;
 	}
 }
 	
