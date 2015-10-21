@@ -22,5 +22,10 @@ public class DeleteRowGem extends Gem {
 			}
 		}
 	}
+	
+	@Override
+	public boolean makeCross() {
+		return true;
+	}
 
 }

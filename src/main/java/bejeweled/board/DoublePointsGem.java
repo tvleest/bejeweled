@@ -22,4 +22,9 @@ public class DoublePointsGem extends Gem {
 			}
 		}
 	}
+	
+	@Override
+	public int timesPoints() {
+		return 2;
+	}
 }

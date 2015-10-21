@@ -100,7 +100,7 @@ public final class GameLogic{
 		for (Combination b : combinations) {
 			br = false;
 			for (Gem g : b.getGems()) {
-				if (g instanceof DeleteRowGem) {
+				if (g.makeCross()) {
 					Combination combi = board.deleteRowAndCol(g, combinations);
 					combinations.add(combi);
 					br = true;
@@ -113,7 +113,7 @@ public final class GameLogic{
 		while(br) {
 			br = false;
 			for(Gem g : combinations.get(combinations.size()-1).getGems()) {
-				if (g instanceof DeleteRowGem) {
+				if (g.makeCross()) {
 					Combination combi = board.deleteRowAndCol(g, combinations);
 					combinations.add(combi);
 					br = true;
@@ -136,9 +136,7 @@ public final class GameLogic{
 			int timesScore = 1;
 			for(int i = 0; i < combinations.size(); i++) {
 				for(Gem gem : combinations.get(i).getGems()) {
-					if(gem instanceof DoublePointsGem) {
-						timesScore *= 2;
-					}
+					timesScore *= gem.timesPoints();
 				}
 			}
 			for(int i = 0; i < timesScore; i++) {
