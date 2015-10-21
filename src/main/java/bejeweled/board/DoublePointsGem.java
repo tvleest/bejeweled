@@ -23,6 +23,9 @@ public class DoublePointsGem extends Gem {
 		}
 	}
 	
+	/**
+	 * Returns the factor to multiply the points with.
+	 */
 	@Override
 	public int timesPoints() {
 		return 2;

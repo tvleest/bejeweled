@@ -25,6 +25,9 @@ public class DeleteRowGem extends Gem {
 		}
 	}
 	
+	/**
+	 * Returns a Combination of all Gems in the cross of this Gem.
+	 */
 	@Override
 	public Combination makeCross(Board b, ArrayList<Combination> c) {
 		return b.deleteRowAndCol(this, c);
