@@ -5,17 +5,22 @@ import java.util.ArrayList;
 public class CombinationIterator implements Iterator{
 	Combination combi;
 	int position = 0;
+	ArrayList<Gem> g;
 	
 	public CombinationIterator(Combination combi){
 		this.combi=combi;
+		g = combi.getGems();
 	}
 	
 	public Object next(){
-		ArrayList<Gem> g = combi.getGems();
-		Gem gem = g.get(position);
-		position = position + 1;
-		return gem;
-		
+		if(hasNext()) {
+			Gem res = g.get(position);
+			position++;
+			return res;
+		}
+		else {
+			return null;
+		}
 	}
 	
 	public boolean hasNext(){
