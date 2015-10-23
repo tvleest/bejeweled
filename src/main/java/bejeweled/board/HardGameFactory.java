@@ -6,11 +6,6 @@ public class HardGameFactory extends GameFactory {
 
 	private final int AmountOfTypes=7;
 	private final int scorePerGem=15;
-	private GemFactory gemFact;
-	
-	public HardGameFactory() {
-		gemFact = new GemFactory(AmountOfTypes);
-	}
 	
 	@Override
 	public Score getScoreObject() {
@@ -19,6 +14,6 @@ public class HardGameFactory extends GameFactory {
 	
 	@Override
 	public GemFactory getGemFactory() {
-		return gemFact;
+		return new GemFactory(AmountOfTypes);
 	}
 }
