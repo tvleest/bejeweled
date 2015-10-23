@@ -18,7 +18,7 @@ public class GemFactory {
 		}
 	}
 	
-	GemType getRandomGemType() {
+	private GemType getRandomGemType() {
 		return GemType.getRandomGemType(gemAmount);
 	}
 }
