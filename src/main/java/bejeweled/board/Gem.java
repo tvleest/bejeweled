@@ -51,7 +51,7 @@ public class Gem implements DoublePoints, Cross {
 		return 1;
 	}
 	
-	public Combination makeCross(Board b, ArrayList<Combination> c) {
+	public Combination makeCross(Board b, Iterator combinationIterator) {
 		return null;
 	}
 	
@@ -187,5 +187,11 @@ public class Gem implements DoublePoints, Cross {
 	public void setCurrentPositionsAsAnimationPositions(){
 		setAnimationx(getCurrentx());
 		setAnimationy(getCurrenty());
+	}
+
+	@Override
+	public Combination makeCross(Board b, ArrayList<Combination> c) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

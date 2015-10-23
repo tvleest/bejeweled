@@ -11,11 +11,13 @@ import bejeweled.Difficulties;
 import bejeweled.Sounds;
 import bejeweled.board.Board;
 import bejeweled.board.Combination;
+import bejeweled.board.CombinationIterator;
 import bejeweled.board.DeleteRowGem;
 import bejeweled.board.DoublePointsGem;
 import bejeweled.board.EasyGameFactory;
 import bejeweled.board.Gem;
 import bejeweled.board.HardGameFactory;
+import bejeweled.board.Iterator;
 import bejeweled.board.GameFactory;
 import bejeweled.board.MediumGameFactory;
 import bejeweled.state.HighScores;
@@ -104,12 +106,17 @@ public final class GameLogic{
 	 * when animations end returnfromanimation will get called again
 	 * untill there are no more combinations then the animations will end
 	 */
+	
 	private void checkForCombinations() {
 		ArrayList<Combination> combinations = board.checkForCombinations();
 		boolean br = false;
 		for (Combination b : combinations) {
 			br = false;
-			for (Gem g : b.getGems()) {
+			
+			Iterator gemIterator = new CombinationIterator(b);
+			while(gemIterator.hasNext()){
+				Gem g = (Gem) gemIterator.next(); 
+			//for (Gem g : b.getGems()) {
 				Combination combi = g.makeCross(board, combinations);
 				if(combi != null) {
 					combinations.add(combi);
@@ -122,7 +129,11 @@ public final class GameLogic{
 		}
 		while(br) {
 			br = false;
-			for(Gem g : combinations.get(combinations.size()-1).getGems()) {
+			
+			Iterator gemIterator = new CombinationIterator(combinations.get(combinations.size()-1));
+			//for(Gem g : combinations.get(combinations.size()-1).getGems()) {
+			while(gemIterator.hasNext()){
+				Gem g = (Gem) gemIterator.next();
 				Combination combi = g.makeCross(board, combinations);
 				if(combi != null) {
 					combinations.add(combi);
@@ -144,8 +155,11 @@ public final class GameLogic{
 			Sounds.getInstance().playCombinationSound();
 			int timesScore = 1;
 			for(int i = 0; i < combinations.size(); i++) {
-				for(Gem gem : combinations.get(i).getGems()) {
-					timesScore *= gem.timesPoints();
+				Iterator gemIterator = new CombinationIterator(combinations.get(i));
+				while(gemIterator.hasNext()){
+				//for(Gem gem : combinations.get(i).getGems()) {
+					Gem g = (Gem) gemIterator.next();
+					timesScore *= g.timesPoints();
 				}
 			}
 			for(int i = 0; i < timesScore; i++) {
@@ -169,6 +183,7 @@ public final class GameLogic{
 			combinationsFormed = false;
 		}
 	}
+
 	
 	/**
 	 * swaps two gems back.
