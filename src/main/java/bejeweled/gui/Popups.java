@@ -18,6 +18,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -116,6 +118,17 @@ public class Popups {
 		});
 
 		Button save = Buttons.pauseMenuButton("Save");
+		
+		popup.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent e) {
+				if(e.getCode() == KeyCode.ESCAPE) {
+					root.setDisable(false);
+					popup.hide();
+					Main.getTimeline().play();
+				}
+			}
+		});
 
 		/*
 		 * Pressing the save button will save the current state of the game to a
