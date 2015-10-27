@@ -41,7 +41,7 @@ public final class GameScene extends Scene implements Observer {
 	private static final int OFFSETX = 248;
 	private static final int OFFSETY = 88;
 	private Label score;
-	private boolean easterAvailable = true;
+	private boolean easterAvailable;
 
 	/**
 	 * GameScene Constructor. Prepares the UI of the root and mouseclick
@@ -49,6 +49,7 @@ public final class GameScene extends Scene implements Observer {
 	 */
 	public GameScene(Group root, Stage stage, Difficulties dif) {
 		super(root);
+		easterAvailable = true;
 		this.getStylesheets().add("Style.css");
 		Canvas canvas = new Canvas(800, 600);
 		root.getChildren().add(canvas);
