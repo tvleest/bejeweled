@@ -11,7 +11,7 @@ public class DoublePointsGem extends Gem {
 	@Override
 	public void draw(final GraphicsContext gc) {
 		if (moving) {
-			gc.drawImage(GemType.getDoublePointsGemImage(type), animationx, animationy);
+			gc.drawImage(GemType.getDoublePointsGemImage(type), animationx, animationy, dimension, dimension);
 		} else {
 			gc.drawImage(GemType.getDoublePointsGemImage(type), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 			if (selected) {

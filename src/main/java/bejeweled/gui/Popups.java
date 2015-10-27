@@ -63,8 +63,9 @@ public class Popups {
 		border.setPadding(new Insets(20, 0, 20, 20));
 
 		Label saved = new Label("Game saved!");
-		saved.setLayoutX(115);
-		saved.setLayoutY(420);
+		saved.setId("savedgame");
+		saved.setLayoutX(120);
+		saved.setLayoutY(150);
 		
 		Image musicIcon = new Image("Images/music2.png");
 		Button musicButton = Buttons.subMenuButton(null, musicIcon, 0, 0);
