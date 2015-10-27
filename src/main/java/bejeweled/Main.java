@@ -342,6 +342,7 @@ public final class Main extends Application {
 	public static void gameOver() {
 		int score = scene.getGameLogic().getScore(); // get score
 		Sounds.getInstance().stopBackgroundSound();// Stop background sound
+		Sounds.getInstance().stopRickRoll();
 		Sounds.getInstance().playGameOverSound();
 
 		HighScores highscores = scene.getGameLogic().getHighScores();
