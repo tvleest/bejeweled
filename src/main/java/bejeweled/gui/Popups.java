@@ -83,6 +83,14 @@ public class Popups {
 			public void handle(WindowEvent e) {
 				root.setDisable(true);
 				Main.getTimeline().stop();
+				gamelogic.setDisabled(true);
+			}
+		});
+		
+		popup.setOnHiding(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent e) {
+				gamelogic.setDisabled(false);
 			}
 		});
 

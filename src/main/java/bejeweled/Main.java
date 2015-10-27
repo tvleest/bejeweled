@@ -329,6 +329,7 @@ public final class Main extends Application {
 		Popup popup = Popups.gameOverPopup(score);
 		popup.show(stage);
 		root.setDisable(true);
+		scene.getGameLogic().setDisabled(true);
 		Button confirm = (Button) popup.getContent().get(2);
 		confirm.setOnAction(new EventHandler<ActionEvent>() {
 
