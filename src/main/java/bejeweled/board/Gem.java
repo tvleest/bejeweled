@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
  */
 public class Gem implements DoublePoints, Cross {
 
-	protected static int dimension = 40; //the dimension (width and height) of the gems on the board
+	protected static int dimension = 55; //the dimension (width and height) of the gems on the board
 	protected int row;
 	protected int col;
 	protected GemType type; //which type of six gems
@@ -61,11 +61,11 @@ public class Gem implements DoublePoints, Cross {
 	 */
 	public void draw(final GraphicsContext gc) {
 		if (moving) {
-			gc.drawImage(GemType.getImage(type), animationx, animationy);
+			gc.drawImage(GemType.getImage(type), animationx, animationy, dimension, dimension);
 		} else {
-			gc.drawImage(GemType.getImage(type), offsetx + col * dimension, offsety + row * dimension);
+			gc.drawImage(GemType.getImage(type), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 			if (selected) {
-				gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension);
+				gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 			} else if (hinted) {
 				gc.drawImage(getHintedImage(), offsetx + col * dimension, offsety + row * dimension, dimension,
 						dimension);
