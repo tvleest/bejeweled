@@ -16,11 +16,13 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+
 import java.util.Observable;
 import java.util.Observer;
 
 import bejeweled.Difficulties;
 import bejeweled.Main;
+import bejeweled.Sounds;
 import bejeweled.board.Gem;
 import bejeweled.gui.Buttons;
 import bejeweled.gui.Popups;
@@ -65,11 +67,7 @@ public final class GameScene extends Scene implements Observer {
 		pauseButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				Main.getTimeline().pause();
-				Popup popup = Popups.pausePopup(root, gamelogic);
-				popup.show(stage);
-				root.setDisable(true);
-
+				showPopup(stage, root);
 			}
 		});
 
@@ -153,6 +151,14 @@ public final class GameScene extends Scene implements Observer {
 		score.setText(scoreObject.getScore()+"");
 	}
 	
-	
+	public void showPopup(Stage stage, Group root) {
+		if(Sounds.getInstance().backgroundSoundPlaying()) {
+			Popup popup = Popups.pausePopup(root, gamelogic, true);
+			popup.show(stage);
+		} else {
+			Popup popup = Popups.pausePopup(root, gamelogic, false);
+			popup.show(stage);
+		}
+	}
 
 }

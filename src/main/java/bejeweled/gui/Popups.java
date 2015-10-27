@@ -32,6 +32,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
+import javafx.stage.WindowEvent;
 
 /**
  * A class dedicated to making popups.
@@ -49,7 +50,7 @@ public class Popups {
 	 *            - The gamescene which needs to be reenabled.
 	 * @return - The pause menu.
 	 */
-	public static Popup pausePopup(Group root, GameLogic gamelogic) {
+	public static Popup pausePopup(Group root, GameLogic gamelogic, boolean music) {
 		Popup popup = new Popup();
 		popup.setWidth(330);
 		popup.setHeight(450);
@@ -72,7 +73,18 @@ public class Popups {
 		mute.setEndX(170);
 		mute.setEndY(220);
 		mute.setStrokeWidth(1.0);
-		mute.setVisible(false);
+		if(music) {
+			mute.setVisible(false);
+		}
+		
+		popup.setHideOnEscape(false);
+		popup.setOnShowing(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent e) {
+				root.setDisable(true);
+				Main.getTimeline().stop();
+			}
+		});
 
 		musicButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -119,17 +131,17 @@ public class Popups {
 
 		Button save = Buttons.pauseMenuButton("Save");
 		
-		popup.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+		popup.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
-				if(e.getCode() == KeyCode.ESCAPE) {
+				if(e.getCode() == KeyCode.ESCAPE || e.getCode() == KeyCode.P) {
 					root.setDisable(false);
 					popup.hide();
 					Main.getTimeline().play();
 				}
 			}
-		});
-
+		});	
+		
 		/*
 		 * Pressing the save button will save the current state of the game to a
 		 * savefile.
