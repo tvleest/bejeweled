@@ -16,6 +16,7 @@ public final class Sounds {
 	private static AudioClip errorSound;
 	private static AudioClip gameOverSound;
 	private static AudioClip shoutOutSound;
+	private static AudioClip rickrollSound;
 	private static Sounds sounds = null;
 
 	/**
@@ -31,6 +32,7 @@ public final class Sounds {
 		errorSound = new AudioClip(new File("src/main/java/Sounds/error.wav").toURI().toString());
 		gameOverSound = new AudioClip(new File("src/main/java/Sounds/gameover.wav").toURI().toString());
 		shoutOutSound = new AudioClip(new File("src/main/java/Sounds/perfect.wav").toURI().toString());
+		rickrollSound = new AudioClip(new File("src/main/java/Sounds/NeverGonnaGiveYouUp.wav").toURI().toString());
 	}
 
 	// This method is part of the singleton pattern
@@ -68,6 +70,20 @@ public final class Sounds {
 	public void stopBackgroundSound() {
 		backgroundSound.stop();
 	}
+	
+	/**
+	 * Plays the background sound effect.
+	 */
+	public void playRickRoll() {
+		rickrollSound.play();
+	}
+
+	/**
+	 * Stops the background sound effect.
+	 */
+	public void stopRickRoll() {
+		rickrollSound.stop();
+	}
 
 	/**
 	 * Plays the error sound effect.
@@ -95,5 +111,12 @@ public final class Sounds {
 	 */
 	public boolean backgroundSoundPlaying() {
 		return backgroundSound.isPlaying();
+	}
+	
+	/**
+	 * @return true if backgroundSound is playing already.
+	 */
+	public boolean rickrollSoundPlaying() {
+		return rickrollSound.isPlaying();
 	}
 }

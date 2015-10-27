@@ -35,6 +35,8 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -233,6 +235,7 @@ public final class Main extends Application {
 		imgView.setFitWidth(800);
 
 		root.getChildren().addAll(imgView);
+		
 		Sounds.getInstance().playBackgroundSound();
 		if (savedGame) {
 			loadFile();
@@ -246,6 +249,32 @@ public final class Main extends Application {
 				scene.draw();
 			}
 		}.start();
+		
+		root.setOnKeyReleased(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent e) {
+				if(e.getCode() == KeyCode.ESCAPE || e.getCode() == KeyCode.P) {
+					scene.showPopup(stage, root);
+				} 
+				if(e.getCode() == KeyCode.M) {
+					if (Sounds.getInstance().backgroundSoundPlaying()) {
+						Sounds.getInstance().stopBackgroundSound();
+					} else {
+						Sounds.getInstance().stopRickRoll();
+						Sounds.getInstance().playBackgroundSound();
+					}
+				}
+				if(e.getCode() == KeyCode.R) {
+					if (Sounds.getInstance().rickrollSoundPlaying()) {
+						Sounds.getInstance().stopRickRoll();
+					} else {
+						Sounds.getInstance().playRickRoll();
+						Sounds.getInstance().stopBackgroundSound();
+					}
+				}
+			}
+		});
+		
 		stage.setScene(scene);
 	}
 
@@ -322,6 +351,7 @@ public final class Main extends Application {
 		Popup popup = Popups.gameOverPopup(score);
 		popup.show(stage);
 		root.setDisable(true);
+		scene.getGameLogic().setDisabled(true);
 		Button confirm = (Button) popup.getContent().get(2);
 		confirm.setOnAction(new EventHandler<ActionEvent>() {
 

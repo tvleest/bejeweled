@@ -31,6 +31,7 @@ import bejeweled.state.Time;
  */
 public final class GameLogic{
 	private boolean isanimating = false;
+	private boolean disabled;
 	private Board board;
 	private static Time time;
 	private static Score score;
@@ -80,7 +81,7 @@ public final class GameLogic{
 	 */
 	public void handleMouseClicked(final int row, final int col) {
 		//we won't handle mouseclicks while an animation is running
-		if(isanimating) {
+		if(isanimating || disabled) {
 			return;
 		}
 		if(board.handleMouseClickedBoard(row,col)){
@@ -226,6 +227,14 @@ public final class GameLogic{
 
 	public Difficulties getDif() {
 		return dif;
+	}
+	
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+	
+	public boolean getDisabled() {
+		return disabled;
 	}
 }
 	
