@@ -194,4 +194,28 @@ public class Gem implements DoublePoints, Cross {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public String getTypeString() {
+		if(type == GemType.BLUE) {
+			return "BLUE";
+		}
+		else if(type == GemType.GREEN) {
+			return "GREEN";
+		}
+		else if(type == GemType.ORANGE) {
+			return "ORANGE";
+		}
+		else if(type == GemType.PINK) {
+			return "PINK";
+		}
+		else if(type == GemType.YELLOW) {
+			return "YELLOW";
+		}
+		else if(type == GemType.RED) {
+			return "RED";
+		}
+		else {
+			return "WHITE";
+		}
+	}
 }

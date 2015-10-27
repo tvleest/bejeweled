@@ -72,4 +72,5 @@ public enum GemType {
 	public static GemType getRandomGemType(int amountOfTypes) {
 		return allgems[random.nextInt(amountOfTypes)];
 	}
+	
 }

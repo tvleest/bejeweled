@@ -6,6 +6,8 @@ import java.io.IOException;
 import bejeweled.Main;
 import bejeweled.Sounds;
 import bejeweled.board.Board;
+import bejeweled.board.DeleteRowGem;
+import bejeweled.board.DoublePointsGem;
 import bejeweled.board.Gem;
 import bejeweled.game.GameLogic;
 import bejeweled.game.GameScene;
@@ -130,10 +132,16 @@ public class Popups {
 				Gem[][] board = gamelogic.getBoard().getGems();
 				String dif = gamelogic.getDif().toString();
 				String save = dif + "\n" + stime + "\n" + score + "\n";
-				System.out.println(board.length);
 				for (int row = 0; row < board.length; row++) {
 					for (int col = 0; col < board.length; col++) {
-						save += board[row][col].getType() + "\n";
+						int special = 0;
+						if(board[row][col] instanceof DoublePointsGem) {
+							special = 1;
+						}
+						else if(board[row][col] instanceof DeleteRowGem) {
+							special = 2;
+						}
+						save += board[row][col].getTypeString() + special +"\n";
 					}
 				}
 				try {
