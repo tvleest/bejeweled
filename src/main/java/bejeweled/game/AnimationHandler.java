@@ -73,7 +73,7 @@ public final class AnimationHandler{
 	 * call gameUpdate for every 10 ms
 	 */
 	public void animate(){
-		timeline = new Timeline(new KeyFrame(Duration.millis(10),
+		timeline = new Timeline(new KeyFrame(Duration.millis(5),
                 new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
             	gameUpdate();

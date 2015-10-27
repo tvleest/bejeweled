@@ -13,7 +13,7 @@ public class DeleteRowGem extends Gem {
 	@Override
 	public void draw(final GraphicsContext gc) {
 		if (moving) {
-			gc.drawImage(GemType.getDeleteRowGemImage(type), animationx, animationy);
+			gc.drawImage(GemType.getDeleteRowGemImage(type), animationx, animationy, dimension, dimension);
 		} else {
 			gc.drawImage(GemType.getDeleteRowGemImage(type), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 			if (selected) {

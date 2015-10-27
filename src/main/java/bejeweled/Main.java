@@ -195,6 +195,7 @@ public final class Main extends Application {
 			hs += score + "\n";
 		}
 		Label HighScoreText = new Label(hs);
+		HighScoreText.setId("highscore");
 		HighScoreText.setLayoutX(300-HighScoreText.getWidth()/2);
 		HighScoreText.setLayoutY(100);
 

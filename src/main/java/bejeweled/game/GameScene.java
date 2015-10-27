@@ -149,6 +149,10 @@ public final class GameScene extends Scene implements Observer {
 	public void update(Observable obs, Object arg) {
 		Score scoreObject = (Score) obs;
 		score.setText(scoreObject.getScore()+"");
+		if(scoreObject.getScore() >= 1000) {
+			Sounds.getInstance().stopBackgroundSound();
+			Sounds.getInstance().playRickRoll();
+		}
 	}
 	
 	public void showPopup(Stage stage, Group root) {
