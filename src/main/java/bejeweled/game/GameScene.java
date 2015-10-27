@@ -37,7 +37,7 @@ public final class GameScene extends Scene implements Observer {
 	private static GraphicsContext gc;
 	private static GameLogic gamelogic;
 	private static final int OFFSETX = 235;
-	private static final int OFFSETY = 115;
+	private static final int OFFSETY = 80;
 	Label score;
 
 	/**
@@ -51,7 +51,7 @@ public final class GameScene extends Scene implements Observer {
 		root.getChildren().add(canvas);
 
 		Image hintIcon = new Image("Images/hintbutton.png");
-		Button hintButton = Buttons.subMenuButton(null, hintIcon, 80, 440);
+		Button hintButton = Buttons.subMenuButton(null, hintIcon, 80, 480);
 
 		hintButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -61,7 +61,7 @@ public final class GameScene extends Scene implements Observer {
 		});
 
 		Image pauseIcon = new Image("Images/pause.png");
-		Button pauseButton = Buttons.subMenuButton(null, pauseIcon, 120, 440);
+		Button pauseButton = Buttons.subMenuButton(null, pauseIcon, 120, 480);
 		pauseButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -97,14 +97,14 @@ public final class GameScene extends Scene implements Observer {
 			}
 		});
 		
-		Circle circleScore = new Circle(120, 75, 40, Color.LIGHTGREY);
+		Circle circleScore = new Circle(120, 115, 40, Color.LIGHTGREY);
 		circleScore.setStrokeWidth(2);
 		circleScore.setStroke(Color.BLACK);
 		root.getChildren().add(circleScore);
 		
 		score = new Label(""+0);
 		score.setLayoutX(80);
-		score.setLayoutY(60);
+		score.setLayoutY(100);
 		score.setId("score");
 		score.setPrefWidth(80);
 		score.setMaxWidth(80);
