@@ -13,9 +13,9 @@ public class DoublePointsGem extends Gem {
 		if (moving) {
 			gc.drawImage(GemType.getDoublePointsGemImage(type), animationx, animationy);
 		} else {
-			gc.drawImage(GemType.getDoublePointsGemImage(type), offsetx + col * dimension, offsety + row * dimension);
+			gc.drawImage(GemType.getDoublePointsGemImage(type), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 			if (selected) {
-				gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension);
+				gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 			} else if (hinted) {
 				gc.drawImage(getHintedImage(), offsetx + col * dimension, offsety + row * dimension, dimension,
 						dimension);
