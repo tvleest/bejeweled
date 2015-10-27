@@ -9,6 +9,8 @@ import bejeweled.board.Board;
 
 import java.util.Scanner;
 
+import bejeweled.board.DeleteRowGem;
+import bejeweled.board.DoublePointsGem;
 import bejeweled.board.Gem;
 import bejeweled.board.GemType;
 import bejeweled.game.GameLogic;
@@ -301,8 +303,19 @@ public final class Main extends Application {
 				for (int col = 0; col < board.length; col++) {
 					if (sc.hasNext()) {
 						String type = sc.nextLine();
-						GemType gtype = GemType.valueOf(type);
-						board[row][col] = new Gem(row, col, gtype);
+						String firstpart = type.substring(0,type.length() - 1);
+						String secondpart = type.substring(type.length()-1, type.length());
+						GemType gtype = GemType.valueOf(firstpart);
+						int special = Integer.valueOf(secondpart);
+						if(special == 0) {
+							board[row][col] = new Gem(row, col, gtype);
+						}
+						else if(special == 1) {
+							board[row][col] = new DoublePointsGem(row, col, gtype);
+						}
+						else {
+							board[row][col] = new DeleteRowGem(row, col, gtype);
+						}
 					}
 				}
 			}

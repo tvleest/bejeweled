@@ -58,12 +58,12 @@ public final class Time {
 	public void drawTime(final GraphicsContext gc) {
 		if (time < 5000) {
 			gc.setFill(Color.BLACK);
-			gc.strokeRect(100, 110, 40, 330);	
+			gc.strokeRect(100, 150, 40, 330);	
 			gc.setFill(Color.YELLOW);
 			if(time>330)
 				time=330;
-			gc.fillRect(100, 440-time, 40, time);
-			gc.fillText(time+"", 110, 440-time);
+			gc.fillRect(100, 480-time, 40, time);
+			gc.fillText(time+"", 110, 480-time);
 			gc.setFill(Color.BLACK);
 			}
 	}
