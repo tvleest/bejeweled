@@ -139,6 +139,7 @@ public class Popups {
 			public void handle(ActionEvent e) {
 				Main.switchMenu();
 				Sounds.getInstance().stopBackgroundSound();
+				Sounds.getInstance().stopRickRoll();
 				popup.hide();
 			}
 		});
