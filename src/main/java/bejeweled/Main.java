@@ -258,7 +258,16 @@ public final class Main extends Application {
 					if (Sounds.getInstance().backgroundSoundPlaying()) {
 						Sounds.getInstance().stopBackgroundSound();
 					} else {
+						Sounds.getInstance().stopRickRoll();
 						Sounds.getInstance().playBackgroundSound();
+					}
+				}
+				if(e.getCode() == KeyCode.R) {
+					if (Sounds.getInstance().rickrollSoundPlaying()) {
+						Sounds.getInstance().stopRickRoll();
+					} else {
+						Sounds.getInstance().playRickRoll();
+						Sounds.getInstance().stopBackgroundSound();
 					}
 				}
 			}

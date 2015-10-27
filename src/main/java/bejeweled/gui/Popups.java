@@ -100,6 +100,10 @@ public class Popups {
 				if (Sounds.getInstance().backgroundSoundPlaying()) {
 					Sounds.getInstance().stopBackgroundSound();
 					mute.setVisible(true);
+				} else if(Sounds.getInstance().rickrollSoundPlaying()) {
+					Sounds.getInstance().stopRickRoll();
+					System.out.println("test");
+					mute.setVisible(true);
 				} else {
 					Sounds.getInstance().playBackgroundSound();
 					mute.setVisible(false);

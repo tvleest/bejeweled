@@ -26,7 +26,7 @@ public final class Score extends Observable {
 	 */
 	public void updateScore(int gems) {
 		score += gems*scorePerGem;
-		int goodscore = 30;
+		int goodscore = 4 * scorePerGem;
 		if (gems*scorePerGem > goodscore) {
 			Main.shoutOut();
 		}

@@ -152,7 +152,7 @@ public final class GameScene extends Scene implements Observer {
 	}
 	
 	public void showPopup(Stage stage, Group root) {
-		if(Sounds.getInstance().backgroundSoundPlaying()) {
+		if(Sounds.getInstance().backgroundSoundPlaying() || Sounds.getInstance().rickrollSoundPlaying()) {
 			Popup popup = Popups.pausePopup(root, gamelogic, true);
 			popup.show(stage);
 		} else {
