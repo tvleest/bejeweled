@@ -15,7 +15,7 @@ public class DeleteRowGem extends Gem {
 		if (moving) {
 			gc.drawImage(GemType.getDeleteRowGemImage(type), animationx, animationy);
 		} else {
-			gc.drawImage(GemType.getDeleteRowGemImage(type), offsetx + col * dimension, offsety + row * dimension);
+			gc.drawImage(GemType.getDeleteRowGemImage(type), offsetx + col * dimension, offsety + row * dimension, dimension, dimension);
 			if (selected) {
 				gc.drawImage(getOverlayImage(), offsetx + col * dimension, offsety + row * dimension);
 			} else if (hinted) {
