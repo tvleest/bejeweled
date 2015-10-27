@@ -40,7 +40,8 @@ public final class GameScene extends Scene implements Observer {
 	private static GameLogic gamelogic;
 	private static final int OFFSETX = 247;
 	private static final int OFFSETY = 88;
-	Label score;
+	private Label score;
+	private boolean easterAvailable;
 
 	/**
 	 * GameScene Constructor. Prepares the UI of the root and mouseclick
@@ -48,6 +49,7 @@ public final class GameScene extends Scene implements Observer {
 	 */
 	public GameScene(Group root, Stage stage, Difficulties dif) {
 		super(root);
+		easterAvailable = true;
 		this.getStylesheets().add("Style.css");
 		Canvas canvas = new Canvas(800, 600);
 		root.getChildren().add(canvas);
@@ -149,7 +151,8 @@ public final class GameScene extends Scene implements Observer {
 	public void update(Observable obs, Object arg) {
 		Score scoreObject = (Score) obs;
 		score.setText(scoreObject.getScore()+"");
-		if(scoreObject.getScore() >= 1000) {
+		if(easterAvailable && scoreObject.getScore() >= 1000) {
+			easterAvailable = false;
 			Sounds.getInstance().stopBackgroundSound();
 			Sounds.getInstance().playRickRoll();
 		}
