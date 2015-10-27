@@ -38,7 +38,7 @@ public final class GameScene extends Scene implements Observer {
 	// to use the sounds in this class
 	private static GraphicsContext gc;
 	private static GameLogic gamelogic;
-	private static final int OFFSETX = 248;
+	private static final int OFFSETX = 247;
 	private static final int OFFSETY = 88;
 	Label score;
 
