@@ -40,7 +40,8 @@ public final class GameScene extends Scene implements Observer {
 	private static GameLogic gamelogic;
 	private static final int OFFSETX = 248;
 	private static final int OFFSETY = 88;
-	Label score;
+	private Label score;
+	private boolean easterAvailable = true;
 
 	/**
 	 * GameScene Constructor. Prepares the UI of the root and mouseclick
@@ -149,7 +150,8 @@ public final class GameScene extends Scene implements Observer {
 	public void update(Observable obs, Object arg) {
 		Score scoreObject = (Score) obs;
 		score.setText(scoreObject.getScore()+"");
-		if(scoreObject.getScore() >= 1000) {
+		if(easterAvailable && scoreObject.getScore() >= 1000) {
+			easterAvailable = false;
 			Sounds.getInstance().stopBackgroundSound();
 			Sounds.getInstance().playRickRoll();
 		}
