@@ -75,7 +75,9 @@ public final class Sounds {
 	 * Plays the background sound effect.
 	 */
 	public void playRickRoll() {
-		rickrollSound.play();
+		if(!rickrollSound.isPlaying()) {
+			rickrollSound.play();
+		}
 	}
 
 	/**
